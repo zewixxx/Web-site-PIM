@@ -1,4 +1,31 @@
 const ZOOM_KEY = "pim-maquette-zoom";
+const FULL_KEY = "pim-fullsite";
+
+function fullsiteOn() {
+  try { return sessionStorage.getItem(FULL_KEY) === "1"; } catch (error) { return false; }
+}
+
+function setFullsite(on) {
+  try { sessionStorage.setItem(FULL_KEY, on ? "1" : "0"); } catch (error) { /* ignore */ }
+}
+
+function enterFullsite(id) {
+  setFullsite(true);
+  const root = document.documentElement;
+  if (root.requestFullscreen && !document.fullscreenElement) {
+    root.requestFullscreen().catch(() => {});
+  }
+  if ((location.hash || "").slice(1) === id) route();
+  else location.hash = id;
+}
+
+function exitFullsite() {
+  setFullsite(false);
+  if (document.fullscreenElement && document.exitFullscreen) {
+    document.exitFullscreen().catch(() => {});
+  }
+  route();
+}
 
 function nav(activeGroup) {
   const item = (id, label, group) => {
@@ -190,6 +217,49 @@ function shell(page) {
   return '<div class="site">' + nav(page.group) + page.html + band + footer() + "</div>";
 }
 
+function escapeHtml(text) {
+  return String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
+}
+
+function pageSelect(currentId) {
+  const groups = [];
+  window.PAGES.forEach((page) => {
+    let group = groups.find((item) => item.name === page.group);
+    if (!group) {
+      group = { name: page.group, pages: [] };
+      groups.push(group);
+    }
+    group.pages.push(page);
+  });
+  return '<select id="page-select" class="page-select" aria-label="Choisir une page">' + groups.map((group) => {
+    return '<optgroup label="' + escapeHtml(group.name) + '">' + group.pages.map((page) => {
+      return '<option value="' + page.id + '"' + (page.id === currentId ? " selected" : "") + ">" + escapeHtml(page.name) + "</option>";
+    }).join("") + "</optgroup>";
+  }).join("") + "</select>";
+}
+
+function pageNavHtml(currentId) {
+  return '<div class="page-nav">' +
+    '<button type="button" id="page-prev" title="Page précédente" aria-label="Page précédente">‹</button>' +
+    pageSelect(currentId) +
+    '<button type="button" id="page-next" title="Page suivante" aria-label="Page suivante">›</button>' +
+    "</div>";
+}
+
+function bindPageNav(currentId) {
+  const select = document.getElementById("page-select");
+  const go = (step) => {
+    const index = window.PAGES.findIndex((page) => page.id === currentId);
+    const target = window.PAGES[(index + step + window.PAGES.length) % window.PAGES.length];
+    location.hash = target.id;
+  };
+  if (select) select.addEventListener("change", () => { location.hash = select.value; });
+  const prev = document.getElementById("page-prev");
+  const next = document.getElementById("page-next");
+  if (prev) prev.addEventListener("click", () => go(-1));
+  if (next) next.addEventListener("click", () => go(1));
+}
+
 function renderPage(id) {
   const page = window.PAGES.find((item) => item.id === id);
   if (!page) {
@@ -197,12 +267,27 @@ function renderPage(id) {
     return;
   }
   document.title = page.name + " — PIM Industrie";
+  if (fullsiteOn()) {
+    document.body.classList.add("is-fullsite");
+    document.body.classList.remove("is-admin");
+    document.body.innerHTML = shell(page) +
+      '<div class="fullsite-tools">' + pageNavHtml(page.id) +
+      '<button type="button" id="fullsite-exit" class="fullsite-exit">Quitter · Échap</button></div>';
+    const exitBtn = document.getElementById("fullsite-exit");
+    if (exitBtn) exitBtn.addEventListener("click", exitFullsite);
+    bindPageNav(page.id);
+    initHeroCarousels();
+    window.scrollTo(0, 0);
+    return;
+  }
+  document.body.classList.remove("is-fullsite");
   const url = pageUrl(page);
   const note = "";
   document.body.innerHTML = [
     '<div class="proto-bar">',
-    "<span>" + page.group + " · " + page.name + "</span>",
+    pageNavHtml(page.id),
     '<div class="admin-actions">',
+    '<button type="button" id="fullsite-open">Plein écran</button>',
     '<button type="button" id="admin-reset">Texte d’origine</button>',
     '<a href="#planches">Toutes les planches</a>',
     "</div></div>",
@@ -213,8 +298,12 @@ function renderPage(id) {
     '<div class="page-viewport">' + shell(page) + "</div>",
     "</div>"
   ].join("");
+  const fullBtn = document.getElementById("fullsite-open");
+  if (fullBtn) fullBtn.addEventListener("click", () => enterFullsite(page.id));
+  bindPageNav(page.id);
   bindAdmin(page);
   initHeroCarousels();
+  window.scrollTo(0, 0);
 }
 
 function renderBoards() {
@@ -260,6 +349,7 @@ function renderBoards() {
     zoomButton(0.32, zoom),
     zoomButton(0.45, zoom),
     "</div>",
+    '<button type="button" id="fullsite-board" class="side-fullsite">Voir comme le vrai site</button>',
     '<a class="side-link" href="#planches">Vue planches</a>',
     side,
     "</aside>",
@@ -268,6 +358,8 @@ function renderBoards() {
     "</div>"
   ].join("");
   initHeroCarousels();
+  const fullBoard = document.getElementById("fullsite-board");
+  if (fullBoard) fullBoard.addEventListener("click", () => enterFullsite("accueil"));
   const openAdmin = document.getElementById("admin-open");
   if (openAdmin) {
     openAdmin.addEventListener("click", () => {
@@ -508,9 +600,22 @@ function initHeroCarousels() {
 
 function route() {
   const id = (location.hash || "#planches").slice(1) || "planches";
-  if (id === "planches") renderBoards();
-  else renderPage(id);
+  if (id === "planches") {
+    setFullsite(false);
+    document.body.classList.remove("is-fullsite");
+    renderBoards();
+  } else {
+    renderPage(id);
+  }
 }
+
+document.addEventListener("fullscreenchange", () => {
+  if (!document.fullscreenElement && fullsiteOn()) exitFullsite();
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && fullsiteOn()) exitFullsite();
+});
 
 document.addEventListener("click", (event) => {
   const button = event.target.closest("[data-zoom]");

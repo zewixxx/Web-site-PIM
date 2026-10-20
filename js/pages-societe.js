@@ -118,10 +118,10 @@ addPage({
     field("Adresse", "text"), field("Code postal *", "text"),
     field("Ville", "text"), field("Pays", "text"),
     field("E-mail *", "email"), field("Téléphone *", "tel"),
-    '<div class="field"><label>Nombre de salariés</label><div class="checks"><label><input type="radio" name="effectif"> moins de 10</label><label><input type="radio" name="effectif"> de 11 à 50</label><label><input type="radio" name="effectif"> plus de 50</label></div></div>',
-    '<div class="field"><label>Vous êtes intéressé·e par</label><div class="checks"><label><input type="checkbox"> Une étude</label><label><input type="checkbox"> Une prestation modulaire</label><label><input type="checkbox"> Une prestation complète</label><label><input type="checkbox"> Un simple contact</label></div></div>',
-    '<div class="field"><label>Votre projet est à échéance</label><select><option>moins d’un mois</option><option>entre 2 et 6 mois</option><option>plus de 6 mois</option></select></div>',
-    '<div class="field" style="grid-column:1 / -1"><label>Votre demande</label><textarea></textarea></div>',
+    '<div class="field"><p class="field-title">Nombre de salariés</p><div class="checks"><label><input type="radio" name="effectif"><span>moins de 10</span></label><label><input type="radio" name="effectif"><span>de 11 à 50</span></label><label><input type="radio" name="effectif"><span>plus de 50</span></label></div></div>',
+    '<div class="field"><p class="field-title">Vous êtes intéressé·e par</p><div class="checks"><label><input type="checkbox"><span>Une étude</span></label><label><input type="checkbox"><span>Une prestation modulaire</span></label><label><input type="checkbox"><span>Une prestation complète</span></label><label><input type="checkbox"><span>Un simple contact</span></label></div></div>',
+    '<div class="field"><label for="echeance">Votre projet est à échéance</label><select id="echeance"><option>moins d’un mois</option><option>entre 2 et 6 mois</option><option>plus de 6 mois</option></select></div>',
+    '<div class="field" style="grid-column:1 / -1"><label for="demande">Votre demande</label><textarea id="demande"></textarea></div>',
     '<p class="note" style="grid-column:1 / -1">* Champs obligatoires. Vos informations sont destinées à PIM Industrie, uniquement pour répondre à votre demande. Vous pouvez y accéder, les corriger ou les faire supprimer en écrivant à mail@pim-industrie.com. <a href="#confidentialite">Protection des données</a></p>',
     '<p style="grid-column:1 / -1"><button class="cta" type="button">Envoyer</button></p>',
     "</form>",
@@ -139,7 +139,8 @@ addPage({
 });
 
 function field(label, type) {
-  return '<div class="field"><label>' + label + '</label><input type="' + type + '"></div>';
+  const id = "champ-" + label.toLowerCase().normalize("NFD").replace(/[^a-z0-9]+/g, "-");
+  return '<div class="field"><label for="' + id + '">' + label + '</label><input id="' + id + '" type="' + type + '"></div>';
 }
 
 addPage({

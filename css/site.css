@@ -303,19 +303,41 @@ ul.clean li { margin: 0 0 6px; line-height: 1.45; }
 .cta-band h2 { color: #fff; }
 .cta-band p { color: rgba(255,255,255,0.88); }
 .short-form { display: grid; grid-template-columns: 1.4fr 1fr 1fr auto; gap: 10px; margin-top: 18px; }
-.short-form input, .short-form select, .field input, .field select, .field textarea {
+.short-form input, .short-form select,
+.field input:not([type="radio"]):not([type="checkbox"]), .field select, .field textarea {
   width: 100%;
   border: 1px solid var(--line);
   background: #fff;
   color: var(--ink);
   padding: 12px 12px;
   font-size: 15px;
+  line-height: 1.3;
 }
+.field select { height: 46px; }
 .field textarea { min-height: 120px; resize: vertical; }
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; }
-.field label { display: block; font-size: 13px; margin-bottom: 6px; color: var(--ink); }
-.checks { display: flex; flex-direction: column; gap: 8px; font-size: 15px; }
-.note { font-size: 13px; color: var(--muted); }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; align-items: start; }
+.field { min-width: 0; }
+.field > label, .field-title { display: block; font-size: 13px; margin: 0 0 6px; color: var(--ink); font-weight: 400; }
+.checks { display: flex; flex-direction: column; gap: 10px; font-size: 15px; }
+.checks label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.3;
+  cursor: pointer;
+}
+.checks input[type="radio"], .checks input[type="checkbox"] {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  padding: 0;
+  accent-color: var(--pim);
+  cursor: pointer;
+}
+.checks span { min-width: 0; }.note { font-size: 13px; color: var(--muted); }
 
 .timeline { border-left: 2px solid var(--pim); margin: 10px 0 0 8px; }
 .tl { padding: 0 0 18px 18px; position: relative; }
@@ -496,3 +518,109 @@ body.is-admin .page-viewport .site img:hover { outline: 2px solid var(--pim); }
 .page-stage .browser { width: 1440px; max-width: 100%; margin: 0 auto 12px; }
 .page-viewport { display: flex; justify-content: center; }
 .page-viewport .site { box-shadow: 0 16px 40px rgba(28, 28, 28, 0.08); border-radius: 12px; overflow: hidden; }
+
+.side-fullsite {
+  width: 100%;
+  margin: 0 0 14px;
+  padding: 10px 12px;
+  background: var(--pim);
+  color: #fff;
+  border: 0;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.side-fullsite:hover { background: var(--pim-dark); }
+#fullsite-open { background: var(--pim); color: #fff; }
+
+/* Plein écran : le site seul, pleine largeur, comme en ligne */
+body.is-fullsite { background: #fff; }
+body.is-fullsite .site { width: 100%; box-shadow: none; border-radius: 0; }
+body.is-fullsite .wrap,
+body.is-fullsite .footer-grid,
+body.is-fullsite .legal-line { width: min(var(--max), calc(100% - 96px)); }
+body.is-fullsite .nav { position: sticky; top: 0; z-index: 40; }
+body.is-fullsite .hero { min-height: clamp(560px, calc(100vh - 118px), 820px); }
+.fullsite-tools {
+  position: fixed;
+  left: 14px;
+  bottom: 14px;
+  z-index: 90;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: rgba(28, 28, 28, 0.88);
+  border-radius: 10px;
+  padding: 6px;
+  opacity: 0.55;
+  transition: opacity 0.2s ease;
+}
+.fullsite-tools:hover, .fullsite-tools:focus-within { opacity: 1; }
+.fullsite-exit {
+  background: var(--pim);
+  color: #fff;
+  border: 0;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* Sélecteur de page toujours visible (barre du haut, collée) */
+.proto-bar { padding-right: 190px; gap: 16px; }
+.page-nav { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.page-nav button {
+  width: 34px; height: 34px; flex: none;
+  border: 1px solid #d9d9d9; background: #fff; color: #1c1c1c;
+  border-radius: 8px; font-size: 20px; line-height: 1; cursor: pointer;
+}
+.page-nav button:hover { border-color: var(--pim); color: var(--pim); }
+.page-select {
+  height: 34px; min-width: 260px; max-width: 420px;
+  border: 1px solid var(--pim); border-radius: 8px;
+  padding: 0 10px; font-size: 14px; font-weight: 600;
+  background: #fff; color: #1c1c1c; cursor: pointer;
+}
+.fullsite-tools .page-nav button { background: #fff; }
+.fullsite-tools .page-select { min-width: 220px; }
+
+@media (max-width: 1100px) {
+  body.is-fullsite .wrap,
+  body.is-fullsite .footer-grid,
+  body.is-fullsite .legal-line { width: calc(100% - 48px); }
+  body.is-fullsite .util, body.is-fullsite .nav, body.is-fullsite .footer { padding-left: 24px; padding-right: 24px; }
+  body.is-fullsite .nav { height: auto; flex-wrap: wrap; padding-top: 10px; padding-bottom: 10px; gap: 10px 20px; }
+  body.is-fullsite .menu { order: 3; width: 100%; flex: none; flex-wrap: wrap; gap: 0 18px; }
+  body.is-fullsite .menu > a, body.is-fullsite .drop > span { padding: 10px 0; }
+  body.is-fullsite .stats { grid-template-columns: repeat(3, 1fr); }
+  body.is-fullsite .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  body.is-fullsite .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  body.is-fullsite .logo-row { grid-template-columns: repeat(5, 1fr); }
+  body.is-fullsite .footer-grid { grid-template-columns: 1fr 1fr; }
+  body.is-fullsite .contact-layout { grid-template-columns: 1fr; }
+  body.is-fullsite .hero-carousel-ui { right: 24px; }
+}
+
+@media (max-width: 720px) {
+  body.is-fullsite h1, body.is-fullsite .hero h1 { font-size: 32px; }
+  body.is-fullsite h2 { font-size: 24px; }
+  body.is-fullsite .hero { min-height: 0; }
+  body.is-fullsite .hero-copy { padding-top: 56px; padding-bottom: 96px; }
+  body.is-fullsite .hero-carousel-ui { left: 16px; right: 16px; bottom: 16px; justify-items: start; max-width: none; }
+  body.is-fullsite .hero-carousel-caption { text-align: left; }
+  body.is-fullsite .stats,
+  body.is-fullsite .grid-2,
+  body.is-fullsite .grid-3,
+  body.is-fullsite .grid-4,
+  body.is-fullsite .split,
+  body.is-fullsite .form-grid,
+  body.is-fullsite .glossary,
+  body.is-fullsite .footer-grid { grid-template-columns: 1fr; }
+  body.is-fullsite .stats { grid-template-columns: 1fr 1fr; }
+  body.is-fullsite .gallery { grid-template-columns: 1fr 1fr; }
+  body.is-fullsite .logo-row { grid-template-columns: repeat(3, 1fr); }
+  body.is-fullsite .section-head { flex-direction: column; align-items: flex-start; }
+  body.is-fullsite .util-right { display: none; }
+  body.is-fullsite .hero-actions { flex-wrap: wrap; }
+}
