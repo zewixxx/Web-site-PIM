@@ -1,0 +1,95 @@
+﻿PHOTOS A REVOIR — PIM INDUSTRIE
+Genere le 20/10/2026 09:48
+
+=== DOSSIER floues-ou-anciennes ===
+Images deja sur le site mais trop petites, floues, stock ou peu PIM.
+
+- industrie_principale.jpg (3771x2068) : Photo stock « SOLUTION », bras robotique — pas PIM
+- gite_du_passant_bed_and_breakfast_venise_bert_17.jpg (1600x1068) : Yacht stock (ex-page nautique) — pas une pièce PIM
+- fanuc_6_axis_welding_robots.jpg (1600x1068) : Robots Fanuc génériques — pas l’atelier PIM
+- cnc_press.jpg (1600x1068) : Visuel machine générique / basse def d’origine
+- cosmet.jpg (1600x1068) : Packshot Dior (marque tierce) basse qualité d’origine
+- maxresdefault.jpg (900x900) : Logo Siemens carré YouTube — pas une photo produit
+- pas_d_image_disponible.png (400x400) : Placeholder « pas d’image »
+- images.jpg (222x222) : Visuel RFID générique très petit
+- sans_titre.png (1950x809) : Visuel produit sans contexte / nom générique
+- fond_abstrait_pim.jpg (1680x798) : Fond abstrait répété — à remplacer par photos atelier
+- drops.jpg (1600x958) : Gouttes d’eau décoratives — pas une pièce PIM
+- tabip.jpg (1600x1208) : Tableau IP générique, pas une photo atelier
+- 3dprintinglighting_printed_electronics.jpg (900x900) : Visuel stock électronique imprimée
+- printed_electronics.jpg (900x900) : Visuel stock / illustration
+- copie_de_coffret_led_roederer_low.jpg (900x900) : Nom « low » + résolution d’origine faible
+- plv_boucheron3.jpg (900x900) : Très petite image d’origine (309px), floue après agrandissement
+- plv_boucheron_copie2.jpg (900x900) : Idem Boucheron, très petite d’origine
+- plv_presentoir.jpg (1600x1068) : 352px d’origine, floue après agrandissement
+- copie_de_p1010019.jpg (1600x1068) : 352px d’origine
+- dome_resine_01.jpg (900x900) : 300px d’origine
+- domes3.jpg (900x900) : 379px d’origine
+- fonddroite_membrane.jpg (1083x1600) : 350px d’origine
+- dsc_05033.jpg (900x900) : 400px d’origine (miniature site)
+- dsc_0506.jpg (900x900) : 400px d’origine
+- dsc_0515.jpg (900x900) : 400px d’origine
+- dsc_0520.jpg (900x900) : 400px d’origine
+- dsc_05343.jpg (900x900) : 400px d’origine
+- dsc_0549.jpg (900x900) : 400px d’origine
+- dsc_0560.jpg (900x900) : 400px d’origine
+- circuit_souples.jpg (900x900) : 400px d’origine
+- circuit_souples3.jpg (900x900) : 400px d’origine
+- 7s.jpg (900x900) : 400px d’origine
+- facade_plastique_habillage_boitier_geolocalisation3.jpg (900x900) : 400px d’origine
+- industrie_claviers_coupelles.jpg (1600x1065) : 640px, à reprendre plus nette
+- industire_aeronautique_defense.jpg (1600x1067) : 600px secteur, souvent trop générique
+- industrie_auromobile.jpg (1600x1067) : 600px secteur
+- industrie_industrie_medicale.jpg (1600x1067) : 600px secteur
+- thumb_marquage_metal.jpg (900x900) : Miniature / thumb
+- 180_ans_de_creations_guerlain2.jpg (221x1100) : 221px de large — très floue
+- _mg_4912.jpg (221x1100) : 221px de large — très floue
+- decoration_plv_texte_43.jpg (1600x1600) : 503px d’origine
+- decoration_plv_texte_5.jpg (1600x1456) : 557px d’origine
+- insert_plastique3.jpg (1600x1133) : 500px d’origine
+- impression_doming.jpg (1600x1059) : 600px d’origine
+- gravure_mecanique_de_plaques_metalliques_product_slide.jpg (1600x900) : 679px d’origine
+- plv_presentoir_goldkenn1.jpg (1600x1067) : 700px d’origine
+- plv_led_bouteille_marie2.jpg (1011x1600) : 400px d’origine
+- identification_boite_de_vitesse_copie2.jpg (1600x1600) : 750px, copie
+- bouteille_cognac.jpg (445x1600) : 278px de large d’origine — étiquette floue
+- carousel_ihm_couches.jpg (1280x720) : Image générée IA — à remplacer par vraie vue éclatée atelier si possible
+- carousel_parfum.jpg (1280x720) : Image générée IA — packshot à refaire avec pièces PIM
+- carousel_etiquette_bouteille.jpg (1280x720) : Image générée IA — à remplacer par étiquette métal PIM réelle
+
+=== PHOTOS MANQUANTES A PRENDRE A L'ATELIER ===
+(Priorite haute = carrousel accueil et pages metier)
+
+1. Vue eclatee / couches d'un vrai clavier a membrane PIM (comme ORION) — fond sombre atelier
+2. Clavier a membrane fini, pose a plat, net (plusieurs angles)
+3. Clavier a coupelles (gros plan sur le clic / dômes)
+4. Clavier retroeclaire allume dans le noir
+5. Face avant plastique sur boitier / machine
+6. Insert / plaque metallique (constructeur, identification)
+7. Circuit souple / limande (gros plan pistes argent)
+8. Etiquette metal sur bouteille (vins/spiritueux) — piece PIM reelle
+9. Insert metal / medaillon pour parfum ou cosmetique — piece PIM
+10. Support / presentoir plexiglas PLV (atelier ou produit fini)
+11. Signaletique lumineuse / coffret LED allume
+12. Etiquette 3D / doming resine (avant/apres ou en cours)
+13. Ligne de serigraphie (machine + operateur, sans visage si besoin)
+14. Laser de decoupe en action (avec EPI, sans danger)
+15. Robot pose coupelles / LED
+16. Poste de controle / test electrique
+17. Spectrometre / teintes Pantone (labo couleurs)
+18. Vue generale atelier 4500 m2 (large, propre, lumiere du jour)
+19. Piece medicale / interface (si possible sans client identifiable)
+20. Piece automobile / plaque (si possible)
+21. Piece aeronautique / defense (si autorise)
+22. Facade nautique / clavier etanche avec eau (demonstration IP65)
+23. Photo equipe / batiment Marckolsheim (facultatif, pour Qui sommes-nous)
+24. Logo / plaque entree PIM Industrie
+
+=== CONSEILS PRISE DE VUE ===
+- Photo horizontale 16:9 pour le carrousel (au moins 1920 px de large)
+- Eviter le flou : bon eclairage, appareil stable
+- Fond neutre ou atelier range
+- Pas de marques clients sans accord (Chanel, Dior, etc. sur packshots)
+- Preferer les pieces PIM reelles aux images stock
+
+Total images copiees dans floues-ou-anciennes : 52

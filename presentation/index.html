@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PIM Industrie — Plan de refonte</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+<style>
+  :root {
+    --pim: #970232;
+    --ink: #1c1c1c;
+    --muted: #5c5c5c;
+    --line: #e6e0e0;
+    --paper: #f6f3f3;
+    --white: #fff;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: #111; font-family: Roboto, "Segoe UI", sans-serif; color: var(--ink); }
+  button { font-family: inherit; }
+  .deck { height: 100%; display: grid; grid-template-rows: 1fr auto; }
+  .stage { display: grid; place-items: center; padding: 28px 24px 8px; }
+  .slide {
+    display: none;
+    width: min(1120px, 100%);
+    height: min(630px, calc(100vh - 92px));
+    background: var(--white);
+    padding: 48px 56px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .slide.on { display: flex; flex-direction: column; }
+  .slide.dark { background: var(--ink); color: white; }
+  .kicker { margin: 0 0 10px; color: var(--pim); letter-spacing: 0.14em; text-transform: uppercase; font-size: 13px; font-weight: 500; }
+  .dark .kicker { color: #e7b3c4; }
+  h1 { margin: 0; font-size: 46px; line-height: 1.08; font-weight: 500; letter-spacing: -0.03em; }
+  h2 { margin: 0 0 18px; font-size: 34px; line-height: 1.15; font-weight: 500; letter-spacing: -0.02em; }
+  .lead { font-size: 20px; line-height: 1.45; max-width: 760px; color: #444; }
+  .dark .lead { color: rgba(255,255,255,0.82); }
+  ul { margin: 8px 0 0; padding: 0; list-style: none; }
+  li { position: relative; padding: 7px 0 7px 18px; line-height: 1.4; font-size: 18px; }
+  li::before { content: ""; width: 7px; height: 7px; background: var(--pim); position: absolute; left: 0; top: 14px; }
+  .dark li::before { background: #e7b3c4; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 8px; }
+  .cols h3 { margin: 0 0 8px; font-size: 16px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--pim); font-weight: 500; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 22px; }
+  .stat { background: var(--paper); padding: 16px 14px; min-height: 108px; }
+  .stat b { display: block; font-size: 26px; font-weight: 500; color: var(--pim); letter-spacing: -0.03em; }
+  .stat span { display: block; margin-top: 6px; font-size: 14px; color: var(--muted); line-height: 1.35; }
+  .steps { display: grid; gap: 10px; margin-top: 6px; }
+  .step { display: grid; grid-template-columns: 52px 1fr; gap: 14px; align-items: start; }
+  .num { font-size: 28px; color: var(--pim); font-weight: 500; line-height: 1; }
+  .step strong { display: block; font-size: 18px; font-weight: 500; }
+  .step span { color: var(--muted); font-size: 15px; line-height: 1.4; }
+  .flow { display: grid; grid-template-columns: 1.1fr auto 1fr auto 1.1fr; gap: 10px; align-items: stretch; margin-top: 28px; }
+  .box { border: 1px solid var(--line); padding: 16px; }
+  .box strong { display: block; margin-bottom: 6px; }
+  .box p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.4; }
+  .arrow { align-self: center; color: var(--pim); font-size: 22px; }
+  .bar { height: 44px; display: flex; align-items: center; justify-content: space-between; padding: 0 18px; color: #ddd; font-size: 13px; }
+  .bar button { background: transparent; color: #ddd; border: 1px solid #444; padding: 6px 10px; cursor: pointer; }
+  .bar button:hover { border-color: #e7b3c4; color: white; }
+  .progress { position: absolute; left: 0; bottom: 0; height: 3px; background: var(--pim); }
+  .notes { display: none; position: absolute; left: 56px; right: 56px; bottom: 18px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 8px; }
+  body.show-notes .notes { display: block; }
+  .foot { margin-top: auto; font-size: 13px; color: #888; }
+  .dark .foot { color: rgba(255,255,255,0.45); }
+</style>
+</head>
+<body>
+<div class="deck">
+  <div class="stage" id="stage"></div>
+  <div class="bar">
+    <span id="count"></span>
+    <span>Flèches pour changer de slide · N notes · F plein écran</span>
+    <span>
+      <button type="button" id="prev">Précédent</button>
+      <button type="button" id="next">Suivant</button>
+    </span>
+  </div>
+</div>
+<script>
+const slides = [
+  {
+    dark: true,
+    html: `
+      <p class="kicker">PIM Industrie · Marckolsheim</p>
+      <h1>Refondre le site sans changer la marque.</h1>
+      <p class="lead">Mettre les qualités de PIM devant. Rendre le site trouvable. Garder le bordeaux, le sérieux et le logo. Construire le nouveau site en Next.js, React et TypeScript.</p>
+      <p class="foot">Plan d’action · SEO, charte, technique</p>`
+  },
+  {
+    html: `
+      <p class="kicker">Objectif</p>
+      <h2>Le visiteur doit avoir envie de parler de son besoin.</h2>
+      <ul>
+        <li>Le public est technique. Sa question : « J’ai une idée, avez-vous la capacité de la réaliser ? »</li>
+        <li>Trois arrivées : une idée, un besoin déjà décrit, un produit à industrialiser.</li>
+        <li>La promesse déjà vraie chez PIM : sur-mesure, réactivité, aucune solution identique.</li>
+        <li>L’accroche actuelle décrit l’entreprise. La nouvelle parle du bénéfice, et garde « 60 ans » comme preuve.</li>
+      </ul>`,
+    notes: "Ne pas ouvrir sur le catalogue de claviers. Ouvrir sur la capacité à prendre un problème."
+  },
+  {
+    html: `
+      <p class="kicker">Ce que PIM a déjà</p>
+      <h2>Les preuves existent. Le site les laisse au second plan.</h2>
+      <div class="stats">
+        <div class="stat"><b>1961</b><span>Création à Marckolsheim, du métal aux interfaces.</span></div>
+        <div class="stat"><b>ISO 9001</b><span>Traçabilité, fiabilité, contrôles.</span></div>
+        <div class="stat"><b>4 500 m²</b><span>Atelier intégré, de la teinte au contrôle.</span></div>
+        <div class="stat"><b>IP65</b><span>Claviers étanches à la poussière et aux jets d’eau.</span></div>
+        <div class="stat"><b>100 %</b><span>Contrôle dimensionnel, esthétique et électrique.</span></div>
+        <div class="stat"><b>1 M</b><span>Coupelles posées par an, 350 000 LED.</span></div>
+        <div class="stat"><b>± 0,3 mm</b><span>Lasers CO2 pour les découpes exigeantes.</span></div>
+        <div class="stat"><b>3 langues</b><span>FR, EN, DE déjà en ligne.</span></div>
+      </div>`,
+    notes: "Citer aussi l’atelier complet : spectrométrie Pantone, RAL, NCS, sérigraphie, robots CMS. Les clients sont réels : Bosch, Siemens, Honeywell, Hennessy, Chanel, Guerlain."
+  },
+  {
+    html: `
+      <p class="kicker">Constat</p>
+      <h2>Le site documente des produits. Il ne guide pas.</h2>
+      <div class="cols">
+        <div>
+          <h3>Parcours</h3>
+          <ul>
+            <li>L’entrée se fait seulement par la technologie.</li>
+            <li>L’accueil ne dirige ni par secteur, ni par besoin.</li>
+            <li>L’arborescence est profonde. Le contact est loin des fiches.</li>
+            <li>Le formulaire est long avant même d’avoir qualifié le sujet.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Référencement</h3>
+          <ul>
+            <li>Le plan XML du site répond en erreur.</li>
+            <li>Le glossaire est vide. Le plan HTML aussi.</li>
+            <li>La politique de données pointe vers une page 404.</li>
+            <li>Plusieurs pages process répètent le même texte.</li>
+          </ul>
+        </div>
+      </div>`,
+    notes: "Les logos sont là, sans récit. Les secteurs médicaux, aéronautiques ou luxe n’ont souvent qu’un visuel."
+  },
+  {
+    html: `
+      <p class="kicker">SEO · structure</p>
+      <h2>Une adresse, une intention de recherche.</h2>
+      <ul>
+        <li>Trois portes : par besoin, par secteur, par technologie. La technologie reste, pour les profils déjà avancés.</li>
+        <li>Pages secteur à texte propre : médical, aéronautique et défense, automobile, automatisation, machine-outils, nautique, électronique, transports, luxe.</li>
+        <li>Chaque fiche produit a un titre, une définition, les limites réelles, les secteurs liés et une FAQ.</li>
+        <li>Le glossaire reprend les mots du métier : limande, coupelle, IP65, doming, Lexan, sérigraphie.</li>
+        <li>Les anciennes adresses sont redirigées en 301. On ne jette pas l’historique Google.</li>
+      </ul>`
+  },
+  {
+    html: `
+      <p class="kicker">SEO · preuve et contenu</p>
+      <h2>Google et le visiteur doivent voir la même preuve.</h2>
+      <ul>
+        <li>ISO 9001, 4 500 m², IP65, contrôle à 100 % et volumes annuels remontent dans les pages, pas seulement dans l’historique.</li>
+        <li>Les références restent nommées. Les cas clients viennent ensuite, au format contexte, contrainte, solution, résultat. Sans chiffre inventé. Anonymes si le dossier l’exige.</li>
+        <li>Les questions utiles sont publiées en HTML. Une fenêtre de discussion, plus tard, ne sera pas indexée.</li>
+        <li>Photos d’atelier récentes, avec un texte alternatif qui décrit la pièce.</li>
+        <li>Fiche Google Business alignée sur les mêmes secteurs et les mêmes images.</li>
+      </ul>`
+  },
+  {
+    html: `
+      <p class="kicker">SEO · socle technique</p>
+      <h2>Ce que le code doit garantir sur chaque page.</h2>
+      <div class="cols">
+        <ul>
+          <li>Title, meta et H1 uniques, générés depuis le contenu.</li>
+          <li>Sitemap, robots et canonicals produits par le framework.</li>
+          <li>Hreflang FR, EN, DE seulement quand la traduction existe.</li>
+          <li>Données structurées : entreprise, produit, FAQ, fil d’Ariane.</li>
+        </ul>
+        <ul>
+          <li>Images redimensionnées, poids maîtrisé, Core Web Vitals suivis.</li>
+          <li>Page de protection des données réelle, à la place du lien cassé.</li>
+          <li>Search Console et mesure des demandes qualifiées, pas seulement des visites.</li>
+          <li>Maillage : secteur vers technologies, technologie vers process, partout vers le contact court.</li>
+        </ul>
+      </div>`
+  },
+  {
+    html: `
+      <p class="kicker">Charte</p>
+      <h2>On met à jour le système. On ne refait pas la marque.</h2>
+      <div class="cols">
+        <div>
+          <h3>On garde</h3>
+          <ul>
+            <li>Le logo PIM Industrie.</li>
+            <li>Le bordeaux #970232, le noir, le blanc.</li>
+            <li>Le téléphone visible dès le premier écran.</li>
+            <li>Le ton industriel, précis, sans effet de mode.</li>
+            <li>Les trois langues.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>On ajuste</h3>
+          <ul>
+            <li>Une échelle de titres claire, plus d’air, moins de gris uniforme.</li>
+            <li>Une navigation lisible : besoin, secteur, technologie.</li>
+            <li>Un bouton de contact présent sur chaque page.</li>
+            <li>Des photos actuelles de l’atelier et des pièces.</li>
+            <li>Industrie et décoration dans le même système, avec deux accroches.</li>
+          </ul>
+        </div>
+      </div>`,
+    notes: "La gamme web-to-print reste une autre marque. PIM peut la citer comme savoir-faire, sans mélanger les discours."
+  },
+  {
+    dark: true,
+    html: `
+      <p class="kicker">Choix technique</p>
+      <h2>WordPress n’est pas le bon outil pour ce site.</h2>
+      <ul>
+        <li>PIM n’est pas un magazine. Le risque, c’est que chaque page soit recomposée à la main et que le SEO se défasse page après page.</li>
+        <li>Les constructeurs de pages produisent un HTML lourd. On perd les Core Web Vitals qu’on vient chercher.</li>
+        <li>Le multilingue par extension désynchronise le français, l’anglais et l’allemand, et casse souvent le hreflang.</li>
+        <li>Le projet devient la maintenance des extensions, au lieu du contenu et des preuves.</li>
+        <li>Le texte finit en blocs HTML. Plus tard, une IA interne ne peut pas s’appuyer sur une fiche propre : produit, secteur, normes, limites.</li>
+      </ul>`,
+    notes: "WordPress convient à une équipe qui publie souvent. Ici le rythme est celui de l’offre industrielle. Le contenu se relit, se versionne, se déploie."
+  },
+  {
+    html: `
+      <p class="kicker">Socle</p>
+      <h2>Next.js, React et TypeScript tiennent la structure à notre place.</h2>
+      <div class="flow">
+        <div class="box"><strong>Contenu typé</strong><p>Produit, secteur, process, page. Champs obligatoires. Pas de fiche à moitié vide.</p></div>
+        <div class="arrow">→</div>
+        <div class="box"><strong>Modèles React</strong><p>Une fiche technologie sert à tous les claviers. Le HTML SEO est le même partout.</p></div>
+        <div class="arrow">→</div>
+        <div class="box"><strong>Même source, plus tard</strong><p>Le site, le sitemap et, le moment venu, l’assistant interne lisent ces objets.</p></div>
+      </div>
+      <ul>
+        <li>Pages rendues côté serveur : le titre, le texte et les données structurées sont dans la réponse, pas ajoutés après coup.</li>
+        <li>TypeScript empêche une redirection oubliée, un secteur sans texte, une page sans meta.</li>
+        <li>Le formulaire de contact est une action du site, validée, sans extension tierce.</li>
+      </ul>`
+  },
+  {
+    html: `
+      <p class="kicker">Ordre de travail</p>
+      <h2>On code le socle avant les cinquante pages.</h2>
+      <div class="steps">
+        <div class="step"><div class="num">01</div><div><strong>Cadrage, avant le code</strong><span>Arborescence, tableau ancienne URL vers nouvelle URL, modèle de contenu, tokens de charte.</span></div></div>
+        <div class="step"><div class="num">02</div><div><strong>Socle Next.js</strong><span>Projet TypeScript, layout, header, footer, types, metadata, sitemap, robots, JSON-LD.</span></div></div>
+        <div class="step"><div class="num">03</div><div><strong>Trois modèles</strong><span>Accueil, fiche technologie, page secteur. Puis contact et pages légales.</span></div></div>
+        <div class="step"><div class="num">04</div><div><strong>Contenu français et redirections</strong><span>Toutes les fiches, glossaire, références, Search Console.</span></div></div>
+        <div class="step"><div class="num">05</div><div><strong>Langues, cas clients, mesure</strong><span>EN et DE, récits validés, suivi des demandes qualifiées.</span></div></div>
+      </div>`
+  },
+  {
+    html: `
+      <p class="kicker">Premier développement</p>
+      <h2>Les premiers fichiers, dans cet ordre.</h2>
+      <div class="cols">
+        <div>
+          <h3>D’abord</h3>
+          <ul>
+            <li>App Router, TypeScript strict, lint.</li>
+            <li>Tokens : bordeaux, noir, blanc, échelle de texte, espacements.</li>
+            <li>Layout commun et navigation à trois portes.</li>
+            <li>Types Produit, Secteur, Process, Page.</li>
+            <li>Helper SEO : titre, description, canonical, fil d’Ariane, JSON-LD.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Tout de suite après</h3>
+          <ul>
+            <li>Page d’accueil branchée sur ces types.</li>
+            <li>Un seul modèle de fiche, alimenté par les claviers existants.</li>
+            <li>Un seul modèle de secteur.</li>
+            <li>Contact : champs actuels, plus le formulaire court.</li>
+            <li>Sitemap et redirections des URL déjà indexées.</li>
+          </ul>
+        </div>
+      </div>`,
+    notes: "On ne développe pas les pages une par une en dur. On développe le modèle, puis on verse le contenu."
+  },
+  {
+    html: `
+      <p class="kicker">Ensuite, pas maintenant</p>
+      <h2>Ce qui attend que le socle tienne.</h2>
+      <ul>
+        <li>Traduction anglaise et allemande, avec hreflang seulement sur les pages vraiment traduites.</li>
+        <li>Rédaction des pages secteur et des cas clients. Le code ne peut pas inventer ces textes.</li>
+        <li>Prises de vues atelier. La charte nouvelle a besoin d’images nouvelles, pas d’un autre logo.</li>
+        <li>Assistant conversationnel, plus tard, branché sur les mêmes fiches typées, avec un accès public et un accès interne séparés.</li>
+        <li>La marque d’impression sur mesure reste à part.</li>
+      </ul>`
+  },
+  {
+    dark: true,
+    html: `
+      <p class="kicker">Réussite</p>
+      <h2>Le site est bon quand un industriel trouve PIM et écrit.</h2>
+      <ul>
+        <li>Chaque gamme a une page unique, rapide, et reliée à un secteur.</li>
+        <li>Les preuves chiffrées sont visibles sans chercher l’historique.</li>
+        <li>Les anciennes URL arrivent au bon endroit.</li>
+        <li>La marque se reconnaît encore : logo, bordeaux, précision.</li>
+        <li>Le contenu est un objet TypeScript, prêt à être relu, traduit, puis servi à une IA interne.</li>
+      </ul>
+      <p class="foot">Prochaine étape : valider l’arborescence et les tokens, puis ouvrir le socle Next.js.</p>`
+  }
+];
+
+const stage = document.getElementById("stage");
+const count = document.getElementById("count");
+let index = 0;
+
+function render() {
+  const slide = slides[index];
+  stage.innerHTML = `<article class="slide on${slide.dark ? " dark" : ""}">${slide.html}<div class="notes">${slide.notes || ""}</div><div class="progress" style="width:${((index + 1) / slides.length) * 100}%"></div></article>`;
+  count.textContent = (index + 1) + " / " + slides.length;
+}
+
+function go(next) {
+  index = Math.max(0, Math.min(slides.length - 1, next));
+  render();
+}
+
+document.getElementById("prev").onclick = () => go(index - 1);
+document.getElementById("next").onclick = () => go(index + 1);
+document.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") { event.preventDefault(); go(index + 1); }
+  if (event.key === "ArrowLeft" || event.key === "PageUp") { event.preventDefault(); go(index - 1); }
+  if (event.key === "Home") go(0);
+  if (event.key === "End") go(slides.length - 1);
+  if (event.key === "n" || event.key === "N") document.body.classList.toggle("show-notes");
+  if (event.key === "f" || event.key === "F") {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
+  }
+});
+render();
+</script>
+</body>
+</html>
