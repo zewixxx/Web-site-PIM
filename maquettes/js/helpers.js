@@ -254,7 +254,7 @@ function specBlock(id, luxe) {
     "<p>" + (luxe
       ? "Finitions, quantités et délai avant lancement : décrivez-nous votre projet."
       : "Matériaux, options, séries et délai de prototype : décrivez-nous votre besoin.") + "</p>",
-    '<a class="cta" href="#contact">Demander un devis</a>',
+    '<a class="cta" href="#demande">Demander un devis</a>',
     '<button type="button" class="cta line">Télécharger la fiche PDF</button>',
     "</div></aside>"
   ].join("");

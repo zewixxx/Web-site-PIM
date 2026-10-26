@@ -17,6 +17,7 @@ function enterFullsite(id) {
   }
   if ((location.hash || "").slice(1) === id) route();
   else location.hash = id;
+  
 }
 
 function exitFullsite() {
@@ -46,13 +47,14 @@ function nav(activeGroup) {
     '<header class="nav">',
     '<a class="logo" href="#accueil"><img src="medias/images/logo_pim_industrie_aplat.png" alt="PIM Industrie"></a>',
     '<nav class="menu">',
-    tab("secteurs", "Interfaces industrielles", "Industrie"),
-    tab("decoration", "Luxe & PLV", "Décoration"),
+    tab("secteurs", "Domaines", "Domaines"),
+    tab("technologies", "Industrie", "Industrie"),
+    tab("decoration", "Luxe &amp; PLV", "Décoration"),
     tab("process", "Process", "Process"),
     tab("ressources", "Ressources", "Ressources"),
     tab("societe", "Société", "Société"),
     "</nav>",
-    '<a class="cta cta-devis" href="#contact">Demander un devis</a>',
+    '<a class="cta cta-devis" href="#contact">Nous contacter</a>',
     "</header>"
   ].join("");
 }
@@ -70,9 +72,9 @@ function footer() {
     "<p>Tél. : 03 88 58 62 00<br>Fax : 03 88 58 62 10<br>mail@pim-industrie.com</p>",
     '<a href="#acces">Accès</a></div>',
     col("Savoir-faire", [
-      ["Interfaces industrielles", "secteurs"],
-      ["La gamme", "technologies"],
-      ["Luxe & PLV", "decoration"],
+      ["Domaines", "secteurs"],
+      ["Industrie", "technologies"],
+      ["Luxe &amp; PLV", "decoration"],
       ["Process", "process"],
       ["Ressources", "ressources"]
     ]),
@@ -82,7 +84,7 @@ function footer() {
       ["Études de cas", "cas-clients"],
       ["Actualités", "actualites"],
       ["Glossaire", "glossaire"],
-      ["Demander un devis", "contact"]
+      ["Demander un devis", "demande"]
     ]),
     col("Informations", [
       ["Mentions légales", "mentions"],
@@ -103,7 +105,7 @@ function ctaBand() {
     '<section class="cta-band"><div class="wrap cta-band-inner">',
     "<div><h2>Un projet ? Demandez un devis</h2>",
     "<p>Étude, prototypage rapide et industrialisation efficace. Décrivez votre projet, nous vous répondons.</p></div>",
-    '<div class="cta-band-actions"><a class="cta ghost" href="#contact">Demander un devis</a>',
+    '<div class="cta-band-actions"><a class="cta ghost" href="#demande">Demander un devis</a>',
     '<p>ou par téléphone : <a href="tel:+33388586200">03 88 58 62 00</a></p></div>',
     "</div></section>"
   ].join("");
@@ -160,6 +162,7 @@ const PAGE_URL = {
   "cas-clients": "https://www.pim-industrie.com/cas-clients",
   actualites: "https://www.pim-industrie.com/actualites",
   contact: "https://www.pim-industrie.com/contact",
+  demande: "https://www.pim-industrie.com/demande-de-devis",
   acces: "https://www.pim-industrie.com/acces",
   glossaire: "https://www.pim-industrie.com/glossaire",
   mentions: "https://www.pim-industrie.com/mentions-legales",
@@ -556,6 +559,7 @@ function initHeroCarousels() {
     if (index < 0) index = 0;
     let timer = null;
     const delay = 5500;
+    const alive = () => document.body.contains(root);
     const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     function show(nextIndex) {
@@ -588,7 +592,10 @@ function initHeroCarousels() {
     function start() {
       stop();
       if (reduceMotion) return;
-      timer = setInterval(() => show(index + 1), delay);
+      timer = setInterval(() => {
+        if (!alive()) { stop(); return; }
+        show(index + 1);
+      }, delay);
     }
 
     if (prevBtn) prevBtn.addEventListener("click", () => { show(index - 1); start(); });

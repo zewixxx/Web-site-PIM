@@ -86,20 +86,18 @@ const secteursIndustrie = secteurs.filter((item) => item.id !== "secteur-luxe");
 // Page « Domaines » : côté interfaces industrielles de l'arbre
 addPage({
   id: "secteurs",
-  group: "Industrie",
-  name: "Domaines",
+  group: "Domaines",
+  name: "Tous les domaines",
   html: [
     '<div class="wrap page page-head">',
-    crumb([["Accueil", "accueil"], ["Interfaces industrielles"]]),
-    '<p class="kicker">Interfaces industrielles</p>',
-    "<h1>Choisissez votre domaine</h1>",
-    '<p class="lead">Huit domaines. Ouvrez le vôtre : les solutions proposées, claviers, faces avant ou plaques métal, sont indiquées sur la page.</p>',
+    crumb([["Accueil", "accueil"], ["Domaines"]]),
+    '<p class="kicker">Domaines</p>',
+    "<h1>Tous nos domaines d’application</h1>",
+    '<p class="lead">Choisissez votre domaine pour voir les solutions adaptées.</p>',
     '<div class="grid-4" style="margin-top:24px">',
-    secteursIndustrie.map((item) => {
-      return '<a class="card" href="#' + item.id + '"><img class="card-visual" src="medias/images/' + item.image + '" alt=""><h3>' + item.name + "</h3><p>" + item.short + '</p><p class="card-facts">' + item.facts.join(" · ") + "</p></a>";
+    secteurs.map((item) => {
+      return '<a class="card" href="#' + item.id + '"><img class="card-visual" src="medias/images/' + item.image + '" alt=""><h3>' + item.name + "</h3><p>" + item.short + "</p></a>";
     }).join(""),
-    "</div>",
-    '<p class="note" style="margin-top:28px">Vous connaissez déjà le produit ? <a href="#technologies">Voir la gamme : claviers, circuits, faces avant</a>.</p>',
     "</div>"
   ].join("")
 });
@@ -108,12 +106,12 @@ addPage({
 secteursIndustrie.forEach((item) => {
   addPage({
     id: item.id,
-    group: "Industrie",
+    group: "Domaines",
     name: item.name,
     html: [
       '<div class="wrap page">',
-      crumb([["Accueil", "accueil"], ["Interfaces industrielles", "secteurs"], [item.name]]),
-      '<p class="kicker">Interfaces industrielles · Domaine</p>',
+      crumb([["Accueil", "accueil"], ["Domaines", "secteurs"], [item.name]]),
+      '<p class="kicker">Domaine</p>',
       "<h1>" + item.name + "</h1>",
       '<p class="lead">' + item.intro + "</p>",
       '<ul class="facts">' + item.facts.map((fact) => "<li>" + fact + "</li>").join("") + "</ul>",
@@ -153,7 +151,7 @@ addPage({
     '<div class="spec-row"><dt>Séries</dt><dd>De l’unité à la grande série</dd></div>',
     '<div class="spec-row"><dt>Quantité minimale</dt><dd>' + TBC + "</dd></div>",
     '<div class="spec-row"><dt>Délai avant lancement</dt><dd>' + TBC + "</dd></div>",
-    '</dl></div><div class="specs-side"><h3>Un lancement en préparation ?</h3><p>Finitions, quantités, délai : décrivez-nous votre projet.</p><a class="cta" href="#contact">Demander un devis</a></div></aside>',
+    '</dl></div><div class="specs-side"><h3>Un lancement en préparation ?</h3><p>Finitions, quantités, délai : décrivez-nous votre projet.</p><a class="cta" href="#demande">Demander un devis</a></div></aside>',
     "<h2>Toute l’offre luxe &amp; PLV</h2>",
     chips(secteurs[secteurs.length - 1].links),
     reassurance(true),

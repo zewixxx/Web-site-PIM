@@ -38,7 +38,7 @@ addPage({
     '<li><h3>Quelle série, et quel prototype ?</h3><p>De la petite à la grande série, avec prototypage rapide. Quantité minimale : ' + TBC + " Délai de prototype : " + TBC + "</p></li>",
     "</ol>",
     keyboardTable(),
-    '<div class="callout">Pas sûr de votre choix ? Décrivez votre besoin : nos équipes accompagnent vos choix pour définir la solution la plus adaptée. <a href="#contact"><b>Demander un devis</b></a></div>',
+    '<div class="callout">Pas sûr de votre choix ? Décrivez votre besoin : nos équipes accompagnent vos choix pour définir la solution la plus adaptée. <a href="#demande"><b>Demander un devis</b></a></div>',
     reassurance(false),
     "</div>"
   ].join("")

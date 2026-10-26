@@ -67,7 +67,7 @@ button, input, select, textarea { font-family: inherit; }
   padding: 10px 0;
   z-index: 5;
 }
-.drop:hover .drop-panel { display: block; }
+.drop-panel, .drop:hover .drop-panel { display: none; }
 .drop-panel a { display: block; padding: 8px 16px; font-size: 14px; text-transform: none; letter-spacing: 0; font-weight: 400; }
 .drop-panel a:hover { background: var(--paper); color: var(--pim); }
 .cta {
