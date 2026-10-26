@@ -45,16 +45,19 @@
     <button type="button" id="show-alt">Maquette 2.0</button>
   </header>
   <div class="view">
-    <iframe id="frame" title="Maquette PIM Industrie" src="maquettes/index.html#accueil"></iframe>
+    <iframe id="frame" title="Maquette PIM Industrie" src="maquettes/index.html?v=41#accueil"></iframe>
   </div>
   <script>
     var frame = document.getElementById("frame");
     var baseBtn = document.getElementById("show-base");
     var altBtn = document.getElementById("show-alt");
+    var bust = "41";
     function show(which) {
       var alt = which === "alt";
       frame.title = alt ? "Maquette 2.0" : "Maquette";
-      frame.src = alt ? "maquette%202.0/index.html#accueil" : "maquettes/index.html#accueil";
+      frame.src = alt
+        ? ("maquette%202.0/index.html?v=" + bust + "#accueil")
+        : ("maquettes/index.html?v=" + bust + "#accueil");
       baseBtn.className = alt ? "" : "on";
       altBtn.className = alt ? "on" : "";
     }
