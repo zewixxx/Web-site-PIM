@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="780" viewBox="0 0 1280 780" role="img" aria-labelledby="title desc">
+  <title id="title">Structure site PIM — maquette v2</title>
+  <desc id="desc">Arbre du site : Accueil, Interfaces industrielles, Luxe &amp; PLV, Process, Ressources, Société, Contact.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a1216"/>
+      <stop offset="55%" stop-color="#241018"/>
+      <stop offset="100%" stop-color="#121820"/>
+    </linearGradient>
+    <style>
+      .t { font-family: Roboto, Segoe UI, sans-serif; fill: #fff; }
+      .muted { fill: #c9b8bf; font-size: 13px; }
+      .h { font-size: 22px; font-weight: 700; }
+      .label { font-size: 14px; font-weight: 700; }
+      .small { font-size: 12px; fill: #d8c8cf; }
+      .tiny { font-size: 11px; fill: #b9a8af; }
+      .box { fill: #2a1620; stroke: #970232; stroke-width: 1.5; }
+      .box2 { fill: #1c2430; stroke: #4a657a; stroke-width: 1.5; }
+      .box3 { fill: #16201c; stroke: #3d6b55; stroke-width: 1.5; }
+      .line { stroke: #8a6a75; stroke-width: 1.5; fill: none; }
+    </style>
+  </defs>
+  <rect width="1280" height="780" fill="url(#bg)"/>
+  <text class="t h" x="48" y="46">PIM Industrie — arbre du site (maquette v2)</text>
+  <text class="t muted" x="48" y="70">Menu = arbre · Domaines sous Interfaces industrielles · plus de branche « Par besoin »</text>
+
+  <rect class="box" x="500" y="96" width="280" height="52" rx="8"/>
+  <text class="t label" x="640" y="128" text-anchor="middle">Accueil</text>
+
+  <path class="line" d="M640 148 V178 H280 V200"/>
+  <path class="line" d="M640 148 V178 H960 V200"/>
+
+  <rect class="box" x="130" y="200" width="300" height="52" rx="8"/>
+  <text class="t label" x="280" y="224" text-anchor="middle">Interfaces industrielles</text>
+  <text class="t tiny" x="280" y="241" text-anchor="middle">Menu top</text>
+
+  <rect class="box" x="810" y="200" width="300" height="52" rx="8"/>
+  <text class="t label" x="960" y="224" text-anchor="middle">Luxe &amp; PLV</text>
+  <text class="t tiny" x="960" y="241" text-anchor="middle">Menu top</text>
+
+  <path class="line" d="M280 252 V280 H160 V300"/>
+  <path class="line" d="M280 252 V280 H400 V300"/>
+
+  <rect class="box2" x="40" y="300" width="240" height="78" rx="8"/>
+  <text class="t label" x="160" y="328" text-anchor="middle">Domaines</text>
+  <text class="t tiny" x="160" y="348" text-anchor="middle">Médical · Aéro · Auto · Machines</text>
+  <text class="t tiny" x="160" y="364" text-anchor="middle">Nautique · Élec. · Transports…</text>
+
+  <rect class="box2" x="300" y="300" width="240" height="78" rx="8"/>
+  <text class="t label" x="420" y="328" text-anchor="middle">Gamme</text>
+  <text class="t tiny" x="420" y="348" text-anchor="middle">Claviers · Circuits · Faces avant</text>
+  <text class="t tiny" x="420" y="364" text-anchor="middle">Façades métal</text>
+
+  <path class="line" d="M960 252 V300"/>
+  <rect class="box2" x="810" y="300" width="300" height="78" rx="8"/>
+  <text class="t label" x="960" y="328" text-anchor="middle">Étiquettes · PLV · Présentoirs</text>
+  <text class="t tiny" x="960" y="348" text-anchor="middle">Vins · Cosmétiques · Lumineux</text>
+  <text class="t tiny" x="960" y="364" text-anchor="middle">Signalétique · plexiglas</text>
+
+  <path class="line" d="M640 148 V430"/>
+  <text class="t muted" x="640" y="420" text-anchor="middle">Commun</text>
+
+  <rect class="box3" x="120" y="440" width="200" height="52" rx="8"/>
+  <text class="t label" x="220" y="472" text-anchor="middle">Process</text>
+
+  <rect class="box3" x="360" y="440" width="200" height="52" rx="8"/>
+  <text class="t label" x="460" y="472" text-anchor="middle">Ressources</text>
+
+  <rect class="box3" x="600" y="440" width="200" height="52" rx="8"/>
+  <text class="t label" x="700" y="472" text-anchor="middle">Société</text>
+
+  <rect class="box3" x="840" y="440" width="200" height="52" rx="8"/>
+  <text class="t label" x="940" y="472" text-anchor="middle">Contact / Devis</text>
+
+  <rect x="48" y="530" width="1184" height="210" rx="12" fill="#120c10" stroke="#3a2430"/>
+  <text class="t label" x="72" y="566">Arbre résumé</text>
+  <text class="t muted" x="72" y="596">Accueil ? Interfaces industrielles (Domaines + Gamme) · Luxe &amp; PLV (Étiquettes, PLV, signalétique, présentoir)</text>
+  <text class="t muted" x="72" y="622">Process · Ressources (guide, cas, actus, glossaire) · Société · Contact</text>
+  <text class="t muted" x="72" y="656">Médical et aéro n’existent qu’une fois, sous Domaines (plus de branche « Par besoin »).</text>
+  <text class="t muted" x="72" y="682">Le menu top et cet arbre disent la même chose.</text>
+  <text class="t muted" x="72" y="708">Fichier aussi dans Compte rendu/30-10/</text>
+</svg>

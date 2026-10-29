@@ -33,6 +33,7 @@
       background: #2a2a2a;
       color: #fff;
     }
+    header button.alt { background: #243036; }
     header button.on { background: #970232; }
     .view { flex: 1; min-height: 0; background: #fff; }
     .view iframe { width: 100%; height: 100%; border: 0; display: block; background: #fff; }
@@ -41,28 +42,36 @@
 <body>
   <header>
     <strong>PIM Industrie</strong>
-    <button type="button" id="show-base" class="on">Maquette</button>
-    <button type="button" id="show-alt">Maquette 2.0</button>
+    <button type="button" id="show-v1">Maquette v1</button>
+    <button type="button" id="show-v2" class="on">Maquette v2</button>
+    <button type="button" id="show-compare" class="alt">Comparaison design</button>
   </header>
   <div class="view">
-    <iframe id="frame" title="Maquette PIM Industrie" src="maquettes/index.html?v=41#accueil"></iframe>
+    <iframe id="frame" title="Maquette v2" src="maquette%20v2/index.html?v=55#accueil"></iframe>
   </div>
   <script>
     var frame = document.getElementById("frame");
-    var baseBtn = document.getElementById("show-base");
-    var altBtn = document.getElementById("show-alt");
-    var bust = "41";
+    var buttons = {
+      v1: document.getElementById("show-v1"),
+      v2: document.getElementById("show-v2"),
+      compare: document.getElementById("show-compare")
+    };
+    var views = {
+      v1: { title: "Maquette v1", src: "maquette%20v1/index.html?v=55#accueil" },
+      v2: { title: "Maquette v2", src: "maquette%20v2/index.html?v=55#accueil" },
+      compare: { title: "Comparaison design", src: "maquette%20comparaison/index.html?v=55#accueil" }
+    };
     function show(which) {
-      var alt = which === "alt";
-      frame.title = alt ? "Maquette 2.0" : "Maquette";
-      frame.src = alt
-        ? ("maquette%202.0/index.html?v=" + bust + "#accueil")
-        : ("maquettes/index.html?v=" + bust + "#accueil");
-      baseBtn.className = alt ? "" : "on";
-      altBtn.className = alt ? "on" : "";
+      frame.title = views[which].title;
+      frame.src = views[which].src;
+      Object.keys(buttons).forEach(function (key) {
+        var extra = key === "compare" ? " alt" : "";
+        buttons[key].className = (key === which ? "on" : "") + (key === "compare" && key !== which ? extra : "");
+      });
     }
-    baseBtn.addEventListener("click", function () { show("base"); });
-    altBtn.addEventListener("click", function () { show("alt"); });
+    buttons.v1.addEventListener("click", function () { show("v1"); });
+    buttons.v2.addEventListener("click", function () { show("v2"); });
+    buttons.compare.addEventListener("click", function () { show("compare"); });
   </script>
 </body>
 </html>

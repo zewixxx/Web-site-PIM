@@ -1,0 +1,20 @@
+{
+  "note": "1 requête principale = 1 page cible. Positions estimées (recherche manuelle oct. 2026). Site actuel souvent en 403 : pages encore indexées.",
+  "mots_cles": [
+    {"requete": "clavier à membrane sur mesure", "page": "clavier-membrane", "url_cible": "/industrie/clavier-a-membrane", "position_actuelle": "Hors top 5", "priorite": "haute"},
+    {"requete": "clavier à membrane industriel", "page": "clavier-membrane", "url_cible": "/industrie/clavier-a-membrane", "position_actuelle": "~3e", "priorite": "haute"},
+    {"requete": "clavier à coupelles", "page": "clavier-coupelles", "url_cible": "/industrie/clavier-a-membrane/clavier-coupelles", "position_actuelle": "~1er", "priorite": "maintenir"},
+    {"requete": "clavier étanche IP65", "page": "clavier-etanche", "url_cible": "/industrie/clavier-etanche", "position_actuelle": "Absent du top", "priorite": "haute"},
+    {"requete": "face avant plastique sérigraphiée", "page": "face-avant-plastique", "url_cible": "/industrie/face-avant-plastique", "position_actuelle": "Absent du top", "priorite": "haute"},
+    {"requete": "plaque constructeur métal", "page": "facade-metallique", "url_cible": "/industrie/facade-et-insert-metallique", "position_actuelle": "Absent du top", "priorite": "moyenne"},
+    {"requete": "étiquette métal personnalisée", "page": "etiquettes", "url_cible": "/decoration/etiquette-personnalisable", "position_actuelle": "Absent du top", "priorite": "haute"},
+    {"requete": "étiquette métal cognac champagne", "page": "etiquette-vins", "url_cible": "/decoration/etiquette-personnalisable/etiquette-vins-spiritueux", "position_actuelle": "~2e", "priorite": "maintenir"},
+    {"requete": "étiquette vin métal", "page": "etiquette-vins", "url_cible": "/decoration/etiquette-personnalisable/etiquette-vins-spiritueux", "position_actuelle": "À mesurer", "priorite": "haute"},
+    {"requete": "PLV lumineuse", "page": "signaletique", "url_cible": "/decoration/signaletique-lumineuse", "position_actuelle": "Absent du top", "priorite": "moyenne"},
+    {"requete": "présentoir plexiglas sur mesure", "page": "presentoir", "url_cible": "/decoration/presentoir-plexiglas", "position_actuelle": "Absent du top", "priorite": "moyenne"},
+    {"requete": "clavier pour appareil médical", "page": "secteur-medical", "url_cible": "/secteurs/industrie-medicale", "position_actuelle": "À mesurer", "priorite": "moyenne"},
+    {"requete": "choisir clavier à membrane", "page": "guide-clavier-membrane", "url_cible": "/guides/choisir-son-clavier-a-membrane", "position_actuelle": "Nouvelle page", "priorite": "haute"},
+    {"requete": "circuit imprimé souple", "page": "circuit-flexible", "url_cible": "/industrie/circuit-flexible", "position_actuelle": "À mesurer", "priorite": "moyenne"},
+    {"requete": "insert métal parfum", "page": "etiquette-cosmetiques", "url_cible": "/decoration/etiquette-personnalisable/etiquette-cosmetiques", "position_actuelle": "À mesurer", "priorite": "moyenne"}
+  ]
+}
