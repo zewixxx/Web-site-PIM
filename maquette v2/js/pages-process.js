@@ -1,25 +1,3 @@
-addPage({
-  id: "process",
-  group: "Process",
-  name: "Nos process",
-  html: [
-    '<div class="wrap page">',
-    crumb([["Accueil", "accueil"], ["Process"]]),
-    '<p class="kicker">Atelier</p>',
-    "<h1>Nos processus de fabrication</h1>",
-    '<p class="lead">Du matériel performant pour une qualité sans failles. Clicherie, sérigraphie, découpe, déformation, gravure, laminage, report de composants, test électrique.</p>',
-    photos(["fond_abstrait_pim.jpg"]),
-    '<div class="grid-3">',
-    '<a class="card" href="#process-impression"><h3>Impression</h3><p>Teintes par spectrométrie, cadres, dégraissage, vernis, sérigraphie.</p></a>',
-    '<a class="card" href="#process-decoupe"><h3>Découpe et déformation</h3><p>Lasers, presses, gaufrage, thermoformage, plieuse.</p></a>',
-    '<a class="card" href="#process-gravure"><h3>Gravure</h3><p>Marquage mécanique définitif, puis mise en couleur.</p></a>',
-    '<a class="card" href="#process-laminage"><h3>Laminage et assemblage</h3><p>Jusqu’à trois matières complexées, reports manuels.</p></a>',
-    '<a class="card" href="#process-composants"><h3>Reports de composants</h3><p>Robots CMS, coupelles et robot mixte.</p></a>',
-    '<a class="card" href="#process-controle"><h3>Test et contrôle</h3><p>Chaque pièce expédiée est testée, puis contrôlée à 100 %.</p></a>',
-    "</div></div>"
-  ].join("")
-});
-
 function processPage(id, name, title, blocks) {
   addPage({
     id: id,
@@ -27,7 +5,7 @@ function processPage(id, name, title, blocks) {
     name: name,
     html: [
       '<div class="wrap page">',
-      crumb([["Accueil", "accueil"], ["Process", "process"], [name]]),
+      crumb([["Accueil", "accueil"], ["Nos prestations", "process"], [name]]),
       '<p class="kicker">Process</p>',
       "<h1>" + title + "</h1>",
       photos(IMAGES[id]),

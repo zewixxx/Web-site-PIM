@@ -8,7 +8,7 @@ const SEO_BRAND = " | PIM Industrie";
 const SEO = {
   accueil: ["fabricant clavier à membrane et PLV luxe", "Claviers à membrane et PLV luxe sur mesure", "Claviers à membrane, circuits souples, étiquettes métal et PLV sur mesure. Atelier de 4 500 m² à Marckolsheim, certifié ISO 9001, depuis 1961."],
   secteurs: ["domaines industriels", "Domaines : médical, aéronautique, automobile", "Huit domaines : médical, aéronautique, automobile, automatisation, machines, nautique, électronique, transports. Claviers, faces avant, plaques métal."],
-  ressources: ["ressources", "Guides, études de cas et actualités", "Choisir un clavier à membrane, lire une étude de cas ou suivre l’actualité de l’atelier PIM Industrie."],
+  ressources: ["ressources", "Guides et glossaire | PIM Industrie", "Choisir un clavier à membrane et comprendre les mots du métier : les ressources de PIM Industrie, à Marckolsheim."],
   "secteur-medical": ["clavier pour appareil médical", "Clavier étanche pour appareil médical", "Clavier à membrane étanche IP65 pour appareils médicaux, fabriqué sur mesure en Alsace. Chaque pièce est testée avant expédition."],
   "secteur-aeronautique": ["clavier aéronautique défense", "Clavier et plaque métal pour l’aéronautique", "Claviers rétroéclairés ou électroluminescents, façades et inserts métal pour l’aéronautique et la défense. Contrôle de 100 % des pièces."],
   "secteur-automobile": ["plaque d’identification automobile", "Plaques d’identification et faces avant auto", "Plaques métal d’identification, faces avant plastique, circuits souples et claviers sur mesure pour l’automobile. Fabrication en Alsace."],

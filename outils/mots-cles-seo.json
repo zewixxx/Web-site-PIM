@@ -1,5 +1,5 @@
 {
-  "note": "1 requête principale = 1 page cible. Positions estimées (recherche manuelle oct. 2026). Site actuel souvent en 403 : pages encore indexées.",
+  "note": "Liste des recherches Google sur lesquelles PIM veut se positionner grâce au nouveau site. 1 requête principale = 1 page cible. Positions estimées (recherche manuelle oct. 2026). Site actuel souvent en 403 : pages encore indexées.",
   "mots_cles": [
     {"requete": "clavier à membrane sur mesure", "page": "clavier-membrane", "url_cible": "/industrie/clavier-a-membrane", "position_actuelle": "Hors top 5", "priorite": "haute"},
     {"requete": "clavier à membrane industriel", "page": "clavier-membrane", "url_cible": "/industrie/clavier-a-membrane", "position_actuelle": "~3e", "priorite": "haute"},

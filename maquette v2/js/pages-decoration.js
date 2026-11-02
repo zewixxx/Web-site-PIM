@@ -6,51 +6,30 @@ addPage({
     '<div class="wrap page">',
     crumb([["Accueil", "accueil"], ["Luxe & PLV"]]),
     '<p class="kicker">Luxe &amp; PLV</p>',
-    "<h1>Luxe &amp; PLV</h1>",
-    '<p class="lead">Étiquettes métal, PLV et présentoirs pour vins, spiritueux, parfums et cosmétiques. Qualité et finition depuis plus de 60 ans.</p>',
-    photos(["visuel_pim_parfum_web.jpg", "copie_de_coffret_led_roederer_low.jpg", "plv_boucheron_copie2.jpg", "plv_presentoir.jpg", "cosmet.jpg", "copie_de_p1010019.jpg"]),
-    "<h2>Par univers</h2>",
-    '<div class="grid-3">',
-    '<a class="card" href="#etiquette-vins"><img class="card-visual" src="medias/images/etiquette_metal_courvoisier.jpg" alt=""><h3>Vins et spiritueux</h3><p>Étiquettes et inserts métal pour cognac, champagne, spiritueux.</p></a>',
-    '<a class="card" href="#etiquette-cosmetiques"><img class="card-visual" src="medias/images/bg_guerlain_tonkaimperiale.jpg" alt=""><h3>Parfums et cosmétiques</h3><p>Inserts métal et dômage résine pour flacons et coffrets.</p></a>',
-    '<a class="card" href="#plv"><img class="card-visual" src="medias/images/plv_presentoir_goldkenn1.jpg" alt=""><h3>Points de vente</h3><p>PLV, signalétique lumineuse et présentoirs plexiglas.</p></a>',
+    "<h1>La pièce qui porte la marque.</h1>",
+    '<p class="lead">Derrière l’étiquette, le même atelier que pour la machine. Marckolsheim, depuis 1961.</p>',
+    '<div class="text-photo">',
+    "<div>",
+    "<h2>L’histoire derrière.</h2>",
+    "<p>PIM naît en 1961 dans la découpe et la déformation du métal. La sérigraphie arrive en 1972. En 2010, l’encre miroir donne aux étiquettes le reflet que demandent les maisons du vin et du parfum.</p>",
+    "<p>Aujourd’hui, les 4 500 m² tiennent les deux : le clavier qui fait parler la machine, et la pièce qui habille la bouteille, le flacon ou le lieu de vente. Étiquette métal, dômage, PLV, présentoir. Chaque pièce est contrôlée avant de partir.</p>",
     "</div>",
-    '<h2 style="margin-top:36px">Par produit</h2>',
-    '<div class="grid-2">',
-    '<a class="card" href="#etiquettes"><h3>Étiquette personnalisable</h3><p>Étiquettes métal, plastique ou dômées, pour embellir un produit.</p></a>',
-    '<a class="card" href="#plv"><h3>Publicité sur le lieu de vente</h3><p>Présentoirs, chevalets et fourreaux.</p></a>',
-    '<a class="card" href="#signaletique"><h3>Signalétique lumineuse</h3><p>La lumière intégrée au coffret ou au présentoir.</p></a>',
-    '<a class="card" href="#presentoir"><h3>Présentoir en plexiglas</h3><p>Découpe, gravure et sérigraphie sur plexiglas.</p></a>',
+    '<img src="medias/images/etiquette_metal_courvoisier.jpg" alt="Étiquette métal fabriquée pour une maison de spiritueux">',
     "</div>",
-    reassurance(true),
-    "</div>"
-  ].join("")
-});
-
-addPage({
-  id: "etiquettes",
-  group: "Décoration",
-  name: "Étiquettes",
-  html: [
-    '<div class="wrap page">',
-    crumb([["Accueil", "accueil"], ["Luxe & PLV", "decoration"], ["Étiquettes"]]),
-    '<p class="kicker">Étiquette personnalisable</p>',
-    "<h1>Des étiquettes sur mesure</h1>",
-    '<p class="lead">Métal, plastique ou résine : une décoration sur mesure pour embellir un produit. Les artisans du beau depuis plus de 60 ans.</p>',
-    photos(["decoration_plv_texte_43.jpg", "domes3.jpg", "medaillon_napoleon3.jpg", "thumb_marquage_metal.jpg", "etiquette_metal_courvoisier.jpg", "dome_resine_01.jpg"]),
-    '<div class="grid-2">',
-    '<a class="card" href="#etiquette-vins"><h3>Vins et spiritueux</h3><p>Insert décoratif en métal sur mesure.</p></a>',
-    '<a class="card" href="#etiquette-cosmetiques"><h3>Cosmétiques et parfums</h3><p>Décoration en métal pour valoriser un produit.</p></a>',
-    '<a class="card" href="#etiquette-plastique"><h3>Étiquette plastique</h3><p>Parachèvement plastique d’un support ou d’un produit.</p></a>',
-    '<a class="card" href="#etiquette-3d"><h3>Étiquette 3D</h3><p>Étiquettes avec dômage en résine.</p></a>',
-    "</div>",
-    reassurance(true),
+    "<h2>Le parcours.</h2>",
+    '<ol class="tl2">',
+    "<li><b>1961</b><span>Création à Marckolsheim : découpe et déformation du métal, sous le nom Plaquettes Industrielles.</span></li>",
+    "<li><b>1972</b><span>Début de la sérigraphie sur polyester. Le décor peut enfin se poser sur un film, puis sur le métal.</span></li>",
+    "<li><b>2010</b><span>Arrivée de l’encre miroir. Les étiquettes prennent le reflet des flacons et des coffrets.</span></li>",
+    "<li><b>Aujourd’hui</b><span>Étiquettes, dômage, PLV et présentoirs sortent du même atelier que les interfaces industrielles. ISO 9001, 100 % des pièces contrôlées.</span></li>",
+    "</ol>",
+    '<p class="lux-cta"><a class="btn" href="references.html#luxe">Voir les produits</a></p>',
     "</div>"
   ].join("")
 });
 
 function labelCrumb(name) {
-  return [["Accueil", "accueil"], ["Luxe & PLV", "decoration"], ["Étiquettes", "etiquettes"], [name]];
+  return [["Accueil", "accueil"], ["Luxe & PLV", "decoration"], [name]];
 }
 
 productPage({
@@ -115,7 +94,7 @@ productPage({
   crumb: [["Accueil", "accueil"], ["Luxe & PLV", "decoration"], ["PLV"]],
   what: "<p>Présentoirs, chevalets, fourreaux, éléments de packaging ou de communication. Marquage par gravure chimique, mécanique ou laser, et par sérigraphie, sur aluminium, plexiglas ou plastique, en encres classiques, mates ou miroir.</p>",
   why: "<p>Ajouter du prestige à l’image de marque, en s’adaptant au produit comme au lieu de présentation.</p>",
-  related: [["Signalétique lumineuse", "signaletique"], ["Présentoir plexiglas", "presentoir"], ["Étiquettes", "etiquettes"]]
+  related: [["Signalétique lumineuse", "signaletique"], ["Présentoir plexiglas", "presentoir"], ["Vins et spiritueux", "etiquette-vins"]]
 });
 
 productPage({

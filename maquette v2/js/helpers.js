@@ -82,27 +82,31 @@ function logos(clients) {
 
 const IMAGES = {
   "clavier-membrane": ["fonddroite_membrane.jpg", "dsc_05033.jpg", "dsc_0506.jpg", "dsc_05343.jpg", "dsc_0560.jpg", "industrie_claviers_bulle1.jpg"],
-  "clavier-retro": ["dsc_0515.jpg"],
-  "clavier-coupelles": ["industrie_claviers_coupelles.jpg", "domes.jpg"],
-  "clavier-gaufre": ["industrie_claviers_domage.jpg"],
-  "clavier-electro": ["mg_48542.jpg"],
-  "clavier-7s": ["7s.jpg"],
-  "clavier-capacitif": ["dsc_0520.jpg"],
-  "clavier-plat": ["clavier_plat_relegendable.jpg"],
-  "clavier-elastomere": ["dsc_0534.jpg"],
-  "clavier-etanche": ["drops.jpg", "tabip.jpg"],
-  "circuit-flexible": ["circuit_souples.jpg", "circuit_souples3.jpg", "printed_electronics.jpg", "3dprintinglighting_printed_electronics.jpg", "_MG_3984.jpg", "images.jpg"],
-  "face-avant-plastique": ["dsc_0628.jpg", "dsc_0633.jpg", "facade_plastique_habillage_boitier_geolocalisation3.jpg", "fapi.jpg"],
-  "facade-metallique": ["dsc_0549.jpg", "dsc_0527.jpg", "dsc_0529.jpg", "dsc_05473.jpg", "dsc_0550.jpg", "dsc_0552.jpg", "dsc_0553.jpg", "identification_boite_de_vitesse_copie2.jpg"],
-  "etiquette-3d": ["dome_resine_01.jpg", "dome_resine_02.jpg", "domes.jpg", "impression_doming.jpg"],
-  "etiquette-vins": ["bouteille_cognac.jpg", "etiquette_metal_courvoisier.jpg", "180_ans_de_creations_guerlain2.jpg", "fond_top_plv_lumineuse.jpg"],
-  "etiquette-cosmetiques": ["bg_guerlain_tonkaimperiale.jpg", "_mg_4912.jpg", "image6.png", "image12.png", "image16.png"],
-  "etiquette-plastique": ["insert_plastique3.jpg", "decoration_plv_texte_5.jpg", "sans_titre.png"],
-  "plv": ["bandeau_decoration_plv.jpg", "decoration_plv_texte_1.jpg", "plv_boucheron3.jpg", "plv_presentoir_goldkenn1.jpg", "dsc_0522.jpg", "dsc_0523.jpg", "dsc_05263.jpg", "dsc_0540.jpg", "dsc_0543.jpg"],
-  "signaletique": ["plv_led_bouteille_marie2.jpg", "fond_top_plv_lumineuse.jpg"],
-  "presentoir": ["plv_presentoir.jpg", "fond_top_plv_lumineuse.jpg"],
-  "process-gravure": ["gravure_mecanique_de_plaques_metalliques_product_slide.jpg", "thumb_marquage_metal.jpg"],
-  "process-decoupe": ["fond_decoupe_laser6.jpg", "cnc_press.jpg"]
+  "clavier-retro": ["dsc_0515.jpg", "industrie_claviers_bulle1.jpg", "dsc_0560.jpg", "mg_48542.jpg"],
+  "clavier-coupelles": ["industrie_claviers_coupelles.jpg", "domes.jpg", "domes3.jpg", "industrie_claviers_domage.jpg"],
+  "clavier-gaufre": ["industrie_claviers_domage.jpg", "industrie_claviers_bulle1.jpg", "dsc_0506.jpg", "fonddroite_membrane.jpg"],
+  "clavier-electro": ["mg_48542.jpg", "dsc_0515.jpg", "dsc_0560.jpg", "7s.jpg"],
+  "clavier-7s": ["7s.jpg", "dsc_0515.jpg", "mg_48542.jpg", "dsc_0560.jpg"],
+  "clavier-capacitif": ["dsc_0520.jpg", "clavier_plat_relegendable.jpg", "dsc_0506.jpg", "dsc_05343.jpg"],
+  "clavier-plat": ["clavier_plat_relegendable.jpg", "fonddroite_membrane.jpg", "dsc_05033.jpg", "dsc_0506.jpg"],
+  "clavier-elastomere": ["dsc_0534.jpg", "dsc_0560.jpg", "industrie_claviers_coupelles.jpg", "drops.jpg"],
+  "clavier-etanche": ["drops.jpg", "tabip.jpg", "dsc_0560.jpg", "dsc_0633.jpg"],
+  "circuit-flexible": ["circuit_souples.jpg", "circuit_souples3.jpg", "_MG_3984.jpg", "printed_electronics.jpg"],
+  "face-avant-plastique": ["dsc_0633.jpg", "dsc_0628.jpg", "fapi.jpg", "facade_plastique_habillage_boitier_geolocalisation3.jpg"],
+  "facade-metallique": ["identification_boite_de_vitesse_copie2.jpg", "gravure_mecanique_de_plaques_metalliques_product_slide.jpg", "thumb_marquage_metal.jpg", "dsc_0527.jpg"],
+  "etiquette-3d": ["dome_resine_01.jpg", "dome_resine_02.jpg", "impression_doming.jpg", "domes3.jpg"],
+  "etiquette-vins": ["bouteille_cognac.jpg", "etiquette_metal_courvoisier.jpg", "medaillon_napoleon3.jpg", "carousel_etiquette_bouteille.jpg"],
+  "etiquette-cosmetiques": ["carousel_parfum.jpg", "cosmet.jpg", "_mg_4912.jpg", "dome_resine_02.jpg"],
+  "etiquette-plastique": ["insert_plastique3.jpg", "decoration_plv_texte_5.jpg", "decoration_plv_texte_43.jpg", "decoration_plv_texte_1.jpg"],
+  "plv": ["plv_presentoir_goldkenn1.jpg", "copie_de_coffret_led_roederer_low.jpg", "plv_boucheron3.jpg", "decoration_plv_texte_1.jpg", "bandeau_decoration_plv.jpg"],
+  "signaletique": ["plv_led_bouteille_marie2.jpg", "copie_de_coffret_led_roederer_low.jpg", "fond_top_plv_lumineuse.jpg", "plv_boucheron3.jpg"],
+  "presentoir": ["plv_presentoir.jpg", "plv_presentoir_goldkenn1.jpg", "plv_boucheron_copie2.jpg", "decoration_plv_texte_1.jpg"],
+  "process-impression": ["mock-serigraphie.jpg", "fond_abstrait_pim.jpg", "mock-creation.jpg", "mock-numerique.jpg"],
+  "process-decoupe": ["fond_decoupe_laser6.jpg", "mock-decoupe.jpg", "cnc_press.jpg", "industrie_claviers_domage.jpg"],
+  "process-gravure": ["gravure_mecanique_de_plaques_metalliques_product_slide.jpg", "thumb_marquage_metal.jpg", "identification_boite_de_vitesse_copie2.jpg", "dsc_0527.jpg"],
+  "process-laminage": ["impression_doming.jpg", "mock-finition.jpg", "fonddroite_membrane.jpg", "industrie_claviers_domage.jpg"],
+  "process-composants": ["industrie_claviers_coupelles.jpg", "domes.jpg", "dsc_0515.jpg", "_MG_3984.jpg"],
+  "process-controle": ["mock-controle.jpg", "dsc_0560.jpg", "drops.jpg", "mock-logistique.jpg"]
 };
 
 /* ------------------------------------------------------------------
@@ -334,11 +338,20 @@ function productPage(data) {
       "<h1>" + data.title + "</h1>",
       '<p class="lead">' + data.lead + "</p>",
       specBlock(data.id, luxe),
-      photos(IMAGES[data.id]),
-      '<div class="split">',
-      "<section><h2>Qu’est-ce que c’est ?</h2>" + data.what + "</section>",
-      "<section><h2>Pour quoi faire ?</h2>" + data.why + "</section>",
+      '<div class="text-photo">',
+      "<div>",
+      "<h2>Qu’est-ce que c’est ?</h2>" + data.what,
+      "<h2>Pour quoi faire ?</h2>" + data.why,
       "</div>",
+      (IMAGES[data.id] && IMAGES[data.id][0])
+        ? '<img src="medias/images/' + IMAGES[data.id][0] + '" alt="' + escapeText(data.name) + '">'
+        : "",
+      "</div>",
+      (IMAGES[data.id] && IMAGES[data.id].length > 1)
+        ? '<div class="photo-strip">' + IMAGES[data.id].slice(1, 5).map((file) => {
+          return '<img src="medias/images/' + file + '" alt="">';
+        }).join("") + "</div>"
+        : "",
       data.extra || "",
       data.id === "clavier-membrane" ? keyboardTable() : "",
       data.related ? "<h2>Dans la même gamme</h2>" + chips(data.related) : "",

@@ -8,21 +8,39 @@
   <style>
     html, body { margin: 0; height: 100%; }
     body {
-      display: flex;
-      flex-direction: column;
       font-family: Roboto, "Segoe UI", sans-serif;
-      background: #141414;
+      background: #fff;
       color: #fff;
     }
     header {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 5;
       display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 14px;
-      background: #111;
-      border-bottom: 1px solid #2a2a2a;
+      align-items: flex-start;
+      gap: 8px;
+      background: transparent;
     }
-    header strong { font-size: 15px; margin-right: 8px; }
+    #switcher {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      border-radius: 10px;
+      background: rgba(17, 17, 17, 0.92);
+    }
+    header.open #switcher { display: flex; }
+    header strong { font-size: 14px; margin-right: 2px; }
+    #toggle {
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      font-size: 20px;
+      line-height: 1;
+      background: rgba(20, 20, 20, 0.72);
+    }
+    header.open #toggle { background: #970232; }
     header button {
       border: 0;
       border-radius: 8px;
@@ -35,32 +53,46 @@
     }
     header button.alt { background: #243036; }
     header button.on { background: #970232; }
-    .view { flex: 1; min-height: 0; background: #fff; }
+    .view { height: 100%; background: #fff; }
     .view iframe { width: 100%; height: 100%; border: 0; display: block; background: #fff; }
   </style>
 </head>
 <body>
-  <header>
-    <strong>PIM Industrie</strong>
-    <button type="button" id="show-v1">Maquette v1</button>
-    <button type="button" id="show-v2" class="on">Maquette v2</button>
-    <button type="button" id="show-compare" class="alt">Comparaison design</button>
+  <header id="bar">
+    <button type="button" id="toggle" aria-expanded="false" aria-label="Ouvrir le choix des maquettes">›</button>
+    <div id="switcher">
+      <strong>PIM Industrie</strong>
+      <button type="button" id="show-v1">Maquette v1</button>
+      <button type="button" id="show-v2">Maquette v2</button>
+      <button type="button" id="show-v3" class="on">Maquette v3 (finale)</button>
+      <button type="button" id="show-compare" class="alt">Comparaison design</button>
+    </div>
   </header>
   <div class="view">
-    <iframe id="frame" title="Maquette v2" src="maquette%20v2/index.html?v=55#accueil"></iframe>
+    <iframe id="frame" title="Maquette v3" src="maquette%20v3/index.html?v=32#accueil"></iframe>
   </div>
   <script>
     var frame = document.getElementById("frame");
     var buttons = {
       v1: document.getElementById("show-v1"),
       v2: document.getElementById("show-v2"),
+      v3: document.getElementById("show-v3"),
       compare: document.getElementById("show-compare")
     };
     var views = {
       v1: { title: "Maquette v1", src: "maquette%20v1/index.html?v=55#accueil" },
       v2: { title: "Maquette v2", src: "maquette%20v2/index.html?v=55#accueil" },
+      v3: { title: "Maquette v3 (finale)", src: "maquette%20v3/index.html?v=32#accueil" },
       compare: { title: "Comparaison design", src: "maquette%20comparaison/index.html?v=55#accueil" }
     };
+    var bar = document.getElementById("bar");
+    var toggle = document.getElementById("toggle");
+    function setOpen(open) {
+      bar.classList.toggle("open", open);
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      toggle.textContent = open ? "‹" : "›";
+      toggle.setAttribute("aria-label", open ? "Replier le choix des maquettes" : "Ouvrir le choix des maquettes");
+    }
     function show(which) {
       frame.title = views[which].title;
       frame.src = views[which].src;
@@ -68,9 +100,12 @@
         var extra = key === "compare" ? " alt" : "";
         buttons[key].className = (key === which ? "on" : "") + (key === "compare" && key !== which ? extra : "");
       });
+      setOpen(false);
     }
+    toggle.addEventListener("click", function () { setOpen(!bar.classList.contains("open")); });
     buttons.v1.addEventListener("click", function () { show("v1"); });
     buttons.v2.addEventListener("click", function () { show("v2"); });
+    buttons.v3.addEventListener("click", function () { show("v3"); });
     buttons.compare.addEventListener("click", function () { show("compare"); });
   </script>
 </body>

@@ -1,7 +1,12 @@
-﻿$ErrorActionPreference = 'Stop'
+$ErrorActionPreference = 'Stop'
 $root = 'C:\Users\gaetan.salber\OneDrive - PIM industrie\Bureau\Rectréation site web pim'
-$caps = Join-Path $root 'Compte rendu\30-10\captures'
+$caps = Join-Path $root 'Compte rendu\30-10\captures\word'
+if (-not (Test-Path -LiteralPath $caps)) { $caps = Join-Path $root 'Compte rendu\30-10\captures' }
 $outPath = Join-Path $root 'Compte rendu\30-10\PIM - Compte rendu refonte site.docx'
+$logPath = Join-Path $env:TEMP 'pim-cr-build.log'
+function Log($m) { $line = "$(Get-Date -Format 'HH:mm:ss') $m"; Add-Content -LiteralPath $logPath -Value $line; Write-Output $line }
+if (Test-Path -LiteralPath $logPath) { Remove-Item -LiteralPath $logPath -Force }
+Log "start caps=$caps"
 $pim = 50 + (2 * 256) + (151 * 65536) # #970232 BGR
 $dark = 22 + (18 * 256) + (26 * 65536)
 $soft = 237 + (235 * 256) + (240 * 65536)
@@ -113,7 +118,10 @@ function Add-B($S, $Text) {
 }
 
 function Add-Img($S, $Path, $Caption, $WidthCm) {
-  if (-not (Test-Path -LiteralPath $Path)) { Add-P $S '[Image manquante]'; return }
+  $jpg = [IO.Path]::ChangeExtension($Path, '.jpg')
+  if (Test-Path -LiteralPath $jpg) { $Path = $jpg }
+  if (-not (Test-Path -LiteralPath $Path)) { Add-P $S '[Image manquante]'; Log "missing $Path"; return }
+  Log "img $Path"
   $pic = $S.InlineShapes.AddPicture($Path, $false, $true)
   $pic.LockAspectRatio = $true
   $pic.Width = ($WidthCm / 2.54) * 72
@@ -155,7 +163,6 @@ function Add-StatusTable($S, $Doc, $Rows) {
       }
     }
   }
-  $null = $t.AutoFitBehavior(1)
   $S.EndKey(6) | Out-Null
   $S.TypeParagraph()
   Set-Normal $S
@@ -182,10 +189,38 @@ function Add-Tbl($S, $Doc, $Headers, $Rows, $HeaderBg) {
       if (($r % 2) -eq 1) { $cell.Shading.BackgroundPatternColor = $soft }
     }
   }
-  $null = $t.AutoFitBehavior(1)
   $S.EndKey(6) | Out-Null
   $S.TypeParagraph()
   Set-Normal $S
+}
+
+function Fill-CompareCol($Cell, $Title, $Plus, $Moins) {
+  $Cell.TopPadding = 10
+  $Cell.BottomPadding = 10
+  $Cell.LeftPadding = 10
+  $Cell.RightPadding = 10
+  $Cell.Shading.BackgroundPatternColor = $soft
+  $lines = New-Object System.Collections.Generic.List[string]
+  $lines.Add($Title) | Out-Null
+  $lines.Add('') | Out-Null
+  $lines.Add('PLUS') | Out-Null
+  foreach ($x in $Plus) { $lines.Add('+ ' + $x) | Out-Null }
+  $lines.Add('') | Out-Null
+  $lines.Add('MOINS') | Out-Null
+  foreach ($x in $Moins) { $lines.Add('- ' + $x) | Out-Null }
+  $Cell.Range.Text = ($lines -join "`r")
+  $paras = $Cell.Range.Paragraphs
+  $paras.Item(1).Range.Font.Bold = $true
+  $paras.Item(1).Range.Font.Size = 14
+  $paras.Item(1).Range.Font.Color = $pim
+  for ($i = 1; $i -le $paras.Count; $i++) {
+    $p = $paras.Item($i)
+    $txt = $p.Range.Text.Trim()
+    if ($txt -eq 'PLUS') { $p.Range.Font.Bold = $true; $p.Range.Font.Color = $ok; $p.Range.Font.Size = 11 }
+    elseif ($txt -eq 'MOINS') { $p.Range.Font.Bold = $true; $p.Range.Font.Color = $pim; $p.Range.Font.Size = 11 }
+    elseif ($txt.StartsWith('+')) { $p.Range.Font.Size = 10; $p.Range.Font.Color = 0 }
+    elseif ($txt.StartsWith('-')) { $p.Range.Font.Size = 10; $p.Range.Font.Color = 0 }
+  }
 }
 
 function Add-Compare($S, $Doc, $LeftTitle, $LeftPlus, $LeftMoins, $RightTitle, $RightPlus, $RightMoins) {
@@ -193,46 +228,17 @@ function Add-Compare($S, $Doc, $LeftTitle, $LeftPlus, $LeftMoins, $RightTitle, $
   $t.Borders.Enable = $false
   $t.PreferredWidthType = 2
   $t.PreferredWidth = 100
-
-  function Fill-Col($Cell, $Title, $Plus, $Moins) {
-    $Cell.TopPadding = 10
-    $Cell.BottomPadding = 10
-    $Cell.LeftPadding = 10
-    $Cell.RightPadding = 10
-    $Cell.Shading.BackgroundPatternColor = $soft
-    $lines = @()
-    $lines += $Title
-    $lines += ''
-    $lines += 'PLUS'
-    foreach ($x in $Plus) { $lines += '+ ' + $x }
-    $lines += ''
-    $lines += 'MOINS'
-    foreach ($x in $Moins) { $lines += '- ' + $x }
-    $Cell.Range.Text = ($lines -join "`r")
-    $paras = $Cell.Range.Paragraphs
-    $paras.Item(1).Range.Font.Bold = $true
-    $paras.Item(1).Range.Font.Size = 14
-    $paras.Item(1).Range.Font.Color = $pim
-    for ($i = 1; $i -le $paras.Count; $i++) {
-      $p = $paras.Item($i)
-      $txt = $p.Range.Text.Trim()
-      if ($txt -eq 'PLUS') { $p.Range.Font.Bold = $true; $p.Range.Font.Color = $ok; $p.Range.Font.Size = 11 }
-      elseif ($txt -eq 'MOINS') { $p.Range.Font.Bold = $true; $p.Range.Font.Color = $pim; $p.Range.Font.Size = 11 }
-      elseif ($txt.StartsWith('+')) { $p.Range.Font.Size = 10; $p.Range.Font.Color = 0 }
-      elseif ($txt.StartsWith('-')) { $p.Range.Font.Size = 10; $p.Range.Font.Color = 0 }
-    }
-  }
-
-  Fill-Col $t.Cell(1, 1) $LeftTitle $LeftPlus $LeftMoins
-  Fill-Col $t.Cell(1, 2) $RightTitle $RightPlus $RightMoins
+  Fill-CompareCol $t.Cell(1, 1) $LeftTitle $LeftPlus $LeftMoins
+  Fill-CompareCol $t.Cell(1, 2) $RightTitle $RightPlus $RightMoins
   $S.EndKey(6) | Out-Null
   $S.TypeParagraph()
   Set-Normal $S
 }
 
 # ---- CONTENT ----
-Add-Banner $sel $doc 'Refonte du site PIM Industrie' "Compte rendu de presentation · octobre 2026 · Maquettes v1 / v2 + page maintenance" $dark $white
-Add-Callout $sel $doc "Recommandation : retenir la maquette v2. Deux univers clairs (Industrie / Luxe & PLV), menu aligne sur l'arbre, pages SEO pretes. La v1 reste une reserve de contenus." $soft $pim
+Log 'content'
+Add-Banner $sel $doc 'Refonte du site PIM Industrie' "Compte rendu de presentation · octobre 2026 · Maquette v2 vs maquette comparaison + page maintenance" $dark $white
+Add-Callout $sel $doc "Recommandation : retenir la maquette v2. Deux univers (Industrie / Luxe & PLV), menu = arbre du site, pages SEO pretes. La maquette comparaison inspire le design (hero, CTA) mais reste trop plate pour le referencement." $soft $pim
 
 Add-H $sel 'Ou en est-on pour vendredi ?' 1 $pim
 Add-StatusTable $sel $doc @(
@@ -240,8 +246,8 @@ Add-StatusTable $sel $doc @(
   @('Site v2 plus proche d''un produit fini', 'Partiel', 'Structure OK ; chiffres Sur devis, photos et cas clients a valider'),
   @('Etat des lieux (Google / mobile / vitesse)', 'Fait', 'Baseline pour mesurer les progres'),
   @('Captures des pages principales', 'Fait', 'Sans barre Plein ecran / planches / Mode admin'),
-  @('Comparaison v1 / v2 + choix', 'Fait', 'Retenue : v2'),
-  @('Liste recherches Google <-> pages', 'Fait', 'Aussi dans outils/mots-cles-seo.json')
+  @('Comparaison v2 / maquette comparaison', 'Fait', 'Retenue : v2'),
+  @('Liste recherches Google a cibler', 'Fait', 'Aussi dans outils/mots-cles-seo.json')
 )
 
 $sel.InsertBreak(7) | Out-Null # page break
@@ -287,55 +293,69 @@ Add-Img $sel (Join-Path $caps 'maintenance.png') 'Page temporaire — message + 
 $sel.InsertBreak(7) | Out-Null
 
 Add-H $sel '3. Quelle maquette retenir ?' 1 $pim
-Add-Img $sel (Join-Path $caps 'v1-accueil.png') 'v1 — carrousel + Domaines au menu' 14.5
-Add-Img $sel (Join-Path $caps 'accueil.png') 'v2 — deux univers, parcours plus clair' 14.5
+Add-P $sel 'Deux pistes design ont ete poussees : la maquette comparaison (site court, hero fort, menu simple) et la maquette v2 (deux univers + profondeur SEO). Voici les captures cote a cote, puis les plus / moins.'
+Add-Img $sel (Join-Path $caps 'comparaison-accueil.png') 'Maquette comparaison — hero plein ecran, menu court, grille de prestations' 14.5
+Add-Img $sel (Join-Path $caps 'accueil.png') 'Maquette v2 — deux univers des l''accueil (Industrie / Luxe & PLV)' 14.5
 
 Add-Compare $sel $doc `
-  'Maquette v1' `
-  @('Charte PIM deja en place', 'Beaucoup de pages produit structurees', 'Bonne base visuelle') `
-  @('Domaines au meme niveau qu''Industrie', 'Accueil dense (carrousel + secteurs)', 'Peu de separation Industrie / Luxe') `
+  'Maquette comparaison' `
+  @('Hero plein ecran impactant', 'Menu court et lisible (5 entrees)', 'CTA contact tres present', 'Grille prestations scannable', 'Rendu moderne type site vitrine') `
+  @('Pas de separation Industrie / Luxe', 'Structure plate (peu de pages profondes)', 'Faible preparation SEO (1 requete = 1 page)', 'Menu generique (A propos / Prestations)', 'Ne suit pas l''arbre Domaines sous Industrie') `
   'Maquette v2' `
-  @('Deux univers clairs des l''accueil', 'Domaines sous Industrie (menu = arbre)', 'Plus de doublon Domaines / Par besoin', 'Titres Google prets page par page', 'Guide, glossaire, etudes de cas') `
-  @('Cas clients a valider', 'Photos atelier a reprendre', 'Chiffres encore Sur devis')
+  @('Deux univers clairs des l''accueil', 'Domaines sous Industrie (menu = arbre)', 'Titres / meta Google prets page par page', 'Fiches produit + guides + ressources', 'Parcours acheteur B2B plus precis') `
+  @('Plus dense a prendre en main', 'Cas clients a valider', 'Photos atelier a reprendre', 'Chiffres encore Sur devis')
 
-Add-Callout $sel $doc 'Choix : maquette v2. Elle corrige la structure et prepare le referencement. La planche Comparaison design reste hors production (trop eloignee de la charte).' $soft $pim
+Add-Callout $sel $doc 'Choix : maquette v2. On peut reprendre des idees visuelles de la comparaison (hero, CTA, respiration) mais la base de production doit etre la v2 : structure + referencement.' $soft $pim
 
 $sel.InsertBreak(7) | Out-Null
 
 Add-H $sel '4. Ou sortir sur Google ?' 1 $pim
-Add-P $sel 'Regle simple : 1 recherche principale = 1 page. Priorite haute = a gagner vite apres mise en ligne.'
-Add-Tbl $sel $doc @('Recherche Google', 'Page', 'Priorite', 'Aujourd''hui') @(
+Add-P $sel 'L''etude de referencement ci-dessus mesure le point de depart. Ci-dessous : la liste des recherches sur lesquelles on veut se positionner grace au nouveau site. Regle : 1 recherche principale = 1 page cible.'
+Add-P $sel 'Priorite haute = a gagner vite apres mise en ligne. Maintenir = deja bien place, a proteger. Moyenne = deuxieme vague.' $false 10
+
+Add-H $sel 'Liste des recherches Google ciblees' 2 $pim
+Add-Tbl $sel $doc @('Recherche Google', 'Page cible', 'Priorite', 'Position actuelle') @(
   @('clavier a membrane sur mesure', 'Clavier a membrane', 'Haute', 'Hors top 5'),
   @('clavier a membrane industriel', 'Clavier a membrane', 'Haute', '~3e'),
   @('clavier a coupelles', 'Clavier a coupelles', 'Maintenir', '~1er'),
   @('clavier etanche IP65', 'Clavier etanche', 'Haute', 'Absent'),
   @('face avant plastique serigraphiee', 'Face avant plastique', 'Haute', 'Absent'),
   @('plaque constructeur metal', 'Facade / insert metal', 'Moyenne', 'Absent'),
+  @('circuit imprime souple', 'Circuit flexible', 'Moyenne', 'A mesurer'),
   @('etiquette metal personnalisee', 'Etiquettes', 'Haute', 'Absent'),
-  @('etiquette metal cognac / champagne / vin', 'Vins et spiritueux', 'Haute', '~2e'),
+  @('etiquette metal cognac / champagne', 'Vins et spiritueux', 'Haute', '~2e'),
+  @('etiquette vin metal', 'Vins et spiritueux', 'Haute', 'A mesurer'),
+  @('insert metal parfum', 'Etiquette cosmetiques', 'Moyenne', 'A mesurer'),
   @('PLV lumineuse', 'Signaletique lumineuse', 'Moyenne', 'Absent'),
   @('presentoir plexiglas sur mesure', 'Presentoir plexiglas', 'Moyenne', 'Absent'),
   @('choisir clavier a membrane', 'Guide (nouvelle page)', 'Haute', '—'),
   @('clavier pour appareil medical', 'Domaine medical', 'Moyenne', 'A mesurer')
 ) $pim
+Add-P $sel 'Fichier detaille : outils/mots-cles-seo.json (requete, page, URL cible, priorite).' $false 9
 
 Add-H $sel '5. Prochaines etapes' 1 $pim
 Add-B $sel 'Deployer la page maintenance sur pim-industrie.com'
-Add-B $sel 'Valider la v2 comme base de production'
+Add-B $sel 'Valider la v2 comme base de production (et piquer le meilleur de la comparaison en design)'
 Add-B $sel 'Fournir MOQ / delais reels + hebergeur legal'
 Add-B $sel 'Valider 4 a 6 etudes de cas avec les clients'
 Add-B $sel 'Remplacer les photos floues / stock'
-Add-B $sel 'Apres mise en ligne : Search Console + PageSpeed vs ce document'
+Add-B $sel 'Apres mise en ligne : Search Console sur la liste ci-dessus + PageSpeed vs ce document'
 
-Add-P $sel 'Maquettes : index.html a la racine (v1 / v2 / comparaison). Page maintenance : dossier maintenance/.' $false 9
+Add-P $sel 'Maquettes : dossiers maquette v2 / et maquette comparaison/. Page maintenance : dossier maintenance/.' $false 9
 
-if (Test-Path -LiteralPath $outPath) { Remove-Item -LiteralPath $outPath -Force }
-$doc.SaveAs2($outPath, 16)
+Log 'save'
+$tmpOut = Join-Path $env:TEMP 'PIM-Compte-rendu-refonte-site.docx'
+if (Test-Path -LiteralPath $tmpOut) { Remove-Item -LiteralPath $tmpOut -Force }
+$doc.SaveAs2($tmpOut, 16)
+Log 'saved-temp'
 $doc.Close($false)
 $word.Quit()
 [System.Runtime.Interopservices.Marshal]::ReleaseComObject($sel) | Out-Null
 [System.Runtime.Interopservices.Marshal]::ReleaseComObject($doc) | Out-Null
 [System.Runtime.Interopservices.Marshal]::ReleaseComObject($word) | Out-Null
 [GC]::Collect(); [GC]::WaitForPendingFinalizers()
-Write-Output "OK $outPath"
+Start-Sleep -Milliseconds 400
+if (Test-Path -LiteralPath $outPath) { Remove-Item -LiteralPath $outPath -Force }
+Copy-Item -LiteralPath $tmpOut -Destination $outPath -Force
+Log "OK $outPath"
 (Get-Item -LiteralPath $outPath | Format-List FullName, Length, LastWriteTime | Out-String)

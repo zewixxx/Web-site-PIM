@@ -103,7 +103,16 @@ addPage({
 });
 
 function sitePlan() {
-  const groups = [];
+  const groups = [{
+    name: "Le site",
+    pages: [
+      { id: "index.html", name: "Accueil", href: "index.html" },
+      { id: "a-propos.html", name: "À propos", href: "a-propos.html" },
+      { id: "prestations.html", name: "Nos prestations", href: "prestations.html" },
+      { id: "references.html", name: "Réalisations", href: "references.html" },
+      { id: "contact.html", name: "Contact", href: "contact.html" }
+    ]
+  }];
   window.PAGES.forEach((page) => {
     let group = groups.find((item) => item.name === page.group);
     if (!group) {
@@ -117,7 +126,7 @@ function sitePlan() {
   });
   return groups.map((group) => {
     return '<article class="card"><h3>' + (WORLD_LABEL[group.name] || group.name) + "</h3><p>" + group.pages.map((page) => {
-      return '<a href="#' + page.id + '">' + page.name + "</a>";
+      return '<a href="' + (page.href || ("#" + page.id)) + '">' + page.name + "</a>";
     }).join("<br>") + "</p></article>";
   }).join("");
 }

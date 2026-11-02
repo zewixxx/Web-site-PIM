@@ -8,59 +8,24 @@ addPage({
     '<p class="kicker">Interfaces industrielles</p>',
     "<h1>Interfaces industrielles</h1>",
     '<p class="lead">Claviers à membrane, circuits souples, faces avant et façades métal — sur mesure, étanches IP65.</p>',
-    '<div class="hub-paths">',
-    '<a class="hub-path" href="#secteurs">',
-    '<span class="hub-path-kicker">Par secteur</span>',
-    "<b>Domaines</b>",
-    "<span>Médical, aéronautique, automobile, automatisation, machines, nautique, électronique, transports.</span>",
+    '<div class="pc-bands">',
+    '<a class="pc-band" href="#secteurs">',
+    '<img src="medias/images/domaines-collage.jpg" alt="Quatre exemples de domaines : médical, aéronautique, interface machine et automobile">',
+    "<div>",
+    "<h2>Domaines</h2>",
+    "<p>Huit secteurs où les interfaces PIM sont déjà en place : le <b>médical</b>, l’<b>aéronautique</b>, l’<b>automobile</b>, l’<b>automatisation</b>, les machines spéciales, le <b>nautique</b>, l’<b>électronique</b> et les <b>transports</b>. Chaque domaine a ses contraintes d’usage, d’étanchéité et de lisibilité. PIM les traite avec le même niveau d’exigence, depuis le besoin jusqu’à la pièce livrée.</p>",
     "<em>Voir les 8 domaines</em>",
+    "</div>",
     "</a>",
-    '<a class="hub-path" href="#gamme">',
-    '<span class="hub-path-kicker">Par produit</span>',
-    "<b>Gamme</b>",
-    "<span>Claviers à membrane, circuits souples, faces avant, façades métal, électronique imprimée.</span>",
+    '<a class="pc-band pc-band--rev" href="references.html#industrie">',
+    "<div>",
+    "<h2>Gamme</h2>",
+    "<p>Quatre familles principales : <b>claviers à membrane</b>, <b>circuits souples</b>, <b>faces avant</b> et <b>façades métal</b>, plus l’électronique imprimée. Les variantes — plat, coupelles, rétroéclairé, étanche IP65 — se choisissent selon l’usage. Le résultat reste une interface sur mesure, cohérente avec la machine.</p>",
     "<em>Voir la gamme</em>",
+    "</div>",
+    '<img src="medias/images/circuit_souples.jpg" alt="Circuit souple imprimé">',
     "</a>",
     "</div>",
-    photos(["bandeau_industrie.jpg", "dsc_0560.jpg", "circuit_souples3.jpg", "dsc_0549.jpg"]),
-    reassurance(false),
-    "</div>"
-  ].join("")
-});
-
-addPage({
-  id: "gamme",
-  group: "Industrie",
-  name: "Gamme",
-  html: [
-    '<div class="wrap page">',
-    crumb([["Accueil", "accueil"], ["Interfaces industrielles", "technologies"], ["Gamme"]]),
-    '<p class="kicker">Interfaces industrielles · Gamme</p>',
-    "<h1>La gamme</h1>",
-    '<p class="lead">Quatre familles principales, puis les variantes de claviers. Pour un secteur précis, ouvrez plutôt les <a href="#secteurs">domaines</a>.</p>',
-    '<div class="grid-4">',
-    '<a class="card" href="#clavier-membrane"><h3>Clavier à membrane</h3><p>Interface homme-machine souple, étanche et sur mesure.</p></a>',
-    '<a class="card" href="#circuit-flexible"><h3>Circuit souple</h3><p>Circuit imprimé sur polyester ou polycarbonate.</p></a>',
-    '<a class="card" href="#face-avant-plastique"><h3>Face avant plastique</h3><p>Décor sérigraphié sur un support ou un circuit.</p></a>',
-    '<a class="card" href="#facade-metallique"><h3>Façade et insert métallique</h3><p>Identification d’un produit, d’une machine, d’un équipement.</p></a>',
-    "</div>",
-    '<div class="grid-2" style="margin-top:20px">',
-    '<a class="card" href="#besoin-electronique-imprimee"><h3>Électronique imprimée</h3><p>Encre argent, chauffage, capteur ou antenne sur film souple.</p></a>',
-    '<a class="card" href="#guide-clavier-membrane"><h3>Guide : choisir son clavier</h3><p>Six questions avant de demander un devis.</p></a>',
-    "</div>",
-    "<h2>Les claviers à membrane</h2>",
-    chips([
-      ["Plat", "clavier-plat"],
-      ["Coupelles", "clavier-coupelles"],
-      ["Gaufré", "clavier-gaufre"],
-      ["Rétroéclairé", "clavier-retro"],
-      ["Électroluminescent", "clavier-electro"],
-      ["Afficheurs 7 segments", "clavier-7s"],
-      ["Capacitif", "clavier-capacitif"],
-      ["Élastomère", "clavier-elastomere"],
-      ["Étanche IP65", "clavier-etanche"]
-    ]),
-    '<div style="margin-top:36px">' + keyboardTable() + "</div>",
     reassurance(false),
     "</div>"
   ].join("")
@@ -80,7 +45,7 @@ const relatedKeys = [
 ];
 
 function keyboardCrumb(name) {
-  return [["Accueil", "accueil"], ["Interfaces industrielles", "technologies"], ["Gamme", "gamme"], ["Clavier à membrane", "clavier-membrane"], [name]];
+  return [["Accueil", "accueil"], ["Interfaces industrielles", "technologies"], ["Clavier à membrane", "clavier-membrane"], [name]];
 }
 
 function othersThan(id) {
@@ -94,7 +59,7 @@ productPage({
   kicker: "Interfaces industrielles",
   title: "Le clavier à membrane",
   lead: "En Lexan® ou en polyester, à partir de 0,5 mm d’épaisseur : une interface homme-machine souple, étanche et conçue sur mesure.",
-  crumb: [["Accueil", "accueil"], ["Interfaces industrielles", "technologies"], ["Gamme", "gamme"], ["Clavier à membrane"]],
+  crumb: [["Accueil", "accueil"], ["Interfaces industrielles", "technologies"], ["Clavier à membrane"]],
   what: [
     "<p>Le clavier à membrane est obtenu par assemblage de feuilles de polyester ou de polycarbonate et d’adhésif. Une languette souple, la limande, permet une connexion directe sur l’équipement électronique.</p>",
     "<p>Contrairement à un clavier électromécanique standard, il combine finesse, étanchéité et liberté de forme. La face supérieure porte le décor ; en dessous, les circuits souples assurent le contact électrique.</p>"
@@ -272,7 +237,7 @@ productPage({
   kicker: "Interfaces industrielles",
   title: "Le clavier étanche",
   lead: "Tous nos claviers sont étanches, grâce à des procédés certifiés IP65.",
-  crumb: [["Accueil", "accueil"], ["Interfaces industrielles", "technologies"], ["Gamme", "gamme"], ["Clavier étanche"]],
+  crumb: [["Accueil", "accueil"], ["Interfaces industrielles", "technologies"], ["Clavier étanche"]],
   what: [
     "<p>L’indice de protection (IP) indique le niveau d’étanchéité du matériel face aux solides et aux liquides. La norme couvre une large échelle : il faut donc bien analyser les conditions d’usage et l’environnement réel.</p>",
     "<p>Les claviers PIM sont construits sur mesure pour répondre aux exigences demandées. Par défaut, ils sont classés IP65.</p>"
@@ -291,7 +256,7 @@ productPage({
   kicker: "Interfaces industrielles",
   title: "Le circuit flexible",
   lead: "Un circuit imprimé souple, pour le chauffage, les batteries, les résistances ou les capteurs.",
-  crumb: [["Accueil", "accueil"], ["Interfaces industrielles", "technologies"], ["Gamme", "gamme"], ["Circuit flexible"]],
+  crumb: [["Accueil", "accueil"], ["Interfaces industrielles", "technologies"], ["Circuit flexible"]],
   what: [
     "<p>Le circuit flexible (ou circuit imprimé souple) est un composant technique : une piste en encre argent est imprimée sur un film polyester ou polycarbonate.</p>",
     "<p>Ce circuit souple peut recevoir un contact touche et se raccorde facilement grâce à une limande. Il se substitue à la carte imprimée rigide partout où la forme, le poids ou la flexibilité comptent.</p>"
@@ -311,7 +276,7 @@ productPage({
   kicker: "Interfaces industrielles",
   title: "La face avant plastique",
   lead: "Aussi appelée insert plastique : un décor sérigraphié qui joue le rôle d’étiquette ou de façade du produit.",
-  crumb: [["Accueil", "accueil"], ["Interfaces industrielles", "technologies"], ["Gamme", "gamme"], ["Face avant plastique"]],
+  crumb: [["Accueil", "accueil"], ["Interfaces industrielles", "technologies"], ["Face avant plastique"]],
   what: [
     "<p>La face avant plastique est un décor souple sérigraphié sur une feuille de polyester ou de polycarbonate. Un adhésif à l’arrière permet de l’appliquer sur tout support.</p>",
     "<p>Tout est personnalisable : couleurs, formes, marquage. Disponible à partir de 150 µm d’épaisseur, elle peut aussi recevoir des reliefs (cloquage, guide-doigt…) et des fenêtres pour faciliter l’usage du décor.</p>"
@@ -330,7 +295,7 @@ productPage({
   kicker: "Interfaces industrielles",
   title: "La façade et l’insert métallique",
   lead: "Plaque constructeur, plaque d’identification ou de conformité : l’insert métal a une place centrale dans l’industrie.",
-  crumb: [["Accueil", "accueil"], ["Interfaces industrielles", "technologies"], ["Gamme", "gamme"], ["Façade et insert métallique"]],
+  crumb: [["Accueil", "accueil"], ["Interfaces industrielles", "technologies"], ["Façade et insert métallique"]],
   what: [
     "<p>La face avant métallique est une étiquette imprimée, fixée par adhésif arrière ou par perforation, applicable sur tout support.</p>",
     "<p>Elle est réalisée sur mesure selon vos contraintes : couleur, forme, épaisseur. Supports disponibles : aluminium, acier inox ou laiton, avec diverses finitions. Un embossage jusqu’à 1 mm permet une mise en relief nette.</p>"
