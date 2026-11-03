@@ -82,7 +82,7 @@ const secteursIndustrie = [
   {
     id: "secteur-transports",
     name: "Transports",
-    image: "dsc_0549.jpg",
+    image: "dsc_0560.jpg",
     short: "Claviers étanches et plaques d’identification.",
     intro: "Claviers IP65 et plaques de conformité pour les équipements de transport.",
     facts: ["IP65", "Plaques d’identification", "Faces avant"],
@@ -118,12 +118,15 @@ secteursIndustrie.forEach((item) => {
       crumb([["Accueil", "accueil"], ["Interfaces industrielles", "technologies"], ["Domaines", "secteurs"], [item.name]]),
       '<p class="kicker">Interfaces industrielles · Domaine</p>',
       "<h1>" + item.name + "</h1>",
-      '<p class="lead">' + item.intro + "</p>",
+      '<div class="text-photo">',
+      "<div>",
+      "<p>" + item.intro + "</p>",
       '<ul class="facts">' + item.facts.map((fact) => "<li>" + fact + "</li>").join("") + "</ul>",
+      '<p class="lux-cta"><a class="btn" href="references.html#' + item.id.replace("secteur-", "") + '">Solutions pour ce domaine</a><a class="btn line" href="contact.html">Nous contacter</a></p>',
+      "</div>",
+      '<img src="medias/images/' + item.image + '" alt="' + item.name + '">',
+      "</div>",
       item.detail || "",
-      photos([item.image]),
-      "<h2>Solutions pour ce domaine</h2>",
-      chips(item.links),
       reassurance(false),
       "</div>"
     ].join("")

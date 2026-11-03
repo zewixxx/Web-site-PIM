@@ -48,29 +48,29 @@ function photos(files) {
 }
 
 const CLIENTS_INDUSTRIE = [
-  ["logo_bosch.jpg", "Bosch"],
-  ["maxresdefault.jpg", "Siemens"],
-  ["brand.gif", "Honeywell"],
-  ["brand_1.gif", "Gaggenau"],
-  ["logo_168365.gif", "Mettler Toledo"],
-  ["saia_burgess.jpg", "Saia-Burgess"],
-  ["meiko_logosvg.jpg", "Meiko"],
-  ["stago.jpg", "Stago"],
-  ["logo_rafi.jpg", "Rafi"],
-  ["drinkotec.jpg", "Drinkotec"]
+  ["logos/logo_bosch.png", "Bosch"],
+  ["logos/maxresdefault.png", "Siemens"],
+  ["logos/brand.png", "Honeywell"],
+  ["logos/brand_1.png", "Gaggenau"],
+  ["logos/logo_168365.png", "Mettler Toledo"],
+  ["logos/saia_burgess.png", "Saia-Burgess"],
+  ["logos/meiko_logosvg.png", "Meiko"],
+  ["logos/stago.png", "Stago"],
+  ["logos/logo_rafi.png", "Rafi"],
+  ["logos/drinkotec.png", "Drinkotec"]
 ];
 
 const CLIENTS_DECORATION = [
-  ["9f6aae72ff064c4dffbc7fc35e9edfb1.jpg", "Chanel"],
-  ["guerlain.jpg", "Guerlain"],
-  ["hennessy_logo.png", "Hennessy"],
-  ["logo_moet_et_chandon.jpg", "Moët & Chandon"],
-  ["remy_cointreau.jpg", "Rémy Cointreau"],
-  ["thierry_mugler.jpg", "Thierry Mugler"],
-  ["logo_devaux.jpg", "Devaux"],
-  ["logo_controle_age2.jpg", "Père Magloire"],
-  ["logo_boulard.jpg", "Calvados Boulard"],
-  ["salomon_001_900.jpg", "Salomon"]
+  ["logos/9f6aae72ff064c4dffbc7fc35e9edfb1.png", "Chanel"],
+  ["logos/guerlain.png", "Guerlain"],
+  ["logos/hennessy_logo.png", "Hennessy"],
+  ["logos/logo_moet_et_chandon.png", "Moët & Chandon"],
+  ["logos/remy_cointreau.png", "Rémy Cointreau"],
+  ["logos/thierry_mugler.png", "Thierry Mugler"],
+  ["logos/logo_devaux.png", "Devaux"],
+  ["logos/logo_controle_age2.png", "Père Magloire"],
+  ["logos/logo_boulard.png", "Calvados Boulard"],
+  ["logos/salomon_001_900.png", "Salomon"]
 ];
 
 function logos(clients) {
@@ -256,18 +256,16 @@ function specBlock(id, luxe) {
   if (!rows) return "";
   const all = rows.concat(luxe ? SPEC_END_LUXE : SPEC_END_INDUSTRIE);
   return [
-    '<aside class="specs">',
-    '<div class="specs-main"><h2>' + (luxe ? "Finitions et réalisation" : "Spécifications") + "</h2><dl>",
-    all.map((row) => '<div class="spec-row"><dt>' + row[0] + "</dt><dd>" + row[1] + "</dd></div>").join(""),
-    "</dl></div>",
-    '<div class="specs-side">',
-    "<h3>" + (luxe ? "Pour votre lancement" : "Pour votre étude") + "</h3>",
-    "<p>" + (luxe
-      ? "Finitions, quantités et délai avant lancement : décrivez-nous votre projet."
-      : "Matériaux, options, séries et délai de prototype : décrivez-nous votre besoin.") + "</p>",
-    '<a class="cta" href="#demande">Demander un devis</a>',
-    '<button type="button" class="cta line">Télécharger la fiche PDF</button>',
-    "</div></aside>"
+    '<section class="spec-sheet">',
+    "<h2>" + (luxe ? "Finitions et réalisation" : "Spécifications") + "</h2>",
+    "<table><tbody>",
+    all.map((row) => '<tr><th scope="row">' + row[0] + "</th><td>" + row[1] + "</td></tr>").join(""),
+    "</tbody></table>",
+    '<div class="spec-actions">',
+    '<a class="btn" href="demande-devis.html">Demander un devis</a>',
+    '<a class="btn line" href="contact.html">Nous contacter</a>',
+    '<button type="button" class="btn line">Télécharger la fiche PDF</button>',
+    "</div></section>"
   ].join("");
 }
 
@@ -337,7 +335,6 @@ function productPage(data) {
       '<p class="kicker">' + data.kicker + "</p>",
       "<h1>" + data.title + "</h1>",
       '<p class="lead">' + data.lead + "</p>",
-      specBlock(data.id, luxe),
       '<div class="text-photo">',
       "<div>",
       "<h2>Qu’est-ce que c’est ?</h2>" + data.what,
@@ -347,6 +344,7 @@ function productPage(data) {
         ? '<img src="medias/images/' + IMAGES[data.id][0] + '" alt="' + escapeText(data.name) + '">'
         : "",
       "</div>",
+      specBlock(data.id, luxe),
       (IMAGES[data.id] && IMAGES[data.id].length > 1)
         ? '<div class="photo-strip">' + IMAGES[data.id].slice(1, 5).map((file) => {
           return '<img src="medias/images/' + file + '" alt="">';

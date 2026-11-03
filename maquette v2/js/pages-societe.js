@@ -30,7 +30,7 @@ addPage({
 
 function glossary(rows) {
   return rows.map((row) => {
-    return '<div class="term"><h2>' + row[0] + "</h2><p>" + row[1] + ' <a href="#' + row[2] + '">En savoir plus</a></p></div>';
+    return '<div class="term"><h2>' + row[0] + "</h2><p>" + row[1] + '</p><a class="btn" href="#' + row[2] + '">En savoir plus</a></div>';
   }).join("");
 }
 

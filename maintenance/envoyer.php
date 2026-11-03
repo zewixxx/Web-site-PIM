@@ -1,35 +1,65 @@
 <?php
 declare(strict_types=1);
 
-function redirect(string $query): void
+require __DIR__ . '/securite.php';
+
+header('X-Content-Type-Options: nosniff');
+header('Referrer-Policy: no-referrer');
+header('Cache-Control: no-store');
+
+function reponse(bool $ok, array $extra = []): void
 {
-    header('Location: contact.html' . ($query !== '' ? '?' . $query : ''));
+    $accepte = (string) ($_SERVER['HTTP_ACCEPT'] ?? '');
+    $ajax = (($_POST['ajax'] ?? '') === '1') || strpos($accepte, 'application/json') !== false;
+    if ($ajax) {
+        header('Content-Type: application/json; charset=UTF-8');
+        echo json_encode(array_merge(['ok' => $ok], $extra), JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+    header('Location: contact.php?' . ($ok ? 'envoye=1' : 'erreur=1'));
     exit;
 }
 
-if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
-    redirect('');
+function ligne(string $cle, int $max): string
+{
+    $valeur = trim((string) ($_POST[$cle] ?? ''));
+    $valeur = str_replace(["\r", "\n", "\0"], ' ', $valeur);
+    if (function_exists('mb_substr')) {
+        return mb_substr($valeur, 0, $max, 'UTF-8');
+    }
+    return substr($valeur, 0, $max);
 }
+
+if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
+    header('Location: contact.php');
+    exit;
+}
+
+if ((int) ($_SERVER['CONTENT_LENGTH'] ?? 0) > 20000) {
+    reponse(false);
+}
+
+demarrer_session();
 
 if (trim((string) ($_POST['societe_web'] ?? '')) !== '') {
-    redirect('envoye=1');
+    reponse(true);
 }
 
-function line(string $key, int $max): string
-{
-    $value = trim((string) ($_POST[$key] ?? ''));
-    $value = str_replace(["\r", "\n", "\0"], ' ', $value);
-    if (function_exists('mb_substr')) {
-        return mb_substr($value, 0, $max, 'UTF-8');
-    }
-    return substr($value, 0, $max);
+if (!origine_acceptable() || !verifier_jeton((string) ($_POST['jeton'] ?? ''))) {
+    reponse(false);
 }
 
-$nom = line('nom', 120);
-$email = line('email', 180);
-$societe = line('societe', 160);
-$telephone = line('telephone', 40);
-$sujet = line('sujet', 80);
+$ouvert = (int) ($_SESSION['ouvert'] ?? 0);
+$age = time() - $ouvert;
+if ($ouvert < 1 || $age < 2 || $age > 7200) {
+    reponse(false);
+}
+
+$nom = ligne('nom', 120);
+$email = ligne('email', 180);
+$societe = ligne('societe', 160);
+$telephone = ligne('telephone', 40);
+$sujet = ligne('sujet', 80);
 $message = trim((string) ($_POST['message'] ?? ''));
 $message = str_replace("\0", '', $message);
 if (function_exists('mb_substr')) {
@@ -38,26 +68,49 @@ if (function_exists('mb_substr')) {
     $message = substr($message, 0, 4000);
 }
 
-if ($nom === '' || $message === '' || filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
-    redirect('erreur=1');
+$liens = preg_match_all('/https?:\/\/|www\./i', $message);
+if (
+    $nom === ''
+    || $message === ''
+    || filter_var($email, FILTER_VALIDATE_EMAIL) === false
+    || !in_array($sujet, SUJETS_AUTORISES, true)
+    || $liens > 3
+) {
+    reponse(false);
 }
 
-$to = 'gaetan.salber@pim-industrie.fr';
-$subject = 'Contact site — ' . ($sujet !== '' ? $sujet . ' — ' : '') . $nom;
-$body = "Message envoyé depuis la page de contact PIM Industrie\n\n"
+if (trop_de_messages(adresse_ip())) {
+    reponse(false);
+}
+noter_message(adresse_ip());
+
+$objet = 'Message du site — ' . $sujet . ' — ' . $nom;
+$texte = "Bonjour,\n\n"
+    . "Vous avez reçu un nouveau message depuis la page de contact de PIM Industrie.\n\n"
     . "Nom : {$nom}\n"
     . "Société : {$societe}\n"
     . "E-mail : {$email}\n"
     . "Téléphone : {$telephone}\n"
     . "Sujet : {$sujet}\n\n"
-    . "Message :\n{$message}\n";
+    . "Message :\n{$message}\n\n"
+    . "Ce message sert uniquement à répondre à la demande.\n";
 
-$encodedSubject = '=?UTF-8?B?' . base64_encode($subject) . '?=';
-$headers = implode("\r\n", [
+$objetEncode = '=?UTF-8?B?' . base64_encode($objet) . '?=';
+$entetes = implode("\r\n", [
     'MIME-Version: 1.0',
     'Content-Type: text/plain; charset=UTF-8',
+    'Content-Transfer-Encoding: 8bit',
+    'From: PIM Industrie <' . EXPEDITEUR . '>',
     'Reply-To: ' . $email,
 ]);
 
-$sent = mail($to, $encodedSubject, $body, $headers);
-redirect($sent ? 'envoye=1' : 'erreur=1');
+$envoye = mail(DESTINATAIRE, $objetEncode, $texte, $entetes, '-f' . EXPEDITEUR);
+if ($envoye !== true) {
+    reponse(false);
+}
+
+renouveler_session_formulaire();
+reponse(true, [
+    'jeton' => jeton(),
+    'ouvert' => $_SESSION['ouvert'],
+]);

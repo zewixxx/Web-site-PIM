@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="site.css?v=42">
+  <link rel="stylesheet" href="site.css?v=65">
 </head>
 <body data-page="accueil">
   <a class="skip" href="#main">Aller au contenu</a>
@@ -38,23 +38,17 @@
         <a href="#decoration">Luxe</a>
         <a href="references.html">Réalisations</a>
         <a href="contact.html">Contact</a>
-        <a class="btn nav-cta" href="contact.html">Demander conseil</a>
       </nav>
-      <a class="btn top-cta" href="contact.html">Demander conseil</a>
     </div>
   </header>
   <main id="main">
-    <section class="hero" data-nav="accueil">
-      <div class="hero-copy">
-        <p class="kicker">PIM Industrie · Marckolsheim · depuis 1961</p>
-        <h1>Des pièces fabriquées à Marckolsheim.</h1>
-        <p class="hero-lead">Claviers à membrane, faces avant et plaques métal pour la machine. Étiquettes et PLV pour la marque. Un seul atelier, en Alsace.</p>
-        <div class="hero-actions">
-          <a class="btn" href="contact.html">Demander conseil</a>
-        </div>
-      </div>
+    <section class="hero hero--full" data-nav="accueil">
       <div class="hero-photo">
-        <img src="../maquette%20v2/medias/images/fond_abstrait_pim.jpg" alt="Ligne d’impression de l’atelier PIM à Marckolsheim" width="1680" height="798" fetchpriority="high">
+        <img src="../maquette%20v2/medias/images/hero-atelier-pim.jpg?v=3" alt="Atelier PIM : clavier à membrane, étiquette métal et sérigraphie" width="1680" height="945" fetchpriority="high">
+      </div>
+      <div class="hero-center">
+        <h1>Des pièces fabriquées à Marckolsheim.</h1>
+        <a class="btn white" href="contact.html">Demander conseil</a>
       </div>
     </section>
     <section class="intro-pc" data-nav="accueil">
@@ -62,7 +56,10 @@
         <h2>Fabricant à Marckolsheim PIM Industrie</h2>
         <h3 class="metiers">Claviers à membrane, circuits souples, faces avant, plaques métal, étiquettes, dômage, PLV</h3>
         <p class="intro">PIM Industrie est un fabricant alsacien spécialisé dans les interfaces pour les machines et les pièces de décoration pour le luxe, reconnu pour son savoir-faire depuis 1961. L’entreprise accompagne ses clients dans leurs projets, de la définition du besoin jusqu’à la livraison, même lorsque le procédé n’est pas encore choisi. Grâce à un atelier de 4&nbsp;500&nbsp;m² à Marckolsheim et à une équipe qui tient toute la chaîne, PIM réalise claviers à membrane, circuits souples, faces avant, plaques métal, étiquettes, dômage et PLV, avec un contrôle des pièces et une traçabilité ISO&nbsp;9001. Son approche allie conseil, maîtrise technique et exigence de finition, pour les industriels comme pour les maisons du luxe.</p>
-        <a class="link-more" href="a-propos.html">En savoir +</a>
+        <div class="block-ask is-center">
+          <a class="btn" href="a-propos.html">En savoir +</a>
+          <a class="btn line" href="contact.html">Nous contacter</a>
+        </div>
       </div>
     </section>
     <section class="sec sec--svc anchor" id="bloc-prestations" data-nav="prestations">
@@ -89,7 +86,7 @@
             <h3>Création graphique &amp; design</h3>
             <p>De la mise en page aux fichiers, pour un rendu fidèle d’une série à l’autre.</p>
           </a>
-          <a class="svc" href="contact.html">
+          <a class="svc" href="impression-numerique.html">
             <span class="svc-ic">
               <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 8V3.2h10V8"></path><rect x="3.5" y="8" width="17" height="7.6" rx="1.4"></rect><path d="M7 15.6h10v5.2H7z"></path><circle cx="16.6" cy="11.6" r=".7" fill="currentColor" stroke="none"></circle></svg>
             </span>
@@ -138,7 +135,7 @@
       <div class="wrap">
         <div class="doors-head">
           <h2>Une touche d’exception.</h2>
-          <p>Production ou luxe : vous choisissez. Le même atelier tient la série.</p>
+          <p>Industrie ou luxe : vous choisissez. Le même atelier tient la série.</p>
         </div>
         <div class="doors-grid">
           <a class="door jump" href="#industrie">
@@ -146,12 +143,12 @@
               <img src="../maquette%20v2/medias/images/dsc_0560.jpg" alt="Interface industrielle fabriquée par PIM" loading="lazy" decoding="async">
             </span>
             <span class="door-body">
-              <span class="kicker">Production</span>
+              <span class="kicker">Industrie</span>
               <strong>La pièce qui fait parler la machine.</strong>
-              <span class="more">Voir la production</span>
+              <span class="more">Voir l’industrie</span>
             </span>
           </a>
-          <a class="door" href="#decoration">
+          <a class="door jump" href="#luxe">
             <span class="door-photo">
               <img src="../maquette%20v2/medias/images/etiquette_metal_courvoisier.jpg" alt="Étiquette métal pour spiritueux" loading="lazy" decoding="async">
             </span>
@@ -178,7 +175,7 @@
             <h2>La pièce qui fait parler la machine.</h2>
             <p class="intro">Claviers à membrane, circuits souples, faces avant et façades métal. Claviers étanches IP65, repérage durable, série tenue dans le même atelier.</p>
           </div>
-          <a class="link-more" href="index.html#technologies">Toute l’offre industrielle</a>
+          <a class="btn" href="index.html#technologies">Toute l’offre industrielle</a>
         </div>
         <div class="tiles tiles--4 tiles--home">
           <a class="tile" href="index.html#clavier-membrane">
@@ -235,6 +232,7 @@
             <a href="index.html#secteur-transports">Transports</a>
           </div>
         </div>
+        <p class="block-ask is-center"><a class="btn" href="contact.html">Nous contacter</a></p>
       </div>
     </section>
     <section class="sec sec--tint anchor" id="bloc-luxe" data-nav="luxe">
@@ -245,7 +243,7 @@
             <h2>La pièce qui porte la marque.</h2>
             <p class="intro">Étiquettes métal, dômage résine, PLV lumineuse et présentoirs pour les vins, les spiritueux, les parfums et les cosmétiques.</p>
           </div>
-          <a class="link-more" href="index.html#decoration">Toute l’offre luxe et PLV</a>
+          <a class="btn" href="index.html#decoration">Toute l’offre luxe et PLV</a>
         </div>
         <div class="tiles tiles--3 tiles--home">
           <a class="tile" href="index.html#etiquette-vins">
@@ -315,7 +313,10 @@
               <span>LED posées par robot chaque année</span>
             </li>
           </ul>
-          <a class="btn line" href="a-propos.html">Voir le parc machines</a>
+          <div class="block-ask">
+            <a class="btn line" href="a-propos.html">Voir le parc machines</a>
+            <a class="btn" href="contact.html">Nous contacter</a>
+          </div>
         </div>
         <div class="feature-media">
           <img src="../maquette%20v2/medias/images/_MG_3984.jpg" alt="Circuit souple manipulé dans l’atelier PIM" loading="lazy" decoding="async">
@@ -334,7 +335,7 @@
       <div class="wrap">
         <h2>Chaque pièce est pensée pour l’usage.</h2>
         <p>Impression, découpe, contrôle, livraison : la série ne change pas de mains. Industrie ou luxe, le premier échange ne vous engage pas.</p>
-        <a class="btn" href="contact.html">Parlons de votre projet</a>
+        <a class="btn" href="contact.html">Nous contacter</a>
       </div>
     </section>
     <section class="sec sec--tint" data-nav="accueil">
@@ -343,40 +344,40 @@
         <p class="intro">Des industriels et des maisons du luxe, en France et à l’international.</p>
         <div class="logo-grid logo-grid--plain">
           <div>
-            <img src="../maquette%20v2/medias/images/logo_bosch.jpg" alt="Bosch" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/logo_bosch.png" alt="Bosch" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/brand.gif" alt="Honeywell" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/brand.png" alt="Honeywell" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/stago.jpg" alt="Stago" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/stago.png" alt="Stago" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/logo_rafi.jpg" alt="Rafi" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/logo_rafi.png" alt="Rafi" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/logo_168365.gif" alt="Mettler Toledo" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/logo_168365.png" alt="Mettler Toledo" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/meiko_logosvg.jpg" alt="Meiko" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/meiko_logosvg.png" alt="Meiko" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/9f6aae72ff064c4dffbc7fc35e9edfb1.jpg" alt="Chanel" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/9f6aae72ff064c4dffbc7fc35e9edfb1.png" alt="Chanel" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/guerlain.jpg" alt="Guerlain" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/guerlain.png" alt="Guerlain" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/hennessy_logo.png" alt="Hennessy" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/hennessy_logo.png" alt="Hennessy" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/logo_moet_et_chandon.jpg" alt="Moët &amp; Chandon" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/logo_moet_et_chandon.png" alt="Moët &amp; Chandon" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/remy_cointreau.jpg" alt="Rémy Cointreau" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/remy_cointreau.png" alt="Rémy Cointreau" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/thierry_mugler.jpg" alt="Thierry Mugler" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/thierry_mugler.png" alt="Thierry Mugler" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
         </div>
         <p style="margin:28px 0 0">
@@ -390,7 +391,7 @@
       <h2>Vous avez un projet ? Nous pouvons le réaliser.</h2>
       <p>Industrie ou luxe, nous étudions la pièce avec vous. Le premier échange ne vous engage pas.</p>
       <div class="cta-actions">
-        <a class="btn white" href="contact.html">Demander conseil</a>
+        <a class="btn white" href="contact.html">Nous contacter</a>
         <a class="btn ghost" href="tel:+33388586200">03 88 58 62 00</a>
       </div>
     </div>
@@ -435,10 +436,12 @@
           <h3>L’entreprise</h3>
           <a href="a-propos.html">À propos</a>
           <a href="prestations.html">Nos prestations</a>
+          <a href="impression-numerique.html">Impression numérique</a>
           <a href="references.html">Réalisations</a>
           <a href="index.html#ressources">Ressources</a>
           <a href="index.html#glossaire">Glossaire</a>
-          <a href="contact.html">Contact</a>
+          <a href="contact.html">Nous contacter</a>
+          <a href="demande-devis.html">Demander un devis</a>
         </div>
       </div>
       <div class="foot-bottom">
@@ -453,16 +456,16 @@
       </div>
     </div>
   </footer>
-  <script src="../maquette%20v2/js/helpers.js?v=59"></script>
-  <script src="../maquette%20v2/js/pages-secteurs.js?v=55"></script>
-  <script src="../maquette%20v2/js/pages-technologies.js?v=61"></script>
+  <script src="../maquette%20v2/js/helpers.js?v=64"></script>
+  <script src="../maquette%20v2/js/pages-secteurs.js?v=59"></script>
+  <script src="../maquette%20v2/js/pages-technologies.js?v=63"></script>
   <script src="../maquette%20v2/js/pages-besoins.js?v=56"></script>
-  <script src="../maquette%20v2/js/pages-decoration.js?v=60"></script>
+  <script src="../maquette%20v2/js/pages-decoration.js?v=63"></script>
   <script src="../maquette%20v2/js/pages-process.js?v=57"></script>
   <script src="../maquette%20v2/js/pages-ressources.js?v=57"></script>
-  <script src="../maquette%20v2/js/pages-societe.js?v=56"></script>
+  <script src="../maquette%20v2/js/pages-societe.js?v=57"></script>
   <script src="../maquette%20v2/js/pages-legal.js?v=56"></script>
   <script src="../maquette%20v2/js/seo.js?v=57"></script>
-  <script src="site.js?v=30"></script>
+  <script src="site.js?v=38"></script>
 </body>
 </html>

@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="site.css?v=42">
+  <link rel="stylesheet" href="site.css?v=65">
 </head>
 <body data-page="references">
   <a class="skip" href="#main">Aller au contenu</a>
@@ -38,9 +38,7 @@
         <a href="index.html#decoration">Luxe</a>
         <a href="references.html" class="on">Réalisations</a>
         <a href="contact.html">Contact</a>
-        <a class="btn nav-cta" href="contact.html">Demander conseil</a>
       </nav>
-      <a class="btn top-cta" href="contact.html">Demander conseil</a>
     </div>
   </header>
   <main id="main">
@@ -64,43 +62,57 @@
           <button type="button" data-filter="luxe">Luxe</button>
           <button type="button" data-filter="etiquettes">Étiquettes</button>
           <button type="button" data-filter="plv">PLV</button>
+          <span class="folio-split" aria-hidden="true"></span>
+          <div class="folio-drop">
+            <button type="button" class="folio-drop-btn" aria-expanded="false" aria-haspopup="true">Domaines</button>
+            <div class="folio-drop-panel">
+              <button type="button" data-filter="medical">Médical</button>
+              <button type="button" data-filter="aeronautique">Aéronautique</button>
+              <button type="button" data-filter="automobile">Automobile</button>
+              <button type="button" data-filter="automatisation">Automatisation</button>
+              <button type="button" data-filter="machines">Machines</button>
+              <button type="button" data-filter="nautique">Nautique</button>
+              <button type="button" data-filter="electronique">Électronique</button>
+              <button type="button" data-filter="transports">Transports</button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
     <section class="sec sec--folio">
       <div class="wrap">
         <div class="folio">
-          <a class="folio-card" href="index.html#clavier-plat" data-cat="claviers">
+          <a class="folio-card" href="index.html#clavier-plat" data-cat="claviers" data-domaine="medical automatisation machines nautique transports">
             <img src="../maquette%20v2/medias/images/clavier_plat_relegendable.jpg" alt="Clavier plat fabriqué par PIM" loading="lazy" decoding="async">
             <h2>Clavier plat</h2>
             <p>Membrane plate et étiquette interchangeable, pour un pupitre lisible et simple à mettre à jour.</p>
             <span class="more">En savoir +</span>
           </a>
-          <a class="folio-card" href="index.html#clavier-coupelles" data-cat="claviers">
+          <a class="folio-card" href="index.html#clavier-coupelles" data-cat="claviers" data-domaine="automatisation machines">
             <img src="../maquette%20v2/medias/images/industrie_claviers_coupelles.jpg" alt="Clavier à coupelles fabriqué par PIM" loading="lazy" decoding="async">
             <h2>Clavier à coupelles</h2>
             <p>Clic net et plusieurs duretés d’enfoncement, pour les commandes de machine.</p>
             <span class="more">En savoir +</span>
           </a>
-          <a class="folio-card" href="index.html#clavier-retro" data-cat="claviers">
+          <a class="folio-card" href="index.html#clavier-retro" data-cat="claviers" data-domaine="aeronautique automatisation nautique transports">
             <img src="../maquette%20v2/medias/images/dsc_0515.jpg" alt="Clavier rétroéclairé fabriqué par PIM" loading="lazy" decoding="async">
             <h2>Clavier rétroéclairé</h2>
             <p>LED intégrées, pour une interface lisible dans la pénombre.</p>
             <span class="more">En savoir +</span>
           </a>
-          <a class="folio-card" href="index.html#circuit-flexible" data-cat="circuits">
+          <a class="folio-card" href="index.html#circuit-flexible" data-cat="circuits" data-domaine="automobile electronique">
             <img src="../maquette%20v2/medias/images/circuit_souples.jpg" alt="Circuit souple fabriqué par PIM" loading="lazy" decoding="async">
             <h2>Circuit souple</h2>
             <p>Encre argent sur film polyester ou polycarbonate, raccordée par limande.</p>
             <span class="more">En savoir +</span>
           </a>
-          <a class="folio-card" href="index.html#face-avant-plastique" data-cat="faces">
+          <a class="folio-card" href="index.html#face-avant-plastique" data-cat="faces" data-domaine="medical automobile automatisation transports">
             <img src="../maquette%20v2/medias/images/dsc_0633.jpg" alt="Face avant plastique fabriquée par PIM" loading="lazy" decoding="async">
             <h2>Face avant plastique</h2>
             <p>Sérigraphie, reliefs et fenêtres sur un support découpé au format de la machine.</p>
             <span class="more">En savoir +</span>
           </a>
-          <a class="folio-card" href="index.html#facade-metallique" data-cat="facades">
+          <a class="folio-card" href="index.html#facade-metallique" data-cat="facades" data-domaine="automobile aeronautique machines transports">
             <img src="../maquette%20v2/medias/images/gravure_mecanique_de_plaques_metalliques_product_slide.jpg" alt="Gravure d’une plaque métal" loading="lazy" decoding="async">
             <h2>Façade et plaque métal</h2>
             <p>Plaque constructeur, d’identification ou de conformité, gravée et découpée.</p>
@@ -124,13 +136,13 @@
             <p>Présentoir et habillage pour le lieu de vente, en aluminium, plexiglas ou plastique.</p>
             <span class="more">En savoir +</span>
           </a>
-          <a class="folio-card" href="index.html#clavier-gaufre" data-cat="claviers">
+          <a class="folio-card" href="index.html#clavier-gaufre" data-cat="claviers" data-domaine="automatisation machines">
             <img src="../maquette%20v2/medias/images/industrie_claviers_domage.jpg" alt="Clavier gaufré fabriqué par PIM" loading="lazy" decoding="async">
             <h2>Clavier gaufré</h2>
             <p>Relief à chaud ou à froid, pour guider le doigt sans perdre l’étanchéité.</p>
             <span class="more">En savoir +</span>
           </a>
-          <a class="folio-card" href="index.html#circuit-flexible" data-cat="circuits">
+          <a class="folio-card" href="index.html#circuit-flexible" data-cat="circuits" data-domaine="electronique">
             <img src="../maquette%20v2/medias/images/circuit_souples3.jpg" alt="Circuit souple imprimé" loading="lazy" decoding="async">
             <h2>Circuit imprimé souple</h2>
             <p>Pistes et pastilles sur film, prêtes à recevoir les composants.</p>
@@ -149,6 +161,7 @@
             <span class="more">En savoir +</span>
           </a>
         </div>
+        <p class="block-ask"><a class="btn" href="contact.html">Nous contacter</a></p>
       </div>
     </section>
     <section class="sec">
@@ -157,64 +170,64 @@
         <h2>Ils nous font confiance</h2>
         <div class="logo-grid">
           <div>
-            <img src="../maquette%20v2/medias/images/logo_bosch.jpg" alt="Bosch" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/logo_bosch.png" alt="Bosch" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/maxresdefault.jpg" alt="Siemens" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/maxresdefault.png" alt="Siemens" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/brand.gif" alt="Honeywell" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/brand.png" alt="Honeywell" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/brand_1.gif" alt="Gaggenau" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/brand_1.png" alt="Gaggenau" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/logo_168365.gif" alt="Mettler Toledo" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/logo_168365.png" alt="Mettler Toledo" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/saia_burgess.jpg" alt="Saia-Burgess" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/saia_burgess.png" alt="Saia-Burgess" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/meiko_logosvg.jpg" alt="Meiko" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/meiko_logosvg.png" alt="Meiko" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/stago.jpg" alt="Stago" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/stago.png" alt="Stago" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/logo_rafi.jpg" alt="Rafi" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/logo_rafi.png" alt="Rafi" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/drinkotec.jpg" alt="Drinkotec" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/drinkotec.png" alt="Drinkotec" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/9f6aae72ff064c4dffbc7fc35e9edfb1.jpg" alt="Chanel" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/9f6aae72ff064c4dffbc7fc35e9edfb1.png" alt="Chanel" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/guerlain.jpg" alt="Guerlain" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/guerlain.png" alt="Guerlain" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/hennessy_logo.png" alt="Hennessy" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/hennessy_logo.png" alt="Hennessy" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/logo_moet_et_chandon.jpg" alt="Moët &amp; Chandon" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/logo_moet_et_chandon.png" alt="Moët &amp; Chandon" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/remy_cointreau.jpg" alt="Rémy Cointreau" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/remy_cointreau.png" alt="Rémy Cointreau" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/thierry_mugler.jpg" alt="Thierry Mugler" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/thierry_mugler.png" alt="Thierry Mugler" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/logo_devaux.jpg" alt="Devaux" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/logo_devaux.png" alt="Devaux" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/logo_controle_age2.jpg" alt="Père Magloire" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/logo_controle_age2.png" alt="Père Magloire" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/logo_boulard.jpg" alt="Calvados Boulard" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/logo_boulard.png" alt="Calvados Boulard" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
           <div>
-            <img src="../maquette%20v2/medias/images/salomon_001_900.jpg" alt="Salomon" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
+            <img src="../maquette%20v2/medias/images/logos/salomon_001_900.png" alt="Salomon" loading="lazy" decoding="async" onerror="this.closest('div').remove()">
           </div>
         </div>
         <p class="note" style="margin-top:22px">Des études de cas détaillées (le besoin, la solution, le résultat) viendront compléter cette page.</p>
@@ -226,7 +239,7 @@
       <h2>Vous avez un projet ? Nous pouvons le réaliser.</h2>
       <p>Industrie ou luxe, nous étudions la pièce avec vous. Le premier échange ne vous engage pas.</p>
       <div class="cta-actions">
-        <a class="btn white" href="contact.html">Demander conseil</a>
+        <a class="btn white" href="contact.html">Nous contacter</a>
         <a class="btn ghost" href="tel:+33388586200">03 88 58 62 00</a>
       </div>
     </div>
@@ -271,9 +284,11 @@
           <h3>L’entreprise</h3>
           <a href="a-propos.html">À propos</a>
           <a href="prestations.html">Nos prestations</a>
+          <a href="impression-numerique.html">Impression numérique</a>
           <a href="index.html#ressources">Ressources</a>
           <a href="index.html#glossaire">Glossaire</a>
-          <a href="contact.html">Contact</a>
+          <a href="contact.html">Nous contacter</a>
+          <a href="demande-devis.html">Demander un devis</a>
         </div>
       </div>
       <div class="foot-bottom">
@@ -288,6 +303,6 @@
       </div>
     </div>
   </footer>
-  <script src="site.js?v=30"></script>
+  <script src="site.js?v=38"></script>
 </body>
 </html>

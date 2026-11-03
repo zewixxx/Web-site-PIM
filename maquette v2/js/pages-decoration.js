@@ -23,7 +23,7 @@ addPage({
     "<li><b>2010</b><span>Arrivée de l’encre miroir. Les étiquettes prennent le reflet des flacons et des coffrets.</span></li>",
     "<li><b>Aujourd’hui</b><span>Étiquettes, dômage, PLV et présentoirs sortent du même atelier que les interfaces industrielles. ISO 9001, 100 % des pièces contrôlées.</span></li>",
     "</ol>",
-    '<p class="lux-cta"><a class="btn" href="references.html#luxe">Voir les produits</a></p>',
+    '<p class="lux-cta"><a class="btn" href="references.html#luxe">Voir les produits</a><a class="btn line" href="contact.html">Nous contacter</a></p>',
     "</div>"
   ].join("")
 });

@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#970232">
-  <title>Contactez PIM Industrie à Marckolsheim | PIM Industrie</title>
-  <meta name="description" content="Formulaire, téléphone et e-mail pour une question. PIM Industrie, Impasse Kohlgaerten, 67390 Marckolsheim.">
+  <title>Nous contacter | PIM Industrie</title>
+  <meta name="description" content="Téléphone, e-mail et formulaire pour écrire à l’atelier. Pour un chiffrage, demandez un devis. PIM Industrie, Marckolsheim.">
   <link rel="canonical" href="https://www.pim-industrie.com/contact">
   <link rel="icon" href="../maquette%20v2/medias/favicon/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="site.css?v=42">
+  <link rel="stylesheet" href="site.css?v=65">
 </head>
 <body data-page="contact">
   <a class="skip" href="#main">Aller au contenu</a>
@@ -23,12 +23,9 @@
       </a>
       <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="site-nav">
         <span class="sr">Menu</span>
-        <i>
-        </i>
-        <i>
-        </i>
-        <i>
-        </i>
+        <i></i>
+        <i></i>
+        <i></i>
       </button>
       <nav class="nav" id="site-nav" aria-label="Navigation principale">
         <a href="index.html">Accueil</a>
@@ -38,9 +35,7 @@
         <a href="index.html#decoration">Luxe</a>
         <a href="references.html">Réalisations</a>
         <a href="contact.html" class="on">Contact</a>
-        <a class="btn nav-cta" href="contact.html">Demander conseil</a>
       </nav>
-      <a class="btn top-cta" href="contact.html">Demander conseil</a>
     </div>
   </header>
   <main id="main">
@@ -51,14 +46,14 @@
           / Contact
         </p>
         <p class="kicker">Parlons de votre pièce</p>
-        <h1>Demander conseil</h1>
-        <p class="lead">Écrivez-nous même si le choix n’est pas fait. Industrie ou luxe, nous vous répondons depuis l’atelier.</p>
+        <h1>Nous contacter</h1>
+        <p class="lead">Écrivez-nous ou appelez, même si le procédé n’est pas encore choisi. Pour un chiffrage, demandez un devis.</p>
+        <div class="page-actions">
+          <a class="btn" href="demande-devis.html">Demander un devis</a>
+        </div>
       </div>
     </section>
     <section class="sec sec--tight">
-      <div class="wrap">
-        <img class="contact-photo" src="../maquette%20v2/medias/images/mock-conseil.jpg" alt="Échange autour d’une pièce à l’atelier, visuel de maquette">
-      </div>
       <div class="wrap contact-grid">
         <aside class="contact-card">
           <h3>PIM Industrie</h3>
@@ -84,11 +79,12 @@
           <p class="note" style="margin-top:16px">Réponse indicative : 2 jours ouvrés.</p>
         </aside>
         <div>
-          <p class="form-ok" id="form-ok" role="status" hidden="">Merci. Sur la maquette, le message n’est pas envoyé.</p>
-          <form id="contact-form" class="formgrid">
+          <p class="kicker">Écrire à l’atelier</p>
+          <p class="form-ok" id="form-ok" role="status" hidden>Merci. Sur la maquette, le message n’est pas envoyé.</p>
+          <form id="contact-form" class="formgrid" data-mock>
             <div class="fld">
               <label for="f-name">Nom *</label>
-              <input id="f-name" name="name" type="text" autocomplete="name" required="">
+              <input id="f-name" name="name" type="text" autocomplete="name" required>
             </div>
             <div class="fld">
               <label for="f-company">Société</label>
@@ -96,7 +92,7 @@
             </div>
             <div class="fld">
               <label for="f-mail">E-mail *</label>
-              <input id="f-mail" name="email" type="email" autocomplete="email" required="">
+              <input id="f-mail" name="email" type="email" autocomplete="email" required>
             </div>
             <div class="fld">
               <label for="f-tel">Téléphone</label>
@@ -105,22 +101,22 @@
             <div class="fld full">
               <label for="f-world">Votre univers</label>
               <select id="f-world" name="world">
-                <option>Je ne sais pas encore</option>
+                <option>Autre</option>
                 <option>Industrie : clavier, circuit, face avant, plaque métal</option>
                 <option>Luxe : étiquette, insert, PLV, présentoir</option>
               </select>
             </div>
             <div class="fld full">
               <label for="f-msg">Votre besoin *</label>
-              <textarea id="f-msg" name="message" required="" placeholder="Décrivez la pièce, la série, ou simplement le doute.">
-              </textarea>
+              <textarea id="f-msg" name="message" required placeholder="Décrivez la pièce, la série, ou simplement le doute."></textarea>
             </div>
             <p class="note full">
               * Champs obligatoires. Vos informations servent uniquement à répondre à votre demande.
               <a href="index.html#confidentialite" style="color:var(--pim);text-decoration:underline">Protection des données</a>
             </p>
-            <div class="full">
+            <div class="full page-actions">
               <button class="btn" type="submit">Envoyer</button>
+              <a class="btn" href="demande-devis.html">Demander un devis</a>
             </div>
           </form>
         </div>
@@ -167,10 +163,12 @@
           <h3>L’entreprise</h3>
           <a href="a-propos.html">À propos</a>
           <a href="prestations.html">Nos prestations</a>
+          <a href="impression-numerique.html">Impression numérique</a>
           <a href="references.html">Réalisations</a>
           <a href="index.html#ressources">Ressources</a>
           <a href="index.html#glossaire">Glossaire</a>
-          <a href="contact.html">Contact</a>
+          <a href="contact.html">Nous contacter</a>
+          <a href="demande-devis.html">Demander un devis</a>
         </div>
       </div>
       <div class="foot-bottom">
@@ -185,6 +183,6 @@
       </div>
     </div>
   </footer>
-  <script src="site.js?v=30"></script>
+  <script src="site.js?v=38"></script>
 </body>
 </html>

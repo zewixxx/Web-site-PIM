@@ -1,5 +1,5 @@
 /* PIM Industrie — comportements seulement.
-   Le texte des pages est dans les fichiers HTML (index, a-propos, prestations, references, contact).
+   Le texte des pages est dans les fichiers HTML (index, a-propos, prestations, impression-numerique, references, contact).
    Ce fichier gère le menu, le formulaire, le défilement Industrie / Luxe,
    et l'affichage des fiches produit reprises de la maquette v2. */
 (function () {
@@ -12,8 +12,10 @@
     accueil: "index.html",
     "a-propos": "a-propos.html",
     prestations: "prestations.html",
+    "impression-numerique": "impression-numerique.html",
     references: "references.html",
-    contact: "contact.html"
+    contact: "contact.html",
+    demande: "demande-devis.html"
   };
   const JUMPS = { industrie: "bloc-industrie", luxe: "bloc-luxe" };
   const ALIASES = {
@@ -31,12 +33,28 @@
       "prestations sérigraphie découpe laser",
       "Nos prestations : du conseil à la livraison",
       "Conseil, création graphique, sérigraphie, découpe et gravure, finition, contrôle qualité et livraison : huit étapes dans un seul atelier alsacien."
+    ],
+    "impression-numerique": [
+      "impression numérique petite série",
+      "Impression numérique, de l’unité à la petite série",
+      "Impression numérique de l’unité à la petite série, quand elle est plus adaptée que la sérigraphie. L’atelier PIM à Marckolsheim vous oriente avant de lancer."
+    ],
+    contact: [
+      "contact PIM Industrie",
+      "Nous contacter",
+      "Téléphone, e-mail et formulaire pour écrire à l’atelier. Pour un chiffrage, demandez un devis. PIM Industrie, Marckolsheim."
+    ],
+    demande: [
+      "demander un devis PIM Industrie",
+      "Demander un devis",
+      "Décrivez la pièce, clavier, face avant, étiquette ou PLV. La quantité et le délai sont précisés au devis. Atelier PIM à Marckolsheim."
     ]
   };
   const PAGE_URL = {
     accueil: SITE + "/",
     "a-propos": SITE + "/qui-sommes-nous",
     prestations: SITE + "/nos-prestations",
+    "impression-numerique": SITE + "/nos-prestations/impression-numerique",
     references: SITE + "/references",
     contact: SITE + "/contact",
     demande: SITE + "/demande-de-devis",
@@ -96,8 +114,8 @@
     prestations: ["prestations.html"],
     references: ["references.html"],
     contact: ["contact.html"],
-    industrie: ["#industrie", "index.html#industrie"],
-    luxe: ["#luxe", "index.html#luxe"]
+    industrie: ["#technologies", "index.html#technologies"],
+    luxe: ["#decoration", "index.html#decoration"]
   };
 
   let homeHTML = null;
@@ -244,7 +262,7 @@
         el.setAttribute("alt", page.name + " : exemple de réalisation PIM Industrie (vue " + n + ")");
       } else el.setAttribute("alt", page.name);
     });
-    root.querySelectorAll("button.cta").forEach((btn) => {
+    root.querySelectorAll("button.cta, button.btn").forEach((btn) => {
       btn.addEventListener("click", (event) => {
         event.preventDefault();
         toast(/PDF/i.test(btn.textContent) ? "Maquette : la fiche PDF sera fournie par PIM." : "Maquette : la demande n’est pas envoyée.");
@@ -280,19 +298,19 @@
         if (event.target.closest("a")) closeMenu();
       });
     }
-    const form = document.getElementById("contact-form");
-    if (form && !form.dataset.bound) {
+    document.querySelectorAll("form[data-mock]").forEach((form) => {
+      if (form.dataset.bound) return;
       form.dataset.bound = "1";
       form.addEventListener("submit", (event) => {
         event.preventDefault();
-        const ok = document.getElementById("form-ok");
-        if (ok) {
+        const ok = form.previousElementSibling;
+        if (ok && ok.classList.contains("form-ok")) {
           ok.hidden = false;
           ok.scrollIntoView({ block: "center" });
         }
         form.reset();
       });
-    }
+    });
   }
 
   function rememberHome() {
@@ -308,6 +326,7 @@
       delete main.dataset.mode;
     }
     viewing = "accueil";
+    document.body.classList.remove("is-fiche");
   }
 
   function showFiche(id) {
@@ -330,20 +349,18 @@
     }
     main.dataset.mode = "fiche";
     viewing = id;
+    document.body.classList.add("is-fiche");
     window.scrollTo(0, 0);
   }
 
   function jumpTo(blockId, navId) {
-    const align = () => {
-      const el = document.getElementById(blockId);
-      if (el) el.scrollIntoView({ behavior: "instant", block: "start" });
-    };
+    const el = document.getElementById(blockId);
     userScrolled = false;
     setActive(navId);
-    align();
-    [200, 700, 1600].forEach((delay) => setTimeout(() => {
-      if (!userScrolled && viewing === "accueil") align();
-    }, delay));
+    if (!el) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const top = el.getBoundingClientRect().top + window.scrollY - 12;
+    window.scrollTo({ top: Math.max(0, top), behavior: reduce ? "auto" : "smooth" });
   }
 
   const FOLIO_GROUPS = {
@@ -352,16 +369,30 @@
   };
 
   function applyFolio(filter) {
-    const bar = document.querySelector(".folio-filters");
-    if (!bar) return;
-    const buttons = Array.prototype.slice.call(bar.querySelectorAll("button"));
+    const buttons = Array.prototype.slice.call(document.querySelectorAll(".folio-filters button"));
+    if (!buttons.length) return;
     const known = buttons.some((button) => button.getAttribute("data-filter") === filter);
     const active = known ? filter : "tout";
+    const domains = ["medical", "aeronautique", "automobile", "automatisation", "machines", "nautique", "electronique", "transports"];
     buttons.forEach((button) => button.classList.toggle("on", button.getAttribute("data-filter") === active));
+    const drop = document.querySelector(".folio-drop");
+    const dropBtn = drop && drop.querySelector(".folio-drop-btn");
+    if (dropBtn) {
+      const chosen = document.querySelector('.folio-drop-panel button[data-filter="' + active + '"]');
+      dropBtn.textContent = chosen ? chosen.textContent : "Domaines";
+      dropBtn.classList.toggle("on", !!chosen);
+      if (chosen) drop.classList.remove("is-open");
+    }
     const group = FOLIO_GROUPS[active];
     document.querySelectorAll(".folio-card").forEach((card) => {
       const cat = card.getAttribute("data-cat");
-      card.classList.toggle("is-off", active !== "tout" && (group ? group.indexOf(cat) === -1 : cat !== active));
+      const tags = (card.getAttribute("data-domaine") || "").split(" ");
+      let hide = false;
+      if (active === "tout") hide = false;
+      else if (group) hide = group.indexOf(cat) === -1;
+      else if (domains.indexOf(active) >= 0) hide = tags.indexOf(active) === -1;
+      else hide = cat !== active;
+      card.classList.toggle("is-off", hide);
     });
   }
 
@@ -374,7 +405,7 @@
     const hops = {
       gamme: "references.html#industrie",
       etiquettes: "references.html#etiquettes",
-      demande: "contact.html",
+      demande: "demande-devis.html",
       societe: "a-propos.html",
       process: "prestations.html",
       references: "references.html",
@@ -423,6 +454,10 @@
   function onScroll() {
     const top = document.getElementById("top-btn");
     if (top) top.classList.toggle("show", window.scrollY > 700);
+    const bar = document.querySelector(".top");
+    if (bar && PAGE === "accueil" && !document.body.classList.contains("is-fiche")) {
+      bar.classList.toggle("is-solid", window.scrollY > 24);
+    }
     if (PAGE !== "accueil" || viewing !== "accueil" || spyTick) return;
     spyTick = true;
     requestAnimationFrame(() => {
@@ -446,18 +481,23 @@
   if (location.hash) route();
   else if (PAGE === "accueil") applySeo("accueil", { id: "accueil", name: "Accueil" });
 
-  const folioFilters = document.querySelector(".folio-filters");
-  if (folioFilters) {
-    applyFolio((location.hash || "").replace(/^#/, "") || "tout");
+  document.querySelectorAll(".folio-filters").forEach((folioFilters) => {
     folioFilters.addEventListener("click", (event) => {
       const button = event.target.closest("button");
-      if (!button) return;
+      if (!button || !folioFilters.contains(button)) return;
+      if (button.classList.contains("folio-drop-btn")) {
+        const drop = button.parentElement;
+        const open = drop.classList.toggle("is-open");
+        button.setAttribute("aria-expanded", open ? "true" : "false");
+        return;
+      }
       const filter = button.getAttribute("data-filter");
       applyFolio(filter);
-      const next = filter === "tout" ? location.pathname + location.search : "#" + filter;
       if (filter === "tout") history.replaceState(null, "", location.pathname + location.search);
       else if (location.hash !== "#" + filter) location.hash = filter;
-      else history.replaceState(null, "", next);
     });
+  });
+  if (document.querySelector(".folio-filters")) {
+    applyFolio((location.hash || "").replace(/^#/, "") || "tout");
   }
 })();
