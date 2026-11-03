@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
-  <title>PIM Industrie — Nouveau site en préparation</title>
+  <title data-i18n="titleHome">PIM Industrie — Nouveau site en préparation</title>
   <link rel="icon" href="medias/favicon.svg" type="image/svg+xml">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
@@ -40,8 +40,50 @@
     }
     .util a { color: #fff; text-decoration: none; }
     .util a:hover { text-decoration: underline; }
-    .langs { display: flex; gap: 12px; align-items: center; opacity: 0.85; }
-    .langs span { opacity: 0.4; }
+    .lang { position: relative; }
+    .lang-btn {
+      background: transparent;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      font: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 4px 10px;
+      cursor: pointer;
+    }
+    .lang-btn:hover,
+    .lang-btn[aria-expanded="true"] { background: #fff; color: #1c1c1c; }
+    .lang-menu {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 8px);
+      z-index: 20;
+      margin: 0;
+      padding: 6px;
+      list-style: none;
+      min-width: 150px;
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+    .lang-menu button {
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: 0;
+      font: inherit;
+      font-size: 14px;
+      padding: 8px 10px;
+      cursor: pointer;
+      color: var(--ink);
+    }
+    .lang-menu button:hover,
+    .lang-menu button[aria-current="true"] {
+      background: #f7eef1;
+      color: var(--pim);
+    }
 
     .nav {
       display: flex;
@@ -156,14 +198,20 @@
     @media (max-width: 860px) {
       .hero { grid-template-columns: 1fr; }
       .hero-aside { min-height: auto; padding-top: 36px; padding-bottom: 40px; }
-      .langs { display: none; }
     }
   </style>
 </head>
 <body>
   <div class="util">
     <a href="tel:+33388586200">03 88 58 62 00</a>
-    <div class="langs"><span>FR</span><span>|</span><span>EN</span><span>|</span><span>DE</span></div>
+    <div class="lang" data-lang-switch>
+      <button type="button" class="lang-btn" aria-expanded="false" aria-haspopup="listbox" aria-controls="lang-menu">FR</button>
+      <ul class="lang-menu" id="lang-menu" role="listbox" hidden>
+        <li><button type="button" data-lang="fr">Français</button></li>
+        <li><button type="button" data-lang="en">English</button></li>
+        <li><button type="button" data-lang="de">Deutsch</button></li>
+      </ul>
+    </div>
   </div>
 
   <header class="nav">
@@ -172,38 +220,40 @@
 
   <section class="hero">
     <div class="hero-copy">
-      <p class="kicker">Marckolsheim · depuis 1961</p>
-      <h1>Notre nouveau site arrive très bientôt.</h1>
-      <p class="lead">
+      <p class="kicker" data-i18n="kicker">Marckolsheim · depuis 1961</p>
+      <h1 data-i18n="homeTitle">Notre nouveau site arrive très bientôt.</h1>
+      <p class="lead" data-i18n="homeLead">
         Nous finalisons une version plus claire de pim-industrie.com.
-        En attendant sa mise en ligne, nos équipes restent joignables pour vos projets
+        En attendant sa mise en ligne, écrivez-nous pour vos projets
         de claviers, faces avant, étiquettes et PLV.
       </p>
       <div class="cta-row">
-        <a class="cta ghost" href="tel:+33388586200">Appeler le 03 88 58 62 00</a>
+        <a class="cta" href="contact.html" data-i18n="write">Nous écrire</a>
+        <a class="cta ghost" href="tel:+33388586200" data-i18n="call">Appeler le 03 88 58 62 00</a>
       </div>
     </div>
 
-    <aside class="hero-aside" aria-label="Coordonnées">
+    <aside class="hero-aside" data-i18n-aria="aside" aria-label="Coordonnées">
       <div>
-        <h2>Nous appeler</h2>
-        <p><a href="tel:+33388586200">03 88 58 62 00</a><br>Fax : 03 88 58 62 10</p>
+        <h2 data-i18n="callUs">Nous appeler</h2>
+        <p><a href="tel:+33388586200">03 88 58 62 00</a><br><span data-i18n="fax">Fax : 03 88 58 62 10</span></p>
       </div>
       <div>
-        <h2>Nous écrire</h2>
+        <h2 data-i18n="writeUs">Nous écrire</h2>
         <p><a href="mailto:mail@pim-industrie.com">mail@pim-industrie.com</a></p>
       </div>
       <div>
-        <h2>Nous rendre visite</h2>
-        <p>Impasse Kohlgaerten<br>67390 Marckolsheim<br>France</p>
+        <h2 data-i18n="visit">Nous rendre visite</h2>
+        <p data-i18n-html="address">Impasse Kohlgaerten<br>67390 Marckolsheim<br>France</p>
       </div>
       <div>
-        <h2>Horaires</h2>
-        <p>Du lundi au vendredi<br>Sur rendez-vous</p>
+        <h2 data-i18n="hours">Horaires</h2>
+        <p data-i18n-html="hoursBody">Du lundi au vendredi<br>Sur rendez-vous</p>
       </div>
     </aside>
   </section>
 
-  <footer class="foot">© PIM Industrie · Fabricant alsacien · ISO 9001</footer>
+  <footer class="foot" data-i18n="foot">© PIM Industrie · Fabricant alsacien · ISO 9001</footer>
+  <script src="lang.js"></script>
 </body>
 </html>
