@@ -111,7 +111,7 @@
     }
 
     .hero-copy {
-      padding: clamp(40px, 7vw, 88px) clamp(20px, 5vw, 64px);
+      padding: clamp(40px, 7vw, 88px) clamp(20px, 5vw, 64px) clamp(40px, 7vw, 88px) clamp(72px, 12vw, 168px);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -270,6 +270,7 @@
 
     @media (max-width: 860px) {
       .hero { grid-template-columns: 1fr; }
+      .hero-copy { padding-left: clamp(20px, 5vw, 64px); }
       .hero-aside { min-height: auto; padding-top: 36px; padding-bottom: 40px; }
       .contact-form { grid-template-columns: 1fr; }
     }
