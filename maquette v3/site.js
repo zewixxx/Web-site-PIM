@@ -127,7 +127,7 @@
   function fixMedia(html) {
     return html
       .replace(/(src|href)="medias\//g, '$1="../maquette%20v2/medias/')
-      .replace('<a href="#process">Voir tout le parc machines</a>', '<a href="a-propos.html">Voir tout le parc machines</a>')
+      .replace('<a href="#process">Voir tout le parc machines</a>', '<a href="a-propos.html#atelier">Voir l’atelier</a>')
       .replace('<a href="#process">Process</a>', '<a href="prestations.html">Nos prestations</a>')
       .replace('<a href="#societe">Qui sommes-nous</a>', '<a href="a-propos.html">À propos</a>');
   }
@@ -182,6 +182,10 @@
     if (url) setMeta('meta[property="og:url"]', { tag: "meta", attrs: { property: "og:url" }, target: "content" }, url);
     const canon = document.querySelector('link[rel="canonical"]');
     if (canon && url) canon.setAttribute("href", url);
+    const domaine = new URLSearchParams(location.search).get("domaine") || "";
+    const note = domaine && url
+      ? "Contexte d’arrivée : " + domaine + ". Cette variante n’est pas une page à part. Adresse indexée : " + url
+      : "";
     let ld = document.getElementById("ld-org");
     if (id === "accueil") {
       if (!ld) {
@@ -201,7 +205,7 @@
         address: { "@type": "PostalAddress", streetAddress: "Impasse Kohlgaerten", postalCode: "67390", addressLocality: "Marckolsheim", addressCountry: "FR" }
       });
     } else if (ld) ld.remove();
-    updateSeoPanel({ query: row ? row[0] : "", title: title, description: description, url: url });
+    updateSeoPanel({ query: row ? row[0] : "", title: title, description: description, url: url, note: note });
   }
 
   function ensureOverlays() {
@@ -234,7 +238,9 @@
       "<dt>URL cible</dt><dd>" + (info.url ? esc(info.url) : "à définir") + "</dd>",
       '<dt>Titre · <span class="' + lenClass(info.title.length, 65) + '">' + info.title.length + " caractères</span></dt><dd>" + esc(info.title) + "</dd>",
       '<dt>Description · <span class="' + lenClass(info.description.length, 160) + '">' + info.description.length + " caractères</span></dt><dd>" + (info.description ? esc(info.description) : "à rédiger") + "</dd>",
-      '</dl><p class="hint">Outil de revue de la maquette : il n’existera pas sur le site final.</p>'
+      "</dl>",
+      info.note ? '<p class="hint">' + esc(info.note) + "</p>" : "",
+      '<p class="hint">Outil de revue de la maquette : il n’existera pas sur le site final.</p>'
     ].join("");
   }
 
@@ -329,9 +335,36 @@
     document.body.classList.remove("is-fiche");
   }
 
+  function currentDomaine() {
+    const slug = new URLSearchParams(location.search).get("domaine") || "";
+    if (slug && typeof domainBySlug === "function" && domainBySlug(slug)) return slug;
+    return "";
+  }
+
+  function mountDomainUses(root, productId) {
+    root.querySelectorAll(".domain-banner, .domain-uses, .domain-qa").forEach((el) => el.remove());
+    if (typeof domainUsesHtml !== "function") return;
+    const slug = currentDomaine();
+    const html = domainUsesHtml(productId, slug);
+    if (!html) return;
+    const wrap = root.querySelector(".wrap");
+    if (!wrap) return;
+    const holder = document.createElement("div");
+    holder.innerHTML = fixMedia(html);
+    const section = holder.firstElementChild;
+    const photo = wrap.querySelector(".text-photo");
+    const proof = wrap.querySelector(".proof");
+    /* Arrivée depuis un domaine : ses réponses passent avant la description générale. */
+    if (section.classList.contains("has-active") && photo) photo.insertAdjacentElement("beforebegin", section);
+    else if (photo) photo.insertAdjacentElement("afterend", section);
+    else if (proof) wrap.insertBefore(section, proof);
+    else wrap.appendChild(section);
+  }
+
   function showFiche(id) {
     if (PAGE !== "accueil") {
-      location.href = "index.html#" + id;
+      const domaine = new URLSearchParams(location.search).get("domaine");
+      location.href = "index.html" + (domaine ? "?domaine=" + encodeURIComponent(domaine) : "") + "#" + id;
       return;
     }
     rememberHome();
@@ -344,6 +377,7 @@
     } else {
       main.innerHTML = '<article class="v2-page" data-page="' + page.id + '">' + fixMedia(page.html) + "</article>";
       enhanceV2(main, page);
+      mountDomainUses(main, page.id);
       applySeo(id, page);
       setActive(navFor(page));
     }
@@ -393,7 +427,30 @@
       else if (domains.indexOf(active) >= 0) hide = tags.indexOf(active) === -1;
       else hide = cat !== active;
       card.classList.toggle("is-off", hide);
+      applyFolioPhoto(card, domains.indexOf(active) >= 0 ? active : "");
     });
+  }
+
+  function applyFolioPhoto(card, slug) {
+    const img = card.querySelector("img");
+    if (!img) return;
+    if (!img.dataset.baseSrc) {
+      img.dataset.baseSrc = img.getAttribute("src") || "";
+      img.dataset.baseAlt = img.getAttribute("alt") || "";
+    }
+    if (!card.dataset.baseHref) card.dataset.baseHref = card.getAttribute("href") || "";
+    const id = (card.dataset.baseHref.split("#")[1] || "").split("?")[0];
+    const file = slug && typeof productDomainPhoto === "function" ? productDomainPhoto(id, slug) : "";
+    if (file) {
+      img.src = "../maquette%20v2/medias/images/" + file;
+      const caption = productDomainCaption(id, slug);
+      if (caption) img.alt = caption;
+      card.setAttribute("href", "index.html?domaine=" + encodeURIComponent(slug) + "#" + id);
+    } else {
+      img.src = img.dataset.baseSrc;
+      img.alt = img.dataset.baseAlt;
+      card.setAttribute("href", card.dataset.baseHref);
+    }
   }
 
   function route() {

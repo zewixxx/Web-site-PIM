@@ -68,7 +68,7 @@ const secteursIndustrie = [
     short: "Claviers étanches pour les environnements humides.",
     intro: "Sur l’eau, l’humidité impose des interfaces étanches. Les claviers PIM sont certifiés IP65 : poussière et jets d’eau.",
     facts: ["IP65", "Protégé des jets d’eau", "Clavier élastomère"],
-    links: [["Clavier étanche IP65", "clavier-etanche"], ["Clavier élastomère", "clavier-elastomere"], ["Clavier rétroéclairé", "clavier-retro"], ["Façade et insert métallique", "facade-metallique"]]
+    links: [["Clavier à membrane", "clavier-membrane"], ["Clavier étanche IP65", "clavier-etanche"], ["Clavier élastomère", "clavier-elastomere"], ["Clavier rétroéclairé", "clavier-retro"], ["Façade et insert métallique", "facade-metallique"]]
   },
   {
     id: "secteur-electronique",
@@ -86,9 +86,155 @@ const secteursIndustrie = [
     short: "Claviers étanches et plaques d’identification.",
     intro: "Claviers IP65 et plaques de conformité pour les équipements de transport.",
     facts: ["IP65", "Plaques d’identification", "Faces avant"],
-    links: [["Clavier étanche IP65", "clavier-etanche"], ["Façade et insert métallique", "facade-metallique"], ["Clavier rétroéclairé", "clavier-retro"], ["Face avant plastique", "face-avant-plastique"]]
+    links: [["Clavier à membrane", "clavier-membrane"], ["Clavier étanche IP65", "clavier-etanche"], ["Façade et insert métallique", "facade-metallique"], ["Clavier rétroéclairé", "clavier-retro"], ["Face avant plastique", "face-avant-plastique"]]
   }
 ];
+
+/* Textes d’usage : une seule fois, affichés sur la fiche produit.
+   ?domaine= choisit le bloc mis en avant. Ce n’est pas une seconde URL indexée. */
+const DOMAIN_USES = {
+  "clavier-membrane": {
+    medical: ["Sur un appareil médical, le clavier se nettoie, épouse le boîtier et reste étanche. Il est réalisé sur mesure, en IP65, et chaque pièce est testée avant expédition.", ["IP65", "Face nettoyable", "Test électrique de chaque pièce"]],
+    aeronautique: ["Pour un équipement exposé, le clavier reste fin et lisible. Le rétroéclairage ou l’électroluminescence s’ajoutent quand le poste manque de lumière.", ["Rétroéclairé ou électroluminescent", "Façade lisible", "Contrôle à 100 %"]],
+    automobile: ["Le clavier habille une commande d’équipement ou d’atelier : faible épaisseur, forme libre, décor imprimé sur la face.", ["Faible épaisseur", "Forme libre", "Décor imprimé"]],
+    automatisation: ["Sur un pupitre, le clavier porte le clic des coupelles, un afficheur ou un rétroéclairage, selon le geste de l’opérateur.", ["Coupelles", "Afficheur 7 segments", "Rétroéclairage"]],
+    machines: ["Le clavier pilote la machine. Il voisine souvent avec la plaque constructeur et une face étanche IP65.", ["Commande machine", "IP65", "À côté de la plaque constructeur"]],
+    nautique: ["En milieu humide, ce clavier se ferme en version étanche : poussière et jets d’eau, lisible sur un pupitre de bord.", ["IP65", "Protégé des jets d’eau", "Limande vers l’électronique"]],
+    electronique: ["Le clavier et le circuit souple forment un seul ensemble. Des LED ou des CMS peuvent être reportés dans l’interface.", ["Circuit souple intégré", "CMS et LED", "Encre argent"]],
+    transports: ["Sur un équipement de transport, le clavier reste étanche et lisible. La plaque d’identification complète la traçabilité.", ["IP65", "Lisibilité", "Plaque d’identification"]]
+  },
+  "clavier-etanche": {
+    medical: ["Les appareils qui se désinfectent demandent une face close. L’IP65 limite les infiltrations au nettoyage.", ["IP65", "Face close", "Test de chaque pièce"]],
+    machines: ["Huile, poussière, nettoyage : la face étanche protège la commande de la machine.", ["IP65", "Face fermée", "Commande machine"]],
+    nautique: ["C’est la pièce retenue dès que le poste prend les embruns ou les jets d’eau.", ["IP65", "Jets d’eau", "Pupitre de bord"]],
+    transports: ["La face étanche tient les lavages et les projections sur les équipements de transport.", ["IP65", "Face fermée", "Équipement de transport"]]
+  },
+  "clavier-capacitif": {
+    medical: ["Sans pièce mobile, la face reste lisse et simple à nettoyer sur un appareil médical.", ["Face lisse", "Sans pièce mobile", "Nettoyage"]],
+    electronique: ["La commande capacitive s’intègre au circuit souple, sans coupelle ni contact mécanique.", ["Sans contact mécanique", "Circuit souple", "Face continue"]]
+  },
+  "face-avant-plastique": {
+    medical: ["La face avant ferme l’appareil, porte le décor et laisse passer affichage et commandes.", ["Décor imprimé", "Fenêtres d’affichage", "Boîtier médical"]],
+    automobile: ["Habillage plastique d’une commande ou d’un équipement : forme, couleur et marquage sur mesure.", ["Marquage", "Forme sur mesure", "Habillage"]],
+    automatisation: ["La face avant du pupitre aligne touches, voyants et fenêtre d’afficheur.", ["Pupitre", "Fenêtre d’afficheur", "Repères de touches"]],
+    transports: ["Face avant résistante pour un équipement de transport, avec le marquage utile à l’opérateur.", ["Marquage", "Équipement de transport", "Sur mesure"]]
+  },
+  "circuit-flexible": {
+    medical: ["Le circuit souple relie le clavier à l’électronique de l’appareil, dans l’épaisseur disponible.", ["Faible épaisseur", "Limande", "Appareil médical"]],
+    automobile: ["Un circuit souple suit la forme du boîtier quand une carte rigide ne passe pas.", ["Forme libre", "Faible épaisseur", "Connexion directe"]],
+    electronique: ["Encre argent, puis CMS et LED reportés : le circuit souple porte l’électronique de l’interface.", ["Encre argent", "CMS et LED", "Électronique imprimée"]]
+  },
+  "clavier-retro": {
+    aeronautique: ["Les touches restent lisibles dans un poste sombre, sans quitter la construction du clavier à membrane.", ["LED de puissance", "Postes sombres", "Touches lisibles"]],
+    automatisation: ["Le rétroéclairage guide l’opérateur sur le pupitre quand l’atelier est peu éclairé.", ["Guidage des touches", "Pupitre", "LED"]],
+    nautique: ["De nuit, sur un pupitre de bord, symboles et touches restent visibles.", ["Usage de nuit", "Pupitre de bord", "Symboles lisibles"]],
+    transports: ["Le rétroéclairage garde la commande lisible dans une cabine ou un local technique.", ["Cabine", "Symboles lisibles", "LED"]]
+  },
+  "clavier-electro": {
+    aeronautique: ["La lampe électroluminescente, sérigraphiée par PIM, éclaire la face de façon uniforme, plane ou courbe.", ["Lumière froide", "Faible consommation", "Forme libre"]]
+  },
+  "facade-metallique": {
+    aeronautique: ["Façade ou insert métal pour identifier un équipement et habiller une face exposée.", ["Insert métal", "Identification", "Sur mesure"]],
+    automobile: ["Plaque d’identification ou habillage métal d’une pièce automobile.", ["Plaque d’identification", "Métal", "Marquage durable"]],
+    machines: ["Plaque constructeur, plaque d’outillage ou plaque de conformité : l’identité de la machine.", ["Plaque constructeur", "Plaque de conformité", "Outillage"]],
+    nautique: ["Plaque métal pour identifier un équipement exposé à l’humidité.", ["Identification", "Métal", "Marquage durable"]],
+    transports: ["Plaque de conformité ou d’identification pour un équipement de transport.", ["Plaque de conformité", "Identification", "Métal"]]
+  },
+  "clavier-coupelles": {
+    automatisation: ["Le clic confirme la touche sur un pupitre, même avec des gants ou sans regarder l’écran.", ["Clic net", "Pupitre", "Un million d’actionnements"]]
+  },
+  "clavier-7s": {
+    automatisation: ["L’afficheur 7 segments, dans moins de 2 mm, donne une valeur lue directement sur le clavier.", ["Moins de 2 mm", "Chiffres lisibles", "Intégré au clavier"]]
+  },
+  "clavier-elastomere": {
+    machines: ["Le clavier élastomère encaisse les sollicitations d’une commande de machine.", ["Touches en relief", "Commande machine", "Sur mesure"]],
+    nautique: ["Les touches en élastomère restent utilisables quand le poste est humide.", ["Relief", "Milieu humide", "Sur mesure"]]
+  },
+  "besoin-electronique-imprimee": {
+    electronique: ["L’encre argent et le report de CMS ou de LED construisent la fonction électronique dans l’interface, pas à côté.", ["Encre argent", "CMS et LED", "Intégré à l’interface"]]
+  },
+  "process-composants": {
+    electronique: ["Le robot pose CMS et LED sur le circuit souple ou le clavier, à l’emplacement prévu au plan.", ["Pose robotisée", "CMS", "LED"]]
+  },
+  "process-controle": {
+    aeronautique: ["Chaque pièce est contrôlée avant expédition. L’exigence du secteur passe par ce contrôle, sur la même fiche.", ["Contrôle à 100 %", "Avant expédition", "Traçabilité ISO 9001"]]
+  }
+};
+
+function domainBySlug(slug) {
+  return secteursIndustrie.find((item) => item.id === "secteur-" + slug) || null;
+}
+
+function domainLabel(slug) {
+  const sector = domainBySlug(slug);
+  return sector ? sector.name : "";
+}
+
+const DOMAIN_PHOTOS = {
+  medical: ["domaine-medical-clavier.jpg", "Clavier à membrane sur un appareil de laboratoire."],
+  aeronautique: ["domaine-aeronautique-clavier.jpg", "Clavier à membrane sur un pupitre d’équipement."],
+  automobile: ["domaine-automobile-clavier.jpg", "Clavier à membrane sur un poste d’atelier automobile."],
+  automatisation: ["domaine-automatisation-clavier.jpg", "Clavier à membrane sur un pupitre de machine."],
+  machines: ["domaine-machines-clavier.jpg", "Clavier à membrane à côté de la plaque machine."],
+  nautique: ["domaine-nautique-clavier.jpg", "Clavier à membrane sur une console de bord."],
+  electronique: ["domaine-electronique-clavier.jpg", "Clavier à membrane et son circuit souple."],
+  transports: ["domaine-transports-clavier.jpg", "Clavier à membrane sur un poste de conduite."]
+};
+
+function domainPhoto(slug) {
+  const row = DOMAIN_PHOTOS[slug];
+  return row ? row[0] : "";
+}
+
+function domainPhotoCaption(slug) {
+  const row = DOMAIN_PHOTOS[slug];
+  return row ? row[1] : "";
+}
+
+function productShot(id, slug) {
+  if (slug && typeof productDomainPhoto === "function") {
+    const file = productDomainPhoto(id, slug);
+    if (file) return file;
+  }
+  return "";
+}
+
+function sectorProductChips(item) {
+  const slug = item.id.replace("secteur-", "");
+  const links = (item.links || []).filter((link) => link[1] !== "clavier-membrane" && link[1].indexOf("process") !== 0 && productShot(link[1], slug));
+  const withPlat = links.some((link) => link[1] === "clavier-plat") || !productShot("clavier-plat", slug)
+    ? links
+    : [["Clavier plat", "clavier-plat"]].concat(links);
+  if (!withPlat.length) return "";
+  return '<div class="domain-products">' + withPlat.map((link) => {
+    const shot = productShot(link[1], slug);
+    if (!shot) return "";
+    return '<a class="domain-product" href="index.html?domaine=' + slug + "#" + link[1] + '">'
+      + '<img src="medias/images/' + shot + '" alt="' + escapeText(link[0]) + ", " + escapeText(item.name) + '">'
+      + "<span>" + escapeText(link[0]) + "</span></a>";
+  }).join("") + "</div>";
+}
+
+function domainUsesHtml(productId, activeSlug) {
+  if (typeof domainPanelHtml !== "function") return "";
+  const order = secteursIndustrie.map((item) => item.id.replace("secteur-", "")).filter((slug) => domainEntry(productId, slug));
+  if (!order.length) return "";
+  const active = order.indexOf(activeSlug) >= 0 ? activeSlug : "";
+  /* Le domaine d’arrivée passe en premier et s’ouvre ; les autres restent fermés. */
+  const sorted = active ? [active].concat(order.filter((slug) => slug !== active)) : order;
+
+  return [
+    '<section class="domain-uses' + (active ? " has-active" : "") + '" id="usages">',
+    active
+      ? "<h2>Ce produit dans votre domaine : " + escapeText(domainLabel(active)) + "</h2>"
+      : "<h2>Ce produit selon votre domaine</h2>",
+    active
+      ? '<p class="domain-context">Le volet de votre domaine est ouvert. Ouvrez les autres pour voir les usages ailleurs : la fiche produit reste la même.</p>'
+      : '<p class="domain-context">Ouvrez le volet de votre domaine pour voir la photo et les réponses qui vous concernent. La fiche produit reste la même.</p>',
+    '<div class="domain-panels">' + sorted.map((slug) => domainPanelHtml(productId, slug, slug === active)).join("") + "</div>",
+    "</section>"
+  ].join("");
+}
 
 addPage({
   id: "secteurs",
@@ -122,10 +268,15 @@ secteursIndustrie.forEach((item) => {
       "<div>",
       "<p>" + item.intro + "</p>",
       '<ul class="facts">' + item.facts.map((fact) => "<li>" + fact + "</li>").join("") + "</ul>",
-      '<p class="lux-cta"><a class="btn" href="references.html#' + item.id.replace("secteur-", "") + '">Solutions pour ce domaine</a><a class="btn line" href="contact.html">Nous contacter</a></p>',
+      '<p class="lux-cta"><a class="btn" href="index.html?domaine=' + item.id.replace("secteur-", "") + '#clavier-membrane">Voir le clavier à membrane</a></p>',
       "</div>",
-      '<img src="medias/images/' + item.image + '" alt="' + item.name + '">',
+      '<figure class="domain-hero">',
+      '<img src="medias/images/' + (domainPhoto(item.id.replace("secteur-", "")) || item.image) + '" alt="' + escapeText(domainPhotoCaption(item.id.replace("secteur-", "")) || item.name) + '">',
+      "<figcaption>" + escapeText(domainPhotoCaption(item.id.replace("secteur-", ""))) + "</figcaption>",
+      "</figure>",
       "</div>",
+      "<h2>Également dans ce domaine</h2>",
+      sectorProductChips(item),
       item.detail || "",
       reassurance(false),
       "</div>"

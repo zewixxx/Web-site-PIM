@@ -6,8 +6,8 @@ if (realpath((string) ($_SERVER['SCRIPT_FILENAME'] ?? '')) === __FILE__) {
     exit;
 }
 
-const DESTINATAIRE = 'mail@pim-industrie.com';
-const EXPEDITEUR = 'mail@pim-industrie.com';
+const DESTINATAIRE = 'info@pim-industrie.com';
+const EXPEDITEUR = 'info@pim-industrie.com';
 const SUJETS_AUTORISES = [
     'Demande de devis',
     'Question technique',

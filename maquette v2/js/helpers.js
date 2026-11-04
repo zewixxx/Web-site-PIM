@@ -263,7 +263,6 @@ function specBlock(id, luxe) {
     "</tbody></table>",
     '<div class="spec-actions">',
     '<a class="btn" href="demande-devis.html">Demander un devis</a>',
-    '<a class="btn line" href="contact.html">Nous contacter</a>',
     '<button type="button" class="btn line">Télécharger la fiche PDF</button>',
     "</div></section>"
   ].join("");
