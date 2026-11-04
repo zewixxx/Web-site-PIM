@@ -16,7 +16,7 @@ function reponse(bool $ok, array $extra = []): void
         echo json_encode(array_merge(['ok' => $ok], $extra), JSON_UNESCAPED_UNICODE);
         exit;
     }
-    header('Location: contact.php?' . ($ok ? 'envoye=1' : 'erreur=1'));
+    header('Location: contact.html?' . ($ok ? 'envoye=1' : 'erreur=1'));
     exit;
 }
 
@@ -31,7 +31,7 @@ function ligne(string $cle, int $max): string
 }
 
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
-    header('Location: contact.php');
+    header('Location: contact.html');
     exit;
 }
 
