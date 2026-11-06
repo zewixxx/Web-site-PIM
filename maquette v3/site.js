@@ -533,6 +533,7 @@
   bindChrome();
   ["wheel", "touchstart", "keydown"].forEach((name) => window.addEventListener(name, () => { userScrolled = true; }, { passive: true }));
   window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
   window.addEventListener("hashchange", route);
   if (PAGE !== "accueil") applySeo(PAGE, { id: PAGE, name: PAGE });
   if (location.hash) route();
