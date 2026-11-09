@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /inc/
+Disallow: /prive/
+
+Sitemap: https://www.pim-industrie.com/sitemap.xml

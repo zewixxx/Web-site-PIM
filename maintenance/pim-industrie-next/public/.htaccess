@@ -1,0 +1,153 @@
+# =============================================================================
+# PIM Industrie - configuration Apache (OVH)
+#
+# Les deux domaines (pim-industrie.com et pim-industrie.de) pointent vers CE MEME DOSSIER.
+#   - www.pim-industrie.com/fr/  -> site en français
+#   - www.pim-industrie.com/en/  -> site en anglais
+#   - www.pim-industrie.de/      -> site en allemand (dossier interne /de/)
+# =============================================================================
+
+Options -Indexes -MultiViews
+ServerSignature Off
+DirectoryIndex index.html index.php
+AddDefaultCharset UTF-8
+ErrorDocument 403 /erreur-404.html
+ErrorDocument 404 /erreur-404.html
+
+AddType image/svg+xml .svg
+AddType font/woff2 .woff2
+
+# -----------------------------------------------------------------------------
+# Redirections (HTTPS, www, langue/domaine)
+# -----------------------------------------------------------------------------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # 1. Sans "www" -> https://www.<domaine> (301)
+  RewriteCond %{HTTP_HOST} ^pim-industrie\.(com|de)$ [NC]
+  RewriteRule ^ https://www.pim-industrie.%1%{REQUEST_URI} [R=301,L,NE]
+
+  # 2. HTTP -> HTTPS (301)
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]
+  RewriteCond %{HTTP_HOST} ^www\.pim-industrie\.(com|de)$ [NC]
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L,NE]
+
+  # ---------------------------------------------------------------------------
+  # Domaine .com : français (/fr/) et anglais (/en/)
+  # ---------------------------------------------------------------------------
+
+  # /de/... sur le .com -> même page sur le .de
+  RewriteCond %{HTTP_HOST} ^www\.pim-industrie\.com$ [NC]
+  RewriteRule ^de(?:/(.*))?$ https://www.pim-industrie.de/$1 [R=301,L,NE]
+
+  # Anciennes adresses de la page de maintenance
+  RewriteCond %{HTTP_HOST} ^www\.pim-industrie\.com$ [NC]
+  RewriteRule ^contact(?:\.html)?/?$ https://www.pim-industrie.com/fr/contact/ [R=301,L]
+  RewriteCond %{HTTP_HOST} ^www\.pim-industrie\.com$ [NC]
+  RewriteRule ^index\.html$ https://www.pim-industrie.com/ [R=301,L]
+
+  # Racine du .com : choix de la langue d'après le navigateur (302, car dépend du visiteur)
+  RewriteCond %{HTTP_HOST} ^www\.pim-industrie\.com$ [NC]
+  RewriteCond %{HTTP:Accept-Language} ^\s*de [NC]
+  RewriteRule ^$ https://www.pim-industrie.de/ [R=302,L,E=PIM_VARY:1]
+
+  RewriteCond %{HTTP_HOST} ^www\.pim-industrie\.com$ [NC]
+  RewriteCond %{HTTP:Accept-Language} ^\s*fr [NC]
+  RewriteRule ^$ https://www.pim-industrie.com/fr/ [R=302,L,E=PIM_VARY:1]
+
+  RewriteCond %{HTTP_HOST} ^www\.pim-industrie\.com$ [NC]
+  RewriteCond %{HTTP:Accept-Language} ^\s*en [NC]
+  RewriteRule ^$ https://www.pim-industrie.com/en/ [R=302,L,E=PIM_VARY:1]
+
+  RewriteCond %{HTTP_HOST} ^www\.pim-industrie\.com$ [NC]
+  RewriteRule ^$ https://www.pim-industrie.com/fr/ [R=302,L,E=PIM_VARY:1]
+
+  # ---------------------------------------------------------------------------
+  # Domaine .de : allemand à la racine (le dossier interne /de/ reste invisible)
+  # ---------------------------------------------------------------------------
+
+  # /fr/... et /en/... sur le .de -> même page sur le .com
+  RewriteCond %{HTTP_HOST} ^www\.pim-industrie\.de$ [NC]
+  RewriteRule ^(fr|en)(?:/(.*))?$ https://www.pim-industrie.com/$1/$2 [R=301,L,NE]
+
+  # Anciennes adresses de la page de maintenance
+  RewriteCond %{HTTP_HOST} ^www\.pim-industrie\.de$ [NC]
+  RewriteRule ^contact(?:\.html)?/?$ https://www.pim-industrie.de/kontakt/ [R=301,L]
+  RewriteCond %{HTTP_HOST} ^www\.pim-industrie\.de$ [NC]
+  RewriteRule ^index\.html$ https://www.pim-industrie.de/ [R=301,L]
+
+  # /de/... demandé directement sur le .de -> adresse sans /de (évite le contenu en double)
+  RewriteCond %{HTTP_HOST} ^www\.pim-industrie\.de$ [NC]
+  RewriteCond %{THE_REQUEST} \s/de(?:/|\s|\?)
+  RewriteRule ^de(?:/(.*))?$ https://www.pim-industrie.de/$1 [R=301,L,NE]
+
+  # robots.txt et sitemap.xml propres à chaque domaine
+  RewriteCond %{HTTP_HOST} ^www\.pim-industrie\.de$ [NC]
+  RewriteRule ^robots\.txt$ robots-de.txt [L]
+  RewriteCond %{HTTP_HOST} ^www\.pim-industrie\.de$ [NC]
+  RewriteRule ^sitemap\.xml$ sitemap-de.xml [L]
+  RewriteRule ^robots\.txt$ robots-com.txt [L]
+  RewriteRule ^sitemap\.xml$ sitemap-com.xml [L]
+
+  # Adresse sans "/" final -> avec "/" (pages uniquement)
+  RewriteCond %{HTTP_HOST} ^www\.pim-industrie\.de$ [NC]
+  RewriteCond %{REQUEST_URI} !\.[A-Za-z0-9]+$
+  RewriteCond %{REQUEST_URI} !/$
+  RewriteRule ^(.+)$ https://www.pim-industrie.de/$1/ [R=301,L,NE]
+
+  # Réécriture interne : https://www.pim-industrie.de/kontakt/ -> dossier /de/kontakt/
+  RewriteCond %{HTTP_HOST} ^www\.pim-industrie\.de$ [NC]
+  RewriteCond %{REQUEST_URI} !^/de(/|$)
+  RewriteCond %{REQUEST_URI} !\.[A-Za-z0-9]+$
+  RewriteRule ^(.*)$ de/$1 [L]
+</IfModule>
+
+# -----------------------------------------------------------------------------
+# En-têtes de sécurité
+# -----------------------------------------------------------------------------
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=(), interest-cohort=()"
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+  Header always set Strict-Transport-Security "max-age=31536000"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
+  Header always append Vary "Accept-Language" env=PIM_VARY
+</IfModule>
+
+# -----------------------------------------------------------------------------
+# Fichiers jamais accessibles depuis Internet
+# -----------------------------------------------------------------------------
+<FilesMatch "(?i)(\.(ini|log|bin|bak|sql|sh|ps1|md|lock)|^\.ovhconfig)$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+# -----------------------------------------------------------------------------
+# Compression et cache
+# -----------------------------------------------------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml application/xml application/javascript text/javascript application/json image/svg+xml
+</IfModule>
+
+<IfModule mod_headers.c>
+  # Pages : toujours revalidées (une mise à jour du site est visible tout de suite)
+  <FilesMatch "(?i)\.(html|txt|xml)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  # Images
+  <FilesMatch "(?i)\.(png|svg|ico|jpg|jpeg|webp)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  # Fichiers générés par Next.js : le nom change à chaque version, cache longue durée
+  <If "%{REQUEST_URI} =~ m#^/_next/static/#">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </If>
+</IfModule>

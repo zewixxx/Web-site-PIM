@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://www.pim-industrie.com/fr/</loc>
+    <lastmod>2026-11-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pim-industrie.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pim-industrie.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pim-industrie.de/"/>
+  </url>
+  <url>
+    <loc>https://www.pim-industrie.com/fr/contact/</loc>
+    <lastmod>2026-11-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pim-industrie.com/fr/contact/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pim-industrie.com/en/contact/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pim-industrie.de/kontakt/"/>
+  </url>
+  <url>
+    <loc>https://www.pim-industrie.com/fr/mentions-legales/</loc>
+    <lastmod>2026-11-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pim-industrie.com/fr/mentions-legales/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pim-industrie.com/en/legal-notice/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pim-industrie.de/impressum/"/>
+  </url>
+  <url>
+    <loc>https://www.pim-industrie.com/en/</loc>
+    <lastmod>2026-11-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pim-industrie.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pim-industrie.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pim-industrie.de/"/>
+  </url>
+  <url>
+    <loc>https://www.pim-industrie.com/en/contact/</loc>
+    <lastmod>2026-11-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pim-industrie.com/fr/contact/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pim-industrie.com/en/contact/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pim-industrie.de/kontakt/"/>
+  </url>
+  <url>
+    <loc>https://www.pim-industrie.com/en/legal-notice/</loc>
+    <lastmod>2026-11-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.pim-industrie.com/fr/mentions-legales/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.pim-industrie.com/en/legal-notice/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://www.pim-industrie.de/impressum/"/>
+  </url>
+</urlset>
