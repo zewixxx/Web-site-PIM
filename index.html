@@ -65,6 +65,7 @@
       <button type="button" id="show-v1">Maquette v1</button>
       <button type="button" id="show-v2">Maquette v2</button>
       <button type="button" id="show-v3" class="on">Maquette v3 (finale)</button>
+      <button type="button" id="show-v4">Maquette v4</button>
       <button type="button" id="show-compare" class="alt">Comparaison design</button>
       <button type="button" id="show-maint" class="alt">Maintenance</button>
     </div>
@@ -78,6 +79,7 @@
       v1: document.getElementById("show-v1"),
       v2: document.getElementById("show-v2"),
       v3: document.getElementById("show-v3"),
+      v4: document.getElementById("show-v4"),
       compare: document.getElementById("show-compare"),
       maint: document.getElementById("show-maint")
     };
@@ -85,6 +87,7 @@
       v1: { title: "Maquette v1", src: "maquette%20v1/index.html?v=55#accueil" },
       v2: { title: "Maquette v2", src: "maquette%20v2/index.html?v=55#accueil" },
       v3: { title: "Maquette v3 (finale)", src: "maquette%20v3/index.html?v=32#accueil" },
+      v4: { title: "Maquette v4", src: "maquette%20v4/index.html#accueil" },
       compare: { title: "Comparaison design", src: "maquette%20comparaison/index.html?v=55#accueil" },
       maint: { title: "Page maintenance", src: "maintenance/index.html?v=4" }
     };
@@ -108,6 +111,7 @@
     buttons.v1.addEventListener("click", function () { show("v1"); });
     buttons.v2.addEventListener("click", function () { show("v2"); });
     buttons.v3.addEventListener("click", function () { show("v3"); });
+    buttons.v4.addEventListener("click", function () { show("v4"); });
     buttons.compare.addEventListener("click", function () { show("compare"); });
     buttons.maint.addEventListener("click", function () { show("maint"); });
   </script>
