@@ -1,0 +1,7 @@
+# Dossier d'images : aucun script ne doit jamais s'exécuter ici (défense en profondeur)
+<FilesMatch "\.(php[0-9]?|phtml|phar|pht|phps|cgi|pl|py|sh|htm|html|svgz?)$">
+<IfModule mod_authz_core.c>
+Require all denied
+</IfModule>
+</FilesMatch>
+Options -Indexes

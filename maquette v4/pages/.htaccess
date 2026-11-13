@@ -1,0 +1,3 @@
+# Dossier des pages. Pas d'index de fichiers.
+# L'adresse publique reste à la racine (/nom.html), voir la règle 4b du .htaccess racine.
+Options -Indexes

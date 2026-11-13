@@ -1,0 +1,16 @@
+# =====================================================================
+# .htaccess à installer à la racine de www.pim-industrie.fr ET de www.pim-industrie.de
+# (hébergements séparés du .com). Domaine officiel : https://www.pim-industrie.com
+# Redirection 301 de TOUT le domaine vers le .com en gardant le chemin et les paramètres :
+# les anciennes adresses archivées du .fr (/pages/..., /uk/...) et du .de (/fr/...-NN.html)
+# sont ensuite redirigées vers la bonne page par les règles du .htaccess du .com.
+# Variante sans hébergement : redirection « visible » 301 configurée chez le registrar/OVH
+# (redirection permanente avec conservation du chemin), ou alias du .fr/.de sur
+# l'hébergement du .com (la règle 3 du .htaccess du .com s'en charge alors en 1 seule étape).
+# Le jour où un site allemand sera publié sur le .de, remplacer ce fichier.
+# =====================================================================
+Options -Indexes
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule ^(.*)$ https://www.pim-industrie.com/$1 [R=301,L]
+</IfModule>

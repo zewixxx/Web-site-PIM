@@ -1,0 +1,338 @@
+# =====================================================================
+# .htaccess — www.pim-industrie.com (domaine officiel, site français)
+# Serveur Apache 2.4 (OVH). À tester sur une préproduction avant mise en ligne.
+# Si la préproduction a un autre nom de domaine, désactiver temporairement la règle 3.
+#
+# Fichiers : index.html à la racine, pages/ par rubrique, css/, js/, img/.
+# L'adresse publique est le chemin du fichier (pages/rubrique/nom.html).
+# Les anciennes adresses /nom.html redirigent vers ce chemin (règle 4b).
+# =====================================================================
+Options -Indexes
+DirectoryIndex index.html
+ErrorDocument 404 /pages/systeme/404.html
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# 1) Fichiers de travail jamais publics (ne pas les mettre en ligne de toute façon)
+#    Bloque aussi _prive/ (configuration, journaux et données du formulaire de contact).
+RewriteRule (^|/)_ - [F,L]
+# 1b) Fichiers et dossiers cachés (.git, .env, .user.ini...) jamais publics, sauf /.well-known/ (certificats SSL)
+RewriteRule (^|/)\.(?!well-known(/|$)) - [F,L]
+
+# 2) Anciennes adresses du site (2002-2025, .com/.fr/.de) -> nouvelles pages, en UNE seule redirection
+#    (cible absolue https://www.pim-industrie.com : pas de chaîne http -> https -> nouvelle page).
+#    Liste complète reconstituée en 11/2026 (Wayback Machine + sitemap archivé d'août 2025),
+#    détail URL par URL dans _outils-dev/redirections-301.csv. 151 règles 301 + 6 règles 410.
+#    Aucune règle ne vise une page du nouveau site (vérifié), donc pas de boucle.
+#    /en/ et /de/ -> page FR la plus proche, PROVISOIREMENT (pas encore de version EN/DE).
+#    Flags : R=301 permanent, L dernière règle, NE garde le #ancre, QSD supprime les anciens ?paramètres (Apache 2.4).
+#    [G] = 410 Gone. Aucune URL de spam (piratage) trouvée ; les 410 visent des pages techniques de l'ancien CMS.
+# --- 410 Gone : pages techniques de l'ancien CMS, tests, liens sortants (aucune URL de spam trouvée)
+# technique : ancien back-office PHP (pas du spam)
+RewriteRule ^admin(/|$) - [G]
+# technique : script PHP de l'ancien CMS (pas du spam)
+RewriteRule ^(sas|site/fichier|medias/.*)\.php$ - [G]
+# page de test/attente
+RewriteRule ^fr/(test-55|test-1-colonne-56|attente-de-49|attente-UK-50)\.html$ - [G]
+# lien sortant (agence web, partenaire)
+RewriteRule ^site/(Site|Lien)[-_].*\.html$ - [G]
+# lien sortant (article de presse externe)
+RewriteRule ^site/Article-Premium-Beauty-News-fr-38-1\.html$ - [G]
+# lien sortant (chaîne YouTube)
+RewriteRule ^site/Chaine-Youtube-Pim-Industrie-fr-14-1\.html$ - [G]
+
+# --- Site 2016-2025 (FR) : /industrie, /decoration, /nos-process, /outils...
+RewriteRule ^acces/?$ https://www.pim-industrie.com/pages/contact/contact.html#acces [R=301,L,NE,QSD]
+RewriteRule ^contact/?$ https://www.pim-industrie.com/pages/contact/contact.html [R=301,L,NE,QSD]
+RewriteRule ^(societe|qui-sommes-nous)/?$ https://www.pim-industrie.com/pages/entreprise/a-propos.html [R=301,L,NE,QSD]
+# INCERTAIN : plus de page actualités (accueil)
+RewriteRule ^actualites(/.*)?$ https://www.pim-industrie.com/ [R=301,L,NE,QSD]
+# plus de newsletter : accueil
+RewriteRule ^inscriptiondesinscription-newsletter/?$ https://www.pim-industrie.com/ [R=301,L,NE,QSD]
+RewriteRule ^industrie/?$ https://www.pim-industrie.com/pages/industrie/industrie.html [R=301,L,NE,QSD]
+RewriteRule ^industrie/circuit-flexible/?$ https://www.pim-industrie.com/pages/industrie/circuit-souple.html [R=301,L,NE,QSD]
+RewriteRule ^industrie/clavier-etanche/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-etanche.html [R=301,L,NE,QSD]
+RewriteRule ^industrie/facade-et-insert-metallique/?$ https://www.pim-industrie.com/pages/industrie/facade-metal.html [R=301,L,NE,QSD]
+RewriteRule ^industrie/faces?-avant-plastique/?$ https://www.pim-industrie.com/pages/industrie/face-avant-plastique.html [R=301,L,NE,QSD]
+RewriteRule ^industrie/clavier-a-membrane/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-membrane.html [R=301,L,NE,QSD]
+RewriteRule ^industrie/clavier-a-membrane/clavier-afficheurs-7s/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-afficheur-7-segments.html [R=301,L,NE,QSD]
+RewriteRule ^industrie/clavier-a-membrane/clavier-capacitif/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-capacitif.html [R=301,L,NE,QSD]
+RewriteRule ^industrie/clavier-a-membrane/clavier-coupelles/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-coupelles.html [R=301,L,NE,QSD]
+RewriteRule ^industrie/clavier-a-membrane/clavier-elastomere/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-elastomere.html [R=301,L,NE,QSD]
+RewriteRule ^industrie/clavier-a-membrane/clavier-electroluminescent/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-electroluminescent.html [R=301,L,NE,QSD]
+RewriteRule ^industrie/clavier-a-membrane/clavier-gaufre/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-gaufre.html [R=301,L,NE,QSD]
+RewriteRule ^industrie/clavier-a-membrane/clavier-plat/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-plat.html [R=301,L,NE,QSD]
+RewriteRule ^industrie/clavier-a-membrane/clavier-retro-eclaire/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-retroeclaire.html [R=301,L,NE,QSD]
+# filet de sécurité
+RewriteRule ^industrie/.+$ https://www.pim-industrie.com/pages/industrie/industrie.html [R=301,L,NE,QSD]
+RewriteRule ^decoration/?$ https://www.pim-industrie.com/pages/luxe/luxe.html [R=301,L,NE,QSD]
+RewriteRule ^decoration/etiquette-personnalisable/?$ https://www.pim-industrie.com/pages/luxe/luxe.html [R=301,L,NE,QSD]
+RewriteRule ^decoration/etiquette-personnalisable/etiquette-3d/?$ https://www.pim-industrie.com/pages/luxe/domage-resine.html [R=301,L,NE,QSD]
+RewriteRule ^decoration/etiquette-personnalisable/etiquette-cosmetiques/?$ https://www.pim-industrie.com/pages/luxe/insert-parfum-cosmetique.html [R=301,L,NE,QSD]
+RewriteRule ^decoration/etiquette-personnalisable/etiquette-plastique/?$ https://www.pim-industrie.com/pages/luxe/etiquette-plastique.html [R=301,L,NE,QSD]
+RewriteRule ^decoration/etiquette-personnalisable/etiquette-vins-spiritueux/?$ https://www.pim-industrie.com/pages/luxe/etiquette-vins-spiritueux.html [R=301,L,NE,QSD]
+RewriteRule ^decoration/facades-de-presentation-et-etiquettes/?$ https://www.pim-industrie.com/pages/luxe/luxe.html [R=301,L,NE,QSD]
+RewriteRule ^decoration/presentoir-plexiglas/?$ https://www.pim-industrie.com/pages/luxe/presentoir-plexiglas.html [R=301,L,NE,QSD]
+RewriteRule ^decoration/publicite-sur-le-lieu-de-vente/?$ https://www.pim-industrie.com/pages/luxe/plv.html [R=301,L,NE,QSD]
+RewriteRule ^decoration/signaletique-lumineuse/?$ https://www.pim-industrie.com/pages/luxe/plv-lumineuse.html [R=301,L,NE,QSD]
+# filet de sécurité
+RewriteRule ^decoration/.+$ https://www.pim-industrie.com/pages/luxe/luxe.html [R=301,L,NE,QSD]
+RewriteRule ^nos-process/?$ https://www.pim-industrie.com/pages/entreprise/prestations.html [R=301,L,NE,QSD]
+RewriteRule ^nos-process/decoupe-deformation/?$ https://www.pim-industrie.com/pages/entreprise/prestations.html#decoupe [R=301,L,NE,QSD]
+RewriteRule ^nos-process/gravure/?$ https://www.pim-industrie.com/pages/savoir-faire/gravure-aluminium.html [R=301,L,NE,QSD]
+RewriteRule ^nos-process/impression/?$ https://www.pim-industrie.com/pages/entreprise/prestations.html#serigraphie [R=301,L,NE,QSD]
+RewriteRule ^nos-process/laminage-assemblage/?$ https://www.pim-industrie.com/pages/entreprise/prestations.html#finition [R=301,L,NE,QSD]
+# INCERTAIN : ou electronique-imprimee.html
+RewriteRule ^nos-process/reports-de-composants/?$ https://www.pim-industrie.com/pages/entreprise/prestations.html#finition [R=301,L,NE,QSD]
+RewriteRule ^nos-process/test-electrique-controle-final/?$ https://www.pim-industrie.com/pages/entreprise/prestations.html#controle [R=301,L,NE,QSD]
+# filet de sécurité
+RewriteRule ^nos-process/.+$ https://www.pim-industrie.com/pages/entreprise/prestations.html [R=301,L,NE,QSD]
+RewriteRule ^outils/conditions-generales-d-achat/?$ https://www.pim-industrie.com/pages/legal/cga.html [R=301,L,NE,QSD]
+RewriteRule ^outils/conditions-generales-de-vente/?$ https://www.pim-industrie.com/pages/legal/cgv.html [R=301,L,NE,QSD]
+RewriteRule ^outils/glossaire(/.*)?$ https://www.pim-industrie.com/pages/ressources/glossaire.html [R=301,L,NE,QSD]
+RewriteRule ^outils/mentions-legales/?$ https://www.pim-industrie.com/pages/legal/mentions-legales.html [R=301,L,NE,QSD]
+RewriteRule ^outils/(plan-du-site|resultats-de-recherche)/?$ https://www.pim-industrie.com/pages/legal/plan-du-site.html [R=301,L,NE,QSD]
+# filet de sécurité
+RewriteRule ^outils(/.*)?$ https://www.pim-industrie.com/pages/legal/plan-du-site.html [R=301,L,NE,QSD]
+
+# --- Version anglaise 2017-2025 (/en/) -> page FR la plus proche (provisoire : pas encore de site EN)
+RewriteRule ^en/?$ https://www.pim-industrie.com/ [R=301,L,NE,QSD]
+RewriteRule ^en/access/?$ https://www.pim-industrie.com/pages/contact/contact.html#acces [R=301,L,NE,QSD]
+RewriteRule ^en/contact/?$ https://www.pim-industrie.com/pages/contact/contact.html [R=301,L,NE,QSD]
+RewriteRule ^en/the-company/?$ https://www.pim-industrie.com/pages/entreprise/a-propos.html [R=301,L,NE,QSD]
+# plus de newsletter : accueil
+RewriteRule ^en/inscriptiondesinscription-newsletter/?$ https://www.pim-industrie.com/ [R=301,L,NE,QSD]
+RewriteRule ^en/industry/?$ https://www.pim-industrie.com/pages/industrie/industrie.html [R=301,L,NE,QSD]
+RewriteRule ^en/industry/flexible-printed-electronics/?$ https://www.pim-industrie.com/pages/industrie/circuit-souple.html [R=301,L,NE,QSD]
+RewriteRule ^en/industry/metal-overlays-and-inserts/?$ https://www.pim-industrie.com/pages/industrie/facade-metal.html [R=301,L,NE,QSD]
+RewriteRule ^en/industry/plastic-overlays/?$ https://www.pim-industrie.com/pages/industrie/face-avant-plastique.html [R=301,L,NE,QSD]
+RewriteRule ^en/industry/membran-keyboards/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-membrane.html [R=301,L,NE,QSD]
+RewriteRule ^en/industry/membran-keyboards/7-segment-display-keypad/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-afficheur-7-segments.html [R=301,L,NE,QSD]
+RewriteRule ^en/industry/membran-keyboards/backlit-keypads/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-retroeclaire.html [R=301,L,NE,QSD]
+RewriteRule ^en/industry/membran-keyboards/capacitive-keypads/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-capacitif.html [R=301,L,NE,QSD]
+RewriteRule ^en/industry/membran-keyboards/dome-switch-keypads/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-coupelles.html [R=301,L,NE,QSD]
+RewriteRule ^en/industry/membran-keyboards/elastomeric-keypads/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-elastomere.html [R=301,L,NE,QSD]
+RewriteRule ^en/industry/membran-keyboards/electroluminescent-keypads/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-electroluminescent.html [R=301,L,NE,QSD]
+RewriteRule ^en/industry/membran-keyboards/embossed-keypads/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-gaufre.html [R=301,L,NE,QSD]
+RewriteRule ^en/industry/membran-keyboards/flat-panel-membrane-keypad/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-plat.html [R=301,L,NE,QSD]
+# filet de sécurité
+RewriteRule ^en/industry/membran-keyboards/.+$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-membrane.html [R=301,L,NE,QSD]
+# filet de sécurité
+RewriteRule ^en/industry/.+$ https://www.pim-industrie.com/pages/industrie/industrie.html [R=301,L,NE,QSD]
+RewriteRule ^en/decoration(/decoration)?/?$ https://www.pim-industrie.com/pages/luxe/luxe.html [R=301,L,NE,QSD]
+RewriteRule ^en/decoration/(decoration/)?illuminated-advertising/?$ https://www.pim-industrie.com/pages/luxe/plv-lumineuse.html [R=301,L,NE,QSD]
+# INCERTAIN : ou insert-parfum-cosmetique.html
+RewriteRule ^en/decoration/(decoration/)?metal-inserts/?$ https://www.pim-industrie.com/pages/luxe/etiquette-vins-spiritueux.html [R=301,L,NE,QSD]
+RewriteRule ^en/decoration/(decoration/)?plastics-labels/?$ https://www.pim-industrie.com/pages/luxe/etiquette-plastique.html [R=301,L,NE,QSD]
+RewriteRule ^en/decoration/(decoration/)?pos-advertising/?$ https://www.pim-industrie.com/pages/luxe/plv.html [R=301,L,NE,QSD]
+# filet de sécurité
+RewriteRule ^en/decoration/.+$ https://www.pim-industrie.com/pages/luxe/luxe.html [R=301,L,NE,QSD]
+RewriteRule ^en/our-processes(/.*)?$ https://www.pim-industrie.com/pages/entreprise/prestations.html [R=301,L,NE,QSD]
+RewriteRule ^en/tools/general-conditions-of-sale/?$ https://www.pim-industrie.com/pages/legal/cgv.html [R=301,L,NE,QSD]
+RewriteRule ^en/tools/general-purchasing-terms/?$ https://www.pim-industrie.com/pages/legal/cga.html [R=301,L,NE,QSD]
+RewriteRule ^en/tools/glossary(/.*)?$ https://www.pim-industrie.com/pages/ressources/glossaire.html [R=301,L,NE,QSD]
+RewriteRule ^en/tools/legal-notice/?$ https://www.pim-industrie.com/pages/legal/mentions-legales.html [R=301,L,NE,QSD]
+RewriteRule ^en/tools/(sitemap|results-of-research)/?$ https://www.pim-industrie.com/pages/legal/plan-du-site.html [R=301,L,NE,QSD]
+
+# --- Version allemande 2017-2025 (/de/) -> page FR la plus proche (provisoire : pas encore de site DE)
+RewriteRule ^de/?$ https://www.pim-industrie.com/ [R=301,L,NE,QSD]
+RewriteRule ^de/anfahrt/?$ https://www.pim-industrie.com/pages/contact/contact.html#acces [R=301,L,NE,QSD]
+RewriteRule ^de/kontakt/?$ https://www.pim-industrie.com/pages/contact/contact.html [R=301,L,NE,QSD]
+RewriteRule ^de/das-unternehmen/?$ https://www.pim-industrie.com/pages/entreprise/a-propos.html [R=301,L,NE,QSD]
+# plus de newsletter : accueil
+RewriteRule ^de/anmeldung-abmeldung-newsletter/?$ https://www.pim-industrie.com/ [R=301,L,NE,QSD]
+RewriteRule ^de/industrie/?$ https://www.pim-industrie.com/pages/industrie/industrie.html [R=301,L,NE,QSD]
+RewriteRule ^de/industrie/schaltkreise/?$ https://www.pim-industrie.com/pages/industrie/circuit-souple.html [R=301,L,NE,QSD]
+RewriteRule ^de/industrie/metall-frontplatten-und-metallplaketten/?$ https://www.pim-industrie.com/pages/industrie/facade-metal.html [R=301,L,NE,QSD]
+RewriteRule ^de/industrie/dekorfolien/?$ https://www.pim-industrie.com/pages/industrie/face-avant-plastique.html [R=301,L,NE,QSD]
+RewriteRule ^de/industrie/folientastaturen/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-membrane.html [R=301,L,NE,QSD]
+RewriteRule ^de/industrie/folientastaturen/tastaturen-mit-7-segment-anzeigen/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-afficheur-7-segments.html [R=301,L,NE,QSD]
+RewriteRule ^de/industrie/folientastaturen/hinterleuchtete-tastaturen/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-retroeclaire.html [R=301,L,NE,QSD]
+RewriteRule ^de/industrie/folientastaturen/kapazitive-tastaturen/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-capacitif.html [R=301,L,NE,QSD]
+RewriteRule ^de/industrie/folientastaturen/tastaturen-mit-schnappscheiben/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-coupelles.html [R=301,L,NE,QSD]
+RewriteRule ^de/industrie/folientastaturen/elastomer-tastaturen/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-elastomere.html [R=301,L,NE,QSD]
+RewriteRule ^de/industrie/folientastaturen/elektrolumineszens-tastaturen/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-electroluminescent.html [R=301,L,NE,QSD]
+RewriteRule ^de/industrie/folientastaturen/gepragte-tastaturen/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-gaufre.html [R=301,L,NE,QSD]
+RewriteRule ^de/industrie/folientastaturen/flache-tastaturen/?$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-plat.html [R=301,L,NE,QSD]
+# filet de sécurité
+RewriteRule ^de/industrie/folientastaturen/.+$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-membrane.html [R=301,L,NE,QSD]
+# filet de sécurité
+RewriteRule ^de/industrie/.+$ https://www.pim-industrie.com/pages/industrie/industrie.html [R=301,L,NE,QSD]
+RewriteRule ^de/dekorative-elemente(/dekorative-elemente)?/?$ https://www.pim-industrie.com/pages/luxe/luxe.html [R=301,L,NE,QSD]
+RewriteRule ^de/dekorative-elemente/(dekorative-elemente/)?beleuchtete-werbeelemente/?$ https://www.pim-industrie.com/pages/luxe/plv-lumineuse.html [R=301,L,NE,QSD]
+RewriteRule ^de/dekorative-elemente/(dekorative-elemente/)?kunststoff-etiketten/?$ https://www.pim-industrie.com/pages/luxe/etiquette-plastique.html [R=301,L,NE,QSD]
+# INCERTAIN : ou insert-parfum-cosmetique.html
+RewriteRule ^de/dekorative-elemente/(dekorative-elemente/)?metall-werbeschilder/?$ https://www.pim-industrie.com/pages/luxe/etiquette-vins-spiritueux.html [R=301,L,NE,QSD]
+RewriteRule ^de/dekorative-elemente/(dekorative-elemente/)?werbung-am-verkaufsort/?$ https://www.pim-industrie.com/pages/luxe/plv.html [R=301,L,NE,QSD]
+# filet de sécurité
+RewriteRule ^de/dekorative-elemente/.+$ https://www.pim-industrie.com/pages/luxe/luxe.html [R=301,L,NE,QSD]
+RewriteRule ^de/unsere-prozesse(/.*)?$ https://www.pim-industrie.com/pages/entreprise/prestations.html [R=301,L,NE,QSD]
+RewriteRule ^de/tools/general-conditions-of-sale/?$ https://www.pim-industrie.com/pages/legal/cgv.html [R=301,L,NE,QSD]
+RewriteRule ^de/tools/general-purchasing-terms/?$ https://www.pim-industrie.com/pages/legal/cga.html [R=301,L,NE,QSD]
+RewriteRule ^de/tools/glossar(/.*)?$ https://www.pim-industrie.com/pages/ressources/glossaire.html [R=301,L,NE,QSD]
+RewriteRule ^de/tools/datenschutz/?$ https://www.pim-industrie.com/pages/legal/confidentialite.html [R=301,L,NE,QSD]
+RewriteRule ^de/tools/(sitemap|forschungsergebnisse)/?$ https://www.pim-industrie.com/pages/legal/plan-du-site.html [R=301,L,NE,QSD]
+
+# --- Ancien CMS 2009-2015 : /fr|en|de/Titre-NN.html (le numero NN identifie la page, toutes langues)
+# accueil / actualités
+RewriteRule ^(fr|en|de)/[^/]*-(3|36)\.html$ https://www.pim-industrie.com/ [R=301,L,NE,QSD]
+RewriteRule ^(fr|en|de)/[^/]*-(9|72)\.html$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-membrane.html [R=301,L,NE,QSD]
+# INCERTAIN : technologie Duraswitch
+RewriteRule ^(fr|en|de)/[^/]*-(30)\.html$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-membrane.html [R=301,L,NE,QSD]
+# INCERTAIN : panneaux de commande
+RewriteRule ^(fr|en|de)/[^/]*-(10)\.html$ https://www.pim-industrie.com/pages/industrie/industrie.html [R=301,L,NE,QSD]
+RewriteRule ^(fr|en|de)/[^/]*-(11)\.html$ https://www.pim-industrie.com/pages/industrie/facade-metal.html [R=301,L,NE,QSD]
+# INCERTAIN : façades/inserts standards
+RewriteRule ^(fr|en|de)/[^/]*-(31)\.html$ https://www.pim-industrie.com/pages/industrie/facade-metal.html [R=301,L,NE,QSD]
+RewriteRule ^(fr|en|de)/[^/]*-(12)\.html$ https://www.pim-industrie.com/pages/industrie/face-avant-plastique.html [R=301,L,NE,QSD]
+RewriteRule ^(fr|en|de)/[^/]*-(14)\.html$ https://www.pim-industrie.com/pages/entreprise/prestations.html [R=301,L,NE,QSD]
+RewriteRule ^(fr|en|de)/[^/]*-(61)\.html$ https://www.pim-industrie.com/pages/entreprise/prestations.html#decoupe [R=301,L,NE,QSD]
+# contact / zones commerciales
+RewriteRule ^(fr|en|de)/[^/]*-(15|42|43|44)\.html$ https://www.pim-industrie.com/pages/contact/contact.html [R=301,L,NE,QSD]
+RewriteRule ^(fr|en|de)/[^/]*-(38)\.html$ https://www.pim-industrie.com/pages/contact/contact.html#acces [R=301,L,NE,QSD]
+RewriteRule ^(fr|en|de)/[^/]*-(17)\.html$ https://www.pim-industrie.com/pages/luxe/luxe.html [R=301,L,NE,QSD]
+RewriteRule ^(fr|en|de)/[^/]*-(19)\.html$ https://www.pim-industrie.com/pages/industrie/domaines/domaine-medical.html [R=301,L,NE,QSD]
+RewriteRule ^(fr|en|de)/[^/]*-(20)\.html$ https://www.pim-industrie.com/pages/industrie/domaines/domaine-aeronautique.html [R=301,L,NE,QSD]
+RewriteRule ^(fr|en|de)/[^/]*-(21)\.html$ https://www.pim-industrie.com/pages/luxe/etiquette-vins-spiritueux.html [R=301,L,NE,QSD]
+# INCERTAIN : équipements industriels (ou domaine-machines-outils.html)
+RewriteRule ^(fr|en|de)/[^/]*-(22)\.html$ https://www.pim-industrie.com/pages/industrie/industrie.html [R=301,L,NE,QSD]
+RewriteRule ^(fr|en|de)/[^/]*-(70)\.html$ https://www.pim-industrie.com/pages/industrie/industrie.html#domaines [R=301,L,NE,QSD]
+RewriteRule ^(fr|en|de)/[^/]*-(23)\.html$ https://www.pim-industrie.com/pages/industrie/domaines/domaine-automobile.html [R=301,L,NE,QSD]
+RewriteRule ^(fr|en|de)/[^/]*-(24)\.html$ https://www.pim-industrie.com/pages/luxe/plv.html [R=301,L,NE,QSD]
+RewriteRule ^(fr|en|de)/[^/]*-(32|33)\.html$ https://www.pim-industrie.com/pages/luxe/plv-lumineuse.html [R=301,L,NE,QSD]
+RewriteRule ^(fr|en|de)/[^/]*-(26)\.html$ https://www.pim-industrie.com/pages/entreprise/a-propos.html [R=301,L,NE,QSD]
+RewriteRule ^(fr|en|de)/[^/]*-(39)\.html$ https://www.pim-industrie.com/pages/entreprise/a-propos.html#rejoindre [R=301,L,NE,QSD]
+RewriteRule ^(fr|en|de)/[^/]*-(27|41)\.html$ https://www.pim-industrie.com/pages/legal/plan-du-site.html [R=301,L,NE,QSD]
+RewriteRule ^(fr|en|de)/[^/]*-(51)\.html$ https://www.pim-industrie.com/pages/legal/mentions-legales.html [R=301,L,NE,QSD]
+# INCERTAIN : étiquettes malléables
+RewriteRule ^(fr|en|de)/[^/]*-(68)\.html$ https://www.pim-industrie.com/pages/luxe/etiquette-plastique.html [R=301,L,NE,QSD]
+# ancienne actualité (salon, presse, portes ouvertes) : accueil
+RewriteRule ^(fr|en|de)/[^/]*-(54|74|75|76|80|89|90)\.html$ https://www.pim-industrie.com/ [R=301,L,NE,QSD]
+# plus de newsletter : accueil
+RewriteRule ^(fr|en|de)/[^/]*-(57|63)\.html$ https://www.pim-industrie.com/ [R=301,L,NE,QSD]
+
+# --- Site 2002-2003 (/pages, /uk/pages), anciens points d'entree, filets de securite
+RewriteRule ^(uk/)?(index\.htm|flash_fr\.htm|flash_uk\.htm)$ https://www.pim-industrie.com/ [R=301,L,NE,QSD]
+RewriteRule ^(uk/)?pages/claviermem?n?bra[mn]e\.htm$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-membrane.html [R=301,L,NE,QSD]
+RewriteRule ^(uk/)?pages/contact\.htm$ https://www.pim-industrie.com/pages/contact/contact.html [R=301,L,NE,QSD]
+RewriteRule ^(uk/)?pages/faceavantplastique\.htm$ https://www.pim-industrie.com/pages/industrie/face-avant-plastique.html [R=301,L,NE,QSD]
+RewriteRule ^(uk/)?pages/metal\.htm$ https://www.pim-industrie.com/pages/industrie/facade-metal.html [R=301,L,NE,QSD]
+RewriteRule ^(uk/)?pages/galerie/metal/.*$ https://www.pim-industrie.com/pages/industrie/facade-metal.html [R=301,L,NE,QSD]
+RewriteRule ^(uk/)?pages/plan\.htm$ https://www.pim-industrie.com/pages/legal/plan-du-site.html [R=301,L,NE,QSD]
+RewriteRule ^(uk/)?pages/(quisommenous\.htm|galerie/qsn/.*)$ https://www.pim-industrie.com/pages/entreprise/a-propos.html [R=301,L,NE,QSD]
+RewriteRule ^(uk/)?pages/zoom_carte\.html$ https://www.pim-industrie.com/pages/contact/contact.html#acces [R=301,L,NE,QSD]
+# ancien point d'entrée PHP (paramètres supprimés)
+RewriteRule ^(index|page|site/page|site/page_[0-9]+)\.php$ https://www.pim-industrie.com/ [R=301,L,NE,QSD]
+RewriteRule ^tag\.html$ https://www.pim-industrie.com/ [R=301,L,NE,QSD]
+RewriteRule ^site/[a-z]{2}\.cookie\.html$ https://www.pim-industrie.com/pages/legal/confidentialite.html [R=301,L,NE,QSD]
+# INCERTAIN : ancien PDF RSE
+RewriteRule ^site/rsepdf-fr-5-2\.html$ https://www.pim-industrie.com/pages/entreprise/a-propos.html#engagements [R=301,L,NE,QSD]
+RewriteRule ^site/flyer_systemes_plv_lumineuxpdf-fr-15-2\.html$ https://www.pim-industrie.com/pages/luxe/plv-lumineuse.html [R=301,L,NE,QSD]
+# filet de sécurité (ancienne page non listée) : À RETIRER quand /en/ ou /de/ seront publiés sur le .com
+RewriteRule ^(fr|en|de|uk)(/.*)?$ https://www.pim-industrie.com/ [R=301,L,NE,QSD]
+
+# 3) HTTPS + www.pim-industrie.com (une seule version du site pour Google ;
+#    redirige aussi pim-industrie.com, et .fr/.de s'ils pointent sur cet hébergement, en gardant le chemin)
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} !^www\.pim-industrie\.com$ [NC]
+RewriteRule ^ https://www.pim-industrie.com%{REQUEST_URI} [L,R=301]
+
+# 4) /index.html -> /
+RewriteCond %{THE_REQUEST} \s/index\.html[\s?]
+RewriteRule ^index\.html$ https://www.pim-industrie.com/ [L,R=301]
+
+# 4b) Anciennes adresses à la racine -> page rangée dans son dossier.
+RewriteRule ^a-propos\.html$ https://www.pim-industrie.com/pages/entreprise/a-propos.html [R=301,L]
+RewriteRule ^prestations\.html$ https://www.pim-industrie.com/pages/entreprise/prestations.html [R=301,L]
+RewriteRule ^references\.html$ https://www.pim-industrie.com/pages/entreprise/references.html [R=301,L]
+RewriteRule ^glossaire\.html$ https://www.pim-industrie.com/pages/ressources/glossaire.html [R=301,L]
+RewriteRule ^guide-clavier-membrane\.html$ https://www.pim-industrie.com/pages/ressources/guide-clavier-membrane.html [R=301,L]
+RewriteRule ^contact\.html$ https://www.pim-industrie.com/pages/contact/contact.html [R=301,L]
+RewriteRule ^contact-merci\.html$ https://www.pim-industrie.com/pages/contact/contact-merci.html [R=301,L]
+RewriteRule ^contact-erreur\.html$ https://www.pim-industrie.com/pages/contact/contact-erreur.html [R=301,L]
+RewriteRule ^industrie\.html$ https://www.pim-industrie.com/pages/industrie/industrie.html [R=301,L]
+RewriteRule ^circuit-souple\.html$ https://www.pim-industrie.com/pages/industrie/circuit-souple.html [R=301,L]
+RewriteRule ^electronique-imprimee\.html$ https://www.pim-industrie.com/pages/industrie/electronique-imprimee.html [R=301,L]
+RewriteRule ^face-avant-plastique\.html$ https://www.pim-industrie.com/pages/industrie/face-avant-plastique.html [R=301,L]
+RewriteRule ^facade-metal\.html$ https://www.pim-industrie.com/pages/industrie/facade-metal.html [R=301,L]
+RewriteRule ^plaque-constructeur\.html$ https://www.pim-industrie.com/pages/industrie/plaque-constructeur.html [R=301,L]
+RewriteRule ^lexan\.html$ https://www.pim-industrie.com/pages/industrie/lexan.html [R=301,L]
+RewriteRule ^clavier-membrane\.html$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-membrane.html [R=301,L]
+RewriteRule ^clavier-plat\.html$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-plat.html [R=301,L]
+RewriteRule ^clavier-gaufre\.html$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-gaufre.html [R=301,L]
+RewriteRule ^clavier-coupelles\.html$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-coupelles.html [R=301,L]
+RewriteRule ^clavier-retroeclaire\.html$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-retroeclaire.html [R=301,L]
+RewriteRule ^clavier-capacitif\.html$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-capacitif.html [R=301,L]
+RewriteRule ^clavier-electroluminescent\.html$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-electroluminescent.html [R=301,L]
+RewriteRule ^clavier-elastomere\.html$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-elastomere.html [R=301,L]
+RewriteRule ^clavier-etanche\.html$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-etanche.html [R=301,L]
+RewriteRule ^clavier-afficheur-7-segments\.html$ https://www.pim-industrie.com/pages/industrie/claviers/clavier-afficheur-7-segments.html [R=301,L]
+RewriteRule ^domaine-medical\.html$ https://www.pim-industrie.com/pages/industrie/domaines/domaine-medical.html [R=301,L]
+RewriteRule ^domaine-aeronautique\.html$ https://www.pim-industrie.com/pages/industrie/domaines/domaine-aeronautique.html [R=301,L]
+RewriteRule ^domaine-automobile\.html$ https://www.pim-industrie.com/pages/industrie/domaines/domaine-automobile.html [R=301,L]
+RewriteRule ^domaine-automatisation\.html$ https://www.pim-industrie.com/pages/industrie/domaines/domaine-automatisation.html [R=301,L]
+RewriteRule ^domaine-machines-outils\.html$ https://www.pim-industrie.com/pages/industrie/domaines/domaine-machines-outils.html [R=301,L]
+RewriteRule ^domaine-nautique\.html$ https://www.pim-industrie.com/pages/industrie/domaines/domaine-nautique.html [R=301,L]
+RewriteRule ^domaine-electronique\.html$ https://www.pim-industrie.com/pages/industrie/domaines/domaine-electronique.html [R=301,L]
+RewriteRule ^domaine-transports\.html$ https://www.pim-industrie.com/pages/industrie/domaines/domaine-transports.html [R=301,L]
+RewriteRule ^luxe\.html$ https://www.pim-industrie.com/pages/luxe/luxe.html [R=301,L]
+RewriteRule ^etiquette-vins-spiritueux\.html$ https://www.pim-industrie.com/pages/luxe/etiquette-vins-spiritueux.html [R=301,L]
+RewriteRule ^etiquette-plastique\.html$ https://www.pim-industrie.com/pages/luxe/etiquette-plastique.html [R=301,L]
+RewriteRule ^insert-parfum-cosmetique\.html$ https://www.pim-industrie.com/pages/luxe/insert-parfum-cosmetique.html [R=301,L]
+RewriteRule ^domage-resine\.html$ https://www.pim-industrie.com/pages/luxe/domage-resine.html [R=301,L]
+RewriteRule ^plv\.html$ https://www.pim-industrie.com/pages/luxe/plv.html [R=301,L]
+RewriteRule ^plv-lumineuse\.html$ https://www.pim-industrie.com/pages/luxe/plv-lumineuse.html [R=301,L]
+RewriteRule ^presentoir-plexiglas\.html$ https://www.pim-industrie.com/pages/luxe/presentoir-plexiglas.html [R=301,L]
+RewriteRule ^impression-numerique\.html$ https://www.pim-industrie.com/pages/savoir-faire/impression-numerique.html [R=301,L]
+RewriteRule ^gravure-aluminium\.html$ https://www.pim-industrie.com/pages/savoir-faire/gravure-aluminium.html [R=301,L]
+RewriteRule ^mentions-legales\.html$ https://www.pim-industrie.com/pages/legal/mentions-legales.html [R=301,L]
+RewriteRule ^confidentialite\.html$ https://www.pim-industrie.com/pages/legal/confidentialite.html [R=301,L]
+RewriteRule ^cgv\.html$ https://www.pim-industrie.com/pages/legal/cgv.html [R=301,L]
+RewriteRule ^cga\.html$ https://www.pim-industrie.com/pages/legal/cga.html [R=301,L]
+RewriteRule ^plan-du-site\.html$ https://www.pim-industrie.com/pages/legal/plan-du-site.html [R=301,L]
+RewriteRule ^404\.html$ https://www.pim-industrie.com/pages/systeme/404.html [R=301,L]
+
+# 4) Sécurité PHP : le site est statique, SEUL le script du formulaire de contact peut s'exécuter.
+#    (placé après les règles 410 pour que les anciennes adresses .php gardent leur réponse 410)
+RewriteCond %{REQUEST_URI} !^/contact-envoi\.php$
+RewriteRule \.(php[0-9]?|phtml|phar|pht|phps|cgi|pl|py|sh)$ - [F,L]
+</IfModule>
+
+# Fichiers sensibles jamais servis (sauvegardes, configurations, journaux, sources)
+<FilesMatch "\.(bak|old|orig|sav|save|swp|tmp|log|ini|conf|cfg|sql|sqlite|db|env|dist|md|csv|key|pem|lock|json|inc|yml|yaml)$|~$">
+<IfModule mod_authz_core.c>
+Require all denied
+</IfModule>
+</FilesMatch>
+
+# Compression
+<IfModule mod_deflate.c>
+AddOutputFilterByType DEFLATE text/html text/css application/javascript text/javascript application/json image/svg+xml text/xml application/xml text/plain
+</IfModule>
+
+# Cache navigateur
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresDefault "access plus 1 week"
+ExpiresByType text/html "access plus 0 seconds"
+ExpiresByType text/css "access plus 1 month"
+ExpiresByType application/javascript "access plus 1 month"
+ExpiresByType image/webp "access plus 6 months"
+ExpiresByType image/jpeg "access plus 6 months"
+ExpiresByType image/png "access plus 6 months"
+ExpiresByType image/svg+xml "access plus 6 months"
+ExpiresByType image/x-icon "access plus 1 year"
+</IfModule>
+AddType image/webp .webp
+
+# Sécurité de base (signal de qualité, sans effet direct sur le classement)
+<IfModule mod_headers.c>
+Header always set X-Content-Type-Options "nosniff"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+Header always set Strict-Transport-Security "max-age=31536000" env=HTTPS
+Header always set X-Frame-Options "SAMEORIGIN"
+Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+Header always unset X-Powered-By
+Header unset X-Powered-By
+</IfModule>

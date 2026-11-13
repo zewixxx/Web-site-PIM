@@ -1,0 +1,10 @@
+# Dossier privé du formulaire de contact : JAMAIS accessible depuis le web.
+# (double protection : la règle 1 du .htaccess racine bloque déjà tout chemin commençant par "_")
+<IfModule mod_authz_core.c>
+Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+Order allow,deny
+Deny from all
+</IfModule>
+Options -Indexes
